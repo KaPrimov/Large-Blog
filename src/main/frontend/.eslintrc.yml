@@ -1,0 +1,38 @@
+env:
+  browser: true
+extends: 
+ - eslint:recommended
+ - plugin:jsx-a11y/recommended
+ - plugin:import/errors
+parserOptions:
+  sourceType: module
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+    modules: true
+plugins:
+  - react
+  - babel
+  - jsx-a11y
+  - import
+rules:
+  indent:
+    - error
+    - tab
+  linebreak-style: 0
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  react/jsx-uses-react: error
+  react/jsx-uses-vars: error
+  babel/new-cap: error
+  babel/object-curly-spacing: error
+  babel/no-invalid-this: error
+  babel/semi: error
+  import/named: error
+  import/namespace: error
+  import/default: error
+  import/export: error
