@@ -1,0 +1,63 @@
+debug: true
+
+# ===============================
+# = SERVER CONFIG
+# ===============================
+
+# Session timeout in seconds
+server:
+  servletPath: /*
+  port: 9090
+  session:
+    timeout: 1800
+  tomcat:
+    max-http-post-size: 20000000
+
+# ===============================
+# = SPRING CONFIG
+# ===============================
+spring:
+  servlet:
+      multipart:
+        max-file-size: 100MB
+        max-request-size: 100MB
+  datasource:
+     url: jdbc:mysql://localhost:3306/large?useSSL=false&useUnicode=true&characterEncoding=utf8&createDatabaseIfNotExist=true
+     # Username and password
+     username: root
+     password: 1234
+# ===============================
+# = JPA / HIBERNATE
+# ===============================
+
+# Use spring.jpa.properties.* for Hibernate native properties (the prefix is
+# stripped before adding them to the entity manager).
+  jpa:
+    # Show or not log for each sql query
+    show-sql: true
+
+    properties:
+      hibernate:
+        # Add Spring Session Context
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        # Show the SQL
+        show_sql: true
+        # Use SQL Comments
+        use_sql_comments: true
+        # Format the SQL
+        format_sql: true
+        # Configger the Hibernate logger level
+        type: trace
+        # Allows Hibernate to generate SQL optimized for a particular DBMS
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+    hibernate:
+      # Hibernate ddl auto (create, create-drop, update): with "update" the database
+      # schema will be automatically updated accordingly to java entities found in the project
+      ddl-auto: validate
+
+      # Naming strategy
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+
+      # Allows Hibernate to generate SQL optimized for a particular DBMS
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
