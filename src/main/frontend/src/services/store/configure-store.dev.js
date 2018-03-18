@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from 'redux';
-import rootReducer from './reducers/index';
+import rootReducer from '../reducers/index';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
 import {createLogger} from 'redux-logger';
@@ -13,7 +13,7 @@ export default function configureStore(initialState) {
     initialState,
     applyMiddleware(thunk,
         //idleMiddleware,
-        reduxImmutableStateInvariant({ignore: 'report.expenses'}), logger)
+        reduxImmutableStateInvariant(), logger)
   );
 
   return store;

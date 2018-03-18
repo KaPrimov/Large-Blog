@@ -6,7 +6,7 @@
 // import {browserHistory} from 'react-router';
 // import {actions as idleActions} from './index';
 // import AdalService from '..//adal.service';
-// import * as ActionTypes from '../../actions/action-types.constants';
+// import * as ActionTypes from '../../actions/action-types.constants.js';
 //
 //
 // //time returned is in milliseconds

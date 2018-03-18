@@ -10,10 +10,13 @@ import {Provider} from 'react-redux';
 import routes from './router/routes.jsx';
 // import * as securityActions from './services/actions/security.actions';
 import {loadTranslations, syncTranslationWithStore} from 'react-redux-i18n';
-// import {initializeLanguage} from './services/actions/locale.actions';
+import {initializeLanguage} from './services/actions/locale.actions';
 import 'font-awesome/css/font-awesome.css';
 import translations from './services/i18n/translations';
 import {AppContainer} from 'react-hot-loader';
+import "../assets/styles/index.scss"
+import "../assets/js/clean-blog.min.js";
+import "../assets/js/jqBootstrapValidation.min.js";
 
 const store = ConfigureStore();
 const history = syncHistoryWithStore(browserHistory, store);
@@ -23,8 +26,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 // Configure i18n and start default english translations
 syncTranslationWithStore(store);
-// store.dispatch(loadTranslations(translations));
-// store.dispatch(initializeLanguage());
+store.dispatch(loadTranslations(translations));
+store.dispatch(initializeLanguage());
 
 const ExtranetApplication = () => (
 	<Provider store={store}>
