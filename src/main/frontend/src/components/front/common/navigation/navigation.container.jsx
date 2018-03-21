@@ -17,13 +17,13 @@ const NavigationContainer= () => {
 							<Link className="nav-link" to="/blog/all"><Translate value="navigation.blogs"/></Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" href="/users/login"><Translate value="navigation.login"/></Link>
+							<Link className="nav-link" to="/users/login"><Translate value="navigation.login"/></Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" href="/users/register"><Translate value="navigation.register"/></Link>
+							<Link className="nav-link" to="/users/register"><Translate value="navigation.register"/></Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" href="/admin"><Translate value="navigation.admin"/></Link>
+							<Link className="nav-link" to="/admin"><Translate value="navigation.admin"/></Link>
 						</li>
 					</ul>
 				</div>

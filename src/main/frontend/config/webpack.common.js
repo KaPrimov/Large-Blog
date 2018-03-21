@@ -8,11 +8,11 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    proxiadExtranetApp: './src/index.jsx'
+    largeApp: './src/index.jsx'
   },
   output: {
     path: path.resolve(__dirname, '../../../../src/main/resources/static'),
-    filename: 'ProxiadExtranetApp.js',
+    filename: 'LargeApp.js',
     publicPath: '/'
   },
   module: {

@@ -1,5 +1,5 @@
 import * as ActionTypes from '../actions/action-types.constants';
-import TransformObjectUtils from '../services/transform-object-utils.service';
+import TransformObjectUtils from '../services/transform-object-utils.service.js';
 
 /**
  * Helper function for generation of initial states of reducers
