@@ -57,7 +57,7 @@ const TextInput = ({inputGroupClassName, inputIconClass, isRequired, isInputGrou
 
 	return (
 		<div className={wrapperClass}>
-			<label className={labelClass} htmlFor={name}><Translate value={label}/>{isRequired && <span className="required">*</span>}
+			<label className={labelClass} htmlFor={name}><Translate value={label}/>{isRequired && <span className="required"> *</span>}
 				{labelLogic}
 			</label>
 			<div className={inputWrapperClass}>

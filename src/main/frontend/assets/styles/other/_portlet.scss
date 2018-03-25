@@ -1,0 +1,163 @@
+.portlet {
+    padding: 12px 20px 15px 20px;
+    position: relative;
+    top: 75px;
+    &.light {
+      background-color: #fff;
+  
+      .caption {
+        color: #641584;
+      }
+  
+      &.settings-submenu{
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+  
+      .portlet-body {
+        color: rgb(121, 141, 173);
+  
+        #specialDay-add-content{
+          .row{
+            padding-left: 17px;
+            margin-right: 0px;
+            margin-left: -15px;
+          }
+        }
+  
+          #specialDay-content{
+            .row{
+              .table-with-no-padding{
+                .animated{
+                  background: white;
+                }
+  
+                .loader-wrapper {
+                  height: 600px;
+                  z-index: inherit;
+                  position: relative;
+                  left: 0;
+              
+                  & > div {
+                    position: relative;
+                    left: calc(50% - 60px);
+                  }
+                }
+              }
+            }
+          }
+  
+        .add_cra_expense_type_form{
+          .custom-bottom-margin{
+            .centarize-leave-type{
+             margin-left: 37%;
+            }
+          }
+        }
+  
+        .add_cra_expense_type_form{
+          .custom-bottom-margin{
+            .centarize-cra-expense-type-description{
+             margin-left: 25%;
+            }
+  
+             .centarize-cra-expense-type-description.cut-off-paddings-for-formchecker{
+                padding-left: 0px;
+                padding-right: 0px;
+             }
+  
+          }
+        }
+  
+        .add_leave_type_form{
+          .custom-bottom-margin{
+            .centarize-leave-type{
+             margin-left: 37%;
+            }
+          }
+        }
+  
+        .add_leave_type_form{
+          .custom-bottom-margin{
+            .centarize-leave-type-description{
+             margin-left: 25%;
+            }
+  
+             .centarize-leave-type-description.cut-off-paddings-for-formchecker{
+                padding-left: 0px;
+                padding-right: 0px;
+             }
+  
+          }
+        }
+  
+        .cra_expense_type_form{
+          .custom-bottom-margin{
+            .centarize-leave-type-description{
+             margin-left: 25%;
+            }
+  
+             .centarize-cra-expense-type-description.cut-off-paddings-for-formchecker{
+                padding-left: 0px;
+                padding-right: 0px;
+             }
+  
+          }
+        }
+  
+  
+        .cra_expense_type_table {
+          max-width: 1370px;
+  
+          .loader-wrapper {
+            height: 560px;
+            z-index: inherit;
+            position: relative;
+            left: 0;
+        
+            & > div {
+              position: relative;
+              left: calc(50% - 60px);
+            }
+          }
+        }
+      }
+  
+      &.react-grid-Container {
+        width: 100% !important;
+      }
+    }
+  
+    .portlet-title {
+      border-bottom: 1px solid #eee;
+      padding: 0;
+      margin-bottom: 10px;
+      min-height: 41px;
+  
+      .caption {
+        font-family: 'Open Sans';
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+    }
+  
+    .portlet-body {
+      padding-top: 8px;
+  
+      .inputWidth{
+            width: 180px;
+      }
+      .loader-wrapper {
+        height: 450px;
+        z-index: inherit;
+        position: relative;
+        left: 0;
+    
+        & > div {
+          position: relative;
+          left: calc(50% - 60px);
+        }
+      }
+    }
+  }
+  

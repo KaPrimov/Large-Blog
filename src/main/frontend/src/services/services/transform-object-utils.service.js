@@ -12,4 +12,11 @@ export default class TransformObjectUtils {
 
 		return newAuthorities;
 	}
+
+	/**
+	 * I18 label transformer
+	 */
+	static transform(label) {
+		return label.replace(/\./g, '_');
+	}
 }

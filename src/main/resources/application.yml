@@ -22,7 +22,7 @@ spring:
         max-file-size: 100MB
         max-request-size: 100MB
   datasource:
-     url: jdbc:mysql://localhost:3306/large?useSSL=false&useUnicode=true&characterEncoding=utf8&createDatabaseIfNotExist=true
+     url: jdbc:mysql://localhost:3306/large_db?useSSL=false&useUnicode=true&characterEncoding=utf8&createDatabaseIfNotExist=true
      # Username and password
      username: root
      password: 1234
@@ -54,7 +54,7 @@ spring:
     hibernate:
       # Hibernate ddl auto (create, create-drop, update): with "update" the database
       # schema will be automatically updated accordingly to java entities found in the project
-      ddl-auto: validate
+      ddl-auto: update
 
       # Naming strategy
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy

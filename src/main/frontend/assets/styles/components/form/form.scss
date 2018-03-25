@@ -1,0 +1,16 @@
+.user-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+
+    .wrapper-input-with-fa {
+        display: flex;
+        align-items: center;
+    }
+
+    .required {
+        color: red;
+    }
+}

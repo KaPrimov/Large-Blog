@@ -15,19 +15,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/", "/users/register", "/users/login").permitAll()
-                .anyRequest().authenticated()
-            .and()
-                .formLogin()
-                .loginPage("/users/login")
-                .permitAll()
-            .and()
+                .authorizeRequests().antMatchers("/api/**").permitAll()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin().loginPage("/users/login").permitAll()
+                .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
-            .and()
+                .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized")
-            .and()
-                .csrf().csrfTokenRepository(csrfTokenRepository());
+                .and()
+                .csrf().disable();
     }
 
     private CsrfTokenRepository csrfTokenRepository() {
