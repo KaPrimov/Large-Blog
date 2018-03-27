@@ -7,6 +7,7 @@ import com.kalin.large.core.service.role.RoleService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,31 +17,52 @@ import java.util.HashSet;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
+    /*---------------------------------------------------- CONSTANTS -------------------------------------------------*/
     private static final String ROLE_USER = "ROLE_USER";
+
+    /*-------------------------------------------------- REPOSITORIES ------------------------------------------------*/
     private final UserRepository userRepository;
+
+    /*---------------------------------------------------- SERVICES --------------------------------------------------*/
     private final ModelMapper modelMapper;
     private final RoleService roleService;
+    private final BCryptPasswordEncoder cryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, RoleService roleService) {
+    public UserServiceImpl(final UserRepository userRepository, final ModelMapper modelMapper, final RoleService roleService, BCryptPasswordEncoder cryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.roleService = roleService;
+        this.cryptPasswordEncoder = cryptPasswordEncoder;
+        initializeMapping();
     }
 
+    /**
+     * @see com.kalin.large.core.service.user.UserService#registerUser(RegisterUserDTO)
+     */
     @Override
     public boolean registerUser(final RegisterUserDTO userDTO) {
-        if (userExists(userDTO)) {
+        if (userExists(userDTO.getUsername(), userDTO.getEmail())) {
             return false;
         }
-        initializeMapping();
         User user = modelMapper.map(userDTO, User.class);
         user.setAuthorities(new HashSet<>(Collections.singletonList(roleService.findRoleByName(ROLE_USER))));
+        user.setPassword(this.cryptPasswordEncoder.encode(userDTO.getPassword()));
         this.userRepository.save(user);
         return true;
     }
 
+    /**
+     * @see com.kalin.large.core.service.user.UserService#hasLogin(String, String)
+     */
+    @Override
+    public boolean hasLogin(final String username, final String email) {
+        return this.userExists(username, email);
+    }
+
+    /**
+     * helper method for mapping dtos
+     */
     private void initializeMapping() {
         PropertyMap<RegisterUserDTO, User> userMap = new PropertyMap<RegisterUserDTO, User>() {
             @Override
@@ -54,13 +76,17 @@ public class UserServiceImpl implements UserService {
         modelMapper.addMappings(userMap);
     }
 
-    private boolean userExists(RegisterUserDTO userDTO) {
-       User isUsernameExisting = this.userRepository.findFirstByUsername(userDTO.getUsername());
+    /**
+     * helper method for checking if user exists in the db
+     * @param username {@link String}
+     * @param email {@link String}
+     * @return boolean
+     */
+    private boolean userExists(final String username, final String email) {
+       User isUsernameExisting = this.userRepository.findFirstByUsername(username);
        if (isUsernameExisting == null) {
-           User isEmailExisting = this.userRepository.findFirstByEmail(userDTO.getEmail());
-           if (isEmailExisting == null) {
-               return false;
-           }
+           User isEmailExisting = this.userRepository.findFirstByEmail(email);
+           return isEmailExisting != null;
        }
        return true;
     }

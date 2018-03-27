@@ -1,6 +1,6 @@
 // import {IDLESTATUS_AWAY, IDLESTATUS_EXPIRED} from './constants';
-// import {_authenticationSuccess,_setLastCheckedTime, logout} from '../../actions/security.actions';
-// import SecurityAPI from '../../api/security.api';
+// import {_authenticationSuccess,_setLastCheckedTime, logout} from '../../actions/credential.actions';
+// import SecurityAPI from '../../api/credential.api';
 // import {ModalService} from '..//modal.service';
 // import {I18n} from 'react-redux-i18n';
 // import {browserHistory} from 'react-router';

@@ -35,8 +35,8 @@ const RegisterForm = ({username, password, confirmPassword, email, onInputChange
 			<div className="row">
 				<TextInput wrapperClass="form-group col-md-6 offset-md-3" name="confirmPassword" isInputGroup={true}
 					label="register.confirm_password_label" labelWrapperClass="col-md-3 field-label-responsive" inputGroupClassName="input-group mb-2 mr-sm-2 mb-sm-0 wrapper-input-with-fa"
-					icon="repeat" inputIconClass="input-group-addon" type="text" inputClass="form-control ml-3" placehoder="common.placehodlers.confirm" 
-					value={confirmPassword} onChange={onInputChange} isRequired={true} error={formChecker.errors['credential.confirm']} />
+					icon="repeat" inputIconClass="input-group-addon" type="password" inputClass="form-control ml-3" placehoder="common.placehodlers.confirm" 
+					value={confirmPassword} onChange={onInputChange} isRequired={true} error={formChecker.errors['credential.confirmPassword']} />
 			</div>
 			<div className="row">
 				<div className="col-md-6 offset-md-3">

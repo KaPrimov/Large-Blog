@@ -8,7 +8,7 @@ import {syncHistoryWithStore} from 'react-router-redux';
 import ConfigureStore from './services/store/configure-store';
 import {Provider} from 'react-redux';
 import routes from './router/routes.jsx';
-// import * as securityActions from './services/actions/security.actions';
+// import * as securityActions from './services/actions/credential.actions';
 import {loadTranslations, syncTranslationWithStore} from 'react-redux-i18n';
 import {initializeLanguage} from './services/actions/locale.actions';
 import 'font-awesome/css/font-awesome.css';
