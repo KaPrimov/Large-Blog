@@ -15,7 +15,11 @@ const bg = {
 		password_label: 'Парола',
 		confirm_password_label: 'Потвърдете паролата',
 		email_label: 'Email за връзка',
-		btn: 'Регистрирайте се'
+		btn: ' Регистрирайте се'
+	},
+	login: {
+		btn: ' Логин',
+		label: 'Логин'
 	},
 	common: {
 		placeholders: {
@@ -51,7 +55,22 @@ const bg = {
 			passwords_do_not_match: 'Паролите не са еднакви',
 			user_exists: 'Имате дупликиран юзърнейм или имейл'
 		}
-	},	
+	},
+	language_component: {
+		lang: {
+			bulgarian: 'Български',
+			english: 'English'
+		},
+		shortLang: {
+			lang: {
+				bulgarian: 'бг',
+				english: 'en'
+			}
+		}
+	},
+	user_actions: {
+		register_success: 'Регистрирахте се успешно!'
+	}
 };
 
 export default bg;

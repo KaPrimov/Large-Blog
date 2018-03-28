@@ -9,7 +9,7 @@ export default class RestService {
 	static get(url, headers = {}, contentType = 'application/json') {
 		return jQuery.ajax({
 			type: 'GET',
-			url: `${constants.SERVER_PATH}${url}`,
+			url: `${Configuration.SERVER_PATH}${url}`,
 			headers: headers,
 			contentType: contentType
 		});
@@ -18,9 +18,9 @@ export default class RestService {
 	static put(url, data = null, headers = {}, contentType = 'application/json') {
 		return jQuery.ajax({
 			type: 'PUT',
-			url: `${constants.SERVER_PATH}${url}`,
+			url: `${Configuration.SERVER_PATH}${url}`,
 			beforeSend: function(request) {
-				request.setRequestHeader('X-XSRF-TOKEN', cookie.load('XSRF-TOKEN'));
+				request.setRequestHeader('X-XSRF-TOKEN', cookie.load(Configuration.X_XSRF_TOKEN_COOKIE_NAME));
 			},
 			data: JSON.stringify(data),
 			headers: headers,
@@ -31,9 +31,9 @@ export default class RestService {
 	static post(url, data = null, headers = {}, contentType = 'application/json') {
 		return jQuery.ajax({
 			type: 'POST',
-			url: `${constants.SERVER_PATH}${url}`,
+			url: `${Configuration.SERVER_PATH}${url}`,
 			beforeSend: function(request) {
-				request.setRequestHeader('X-XSRF-TOKEN', cookie.load('XSRF-TOKEN'));
+				request.setRequestHeader('X-XSRF-TOKEN', cookie.load(Configuration.X_XSRF_TOKEN_COOKIE_NAME));
 			},
 			data: JSON.stringify(data),
 			headers: headers,
@@ -44,9 +44,9 @@ export default class RestService {
 	static delete(url, headers = {}, contentType = 'application/json', data = null) {
 		return jQuery.ajax({
 			type: 'DELETE',
-			url: `${constants.SERVER_PATH}${url}`,
+			url: `${Configuration.SERVER_PATH}${url}`,
 			beforeSend: function(request) {
-				request.setRequestHeader('X-XSRF-TOKEN', cookie.load('XSRF-TOKEN'));
+				request.setRequestHeader('X-XSRF-TOKEN', cookie.load(Configuration.X_XSRF_TOKEN_COOKIE_NAME));
 			},
 			data: JSON.stringify(data),
 			headers: headers,
@@ -57,9 +57,9 @@ export default class RestService {
 	static postWithCustomProperties(url, data = null, properties = {}, contentType = 'application/json', headers = {} ) {
 		return jQuery.ajax({
 			type: 'POST',
-			url: `${constants.SERVER_PATH}${url}`,
+			url: `${Configuration.SERVER_PATH}${url}`,
 			beforeSend: function(request) {
-				request.setRequestHeader('X-XSRF-TOKEN', cookie.load('XSRF-TOKEN'));
+				request.setRequestHeader('X-XSRF-TOKEN', cookie.load(Configuration.X_XSRF_TOKEN_COOKIE_NAME));
 			},
 			data: data,
 			file: data,

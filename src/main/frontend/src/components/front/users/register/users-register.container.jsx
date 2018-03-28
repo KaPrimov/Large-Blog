@@ -6,6 +6,7 @@ import UserRegisterForm from './users-register-form.component.jsx';
 import * as userActions from '../../../../services/actions/user.actions';
 import SecurityAPI from '../../../../services/api/security.api';
 import FormValidatorService from '../../../../services/services/form-validator.service';
+import NotificationService from '../../../../services/services/notification.service.js';
 
 class UserRegisterContainer extends Component {
 	constructor(props) {
@@ -35,13 +36,12 @@ class UserRegisterContainer extends Component {
 		event.preventDefault();
 		this.validateForm(null, null, true).then(() => {
 			if (this.state.formChecker.isValid) {
-				alert('inside')
 				let userData = {
 					username: this.state.username,
 					password: this.state.password,
 					email: this.state.email
 				};
-				
+				NotificationService.notifySuccess(I18n.t('user_actions.register_success'));
 				this.props.actions.registerUser(userData);
 			}
 		});

@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(path = "/api/users")
-public class UserController {
+public class UserAPI {
 
     /*---------------------------------------------------- SERVICES --------------------------------------------------*/
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserAPI(UserService userService) {
         this.userService = userService;
     }
 

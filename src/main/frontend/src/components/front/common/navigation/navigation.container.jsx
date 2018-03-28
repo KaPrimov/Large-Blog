@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {Translate} from 'react-redux-i18n';
+import LanguageContainer from './locale/language.container.jsx';
 
 const NavigationContainer= () => {
 	return (
@@ -27,6 +28,7 @@ const NavigationContainer= () => {
 						</li>
 					</ul>
 				</div>
+				<LanguageContainer />
 			</div>
 		</nav>
 	);

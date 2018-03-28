@@ -17,6 +17,10 @@ const gb = {
 		email_label: 'Your valid email',
 		btn: 'Register'
 	},
+	login: {
+		btn: 'Login',
+		label: 'Login'
+	},
 	common: {
 		placeholders: {
 			username: 'Username',
@@ -52,7 +56,21 @@ const gb = {
 			user_exists: 'Duplicated usename or password'
 		}
 	},
-	
+	language_component: {
+		lang: {
+			bulgarian: 'Български',
+			english: 'English'
+		},
+		shortLang: {
+			lang: {
+				bulgarian: 'бг',
+				english: 'en'
+			}
+		}
+	},
+	user_actions: {
+		register_success: 'Registered successfully!'
+	}	
 };
 
 export default gb;

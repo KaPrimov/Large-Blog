@@ -7,6 +7,9 @@ import com.kalin.large.core.service.role.RoleService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,7 @@ import java.util.HashSet;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     /*---------------------------------------------------- CONSTANTS -------------------------------------------------*/
     private static final String ROLE_USER = "ROLE_USER";
 
@@ -60,6 +63,14 @@ public class UserServiceImpl implements UserService {
         return this.userExists(username, email);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = this.userRepository.findFirstByUsername(username);
+        if(user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
+    }
     /**
      * helper method for mapping dtos
      */
@@ -90,4 +101,6 @@ public class UserServiceImpl implements UserService {
        }
        return true;
     }
+
+
 }
