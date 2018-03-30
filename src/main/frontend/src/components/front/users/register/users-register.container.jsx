@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {I18n} from 'react-redux-i18n';
+import {browserHistory} from 'react-router';
 import UserRegisterForm from './users-register-form.component.jsx';
 import * as userActions from '../../../../services/actions/user.actions';
 import SecurityAPI from '../../../../services/api/security.api';
@@ -9,8 +10,8 @@ import FormValidatorService from '../../../../services/services/form-validator.s
 import NotificationService from '../../../../services/services/notification.service.js';
 
 class UserRegisterContainer extends Component {
-	constructor(props) {
-		super(props);
+	constructor(props, context) {
+		super(props, context);
 		this.state = {
 			username: '',
 			password: '',
@@ -42,7 +43,9 @@ class UserRegisterContainer extends Component {
 					email: this.state.email
 				};
 				NotificationService.notifySuccess(I18n.t('user_actions.register_success'));
-				this.props.actions.registerUser(userData);
+				this.props.actions.registerUser(userData).then(() => {
+					browserHistory.push('/users/login');
+				});
 			}
 		});
 		

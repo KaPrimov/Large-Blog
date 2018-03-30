@@ -28,7 +28,7 @@ public class AuthenticationAPI {
      *            to look for
      * @return true if the login exists, otherwise - false
      */
-    @GetMapping(value = "/api/loginExists", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/loginExists", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<Boolean> loginExists(@RequestParam(required = true) final String username, @RequestParam(required = true) final String email) {
 
         if (userService.hasLogin(username, email)) {

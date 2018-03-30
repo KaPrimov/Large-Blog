@@ -39,13 +39,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-                .authorizeRequests().anyRequest().permitAll().and()
-                .csrf().disable()
-                .formLogin().loginPage("/users/login").permitAll().loginProcessingUrl("/login").permitAll().failureHandler(new SimpleUrlAuthenticationFailureHandler()).permitAll().and()
-                .logout().and()
-                .headers().cacheControl().disable().addHeaderWriter(new CacheControlHeaderWriter()).and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+        http.authorizeRequests().and().httpBasic().and()
+			.csrf().disable()
+			.exceptionHandling()
+	        .and()
+	        .authorizeRequests()
+	        .antMatchers("/api/users/login", "/api/users/register").permitAll()
+	        .antMatchers("/api/**").authenticated()
+	        .and()
+	        .formLogin().permitAll()
+	        .usernameParameter("username")
+	        .passwordParameter("password")
+	        .loginPage("/users/login").permitAll()
+	        .successHandler(authenticationSuccessHandler)
+	        .failureHandler(new SimpleUrlAuthenticationFailureHandler())
+	        .and()
+	        .logout();
     }
 
     private CsrfTokenRepository csrfTokenRepository() {

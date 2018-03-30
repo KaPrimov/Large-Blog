@@ -5,7 +5,6 @@ import com.kalin.large.core.model.user.beans.RegisterUserDTO;
 import com.kalin.large.core.repository.user.UserRepository;
 import com.kalin.large.core.service.role.RoleService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,12 +31,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final BCryptPasswordEncoder cryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final ModelMapper modelMapper, final RoleService roleService, BCryptPasswordEncoder cryptPasswordEncoder) {
+    public UserServiceImpl(final UserRepository userRepository, final ModelMapper modelMapper, final RoleService roleService, final BCryptPasswordEncoder cryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.roleService = roleService;
         this.cryptPasswordEncoder = cryptPasswordEncoder;
-        initializeMapping();
     }
 
     /**
@@ -49,6 +47,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return false;
         }
         User user = modelMapper.map(userDTO, User.class);
+        user.setAccountNonExpired(true);    
+        user.setAccountNonLocked(true);     
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);              
         user.setAuthorities(new HashSet<>(Collections.singletonList(roleService.findRoleByName(ROLE_USER))));
         user.setPassword(this.cryptPasswordEncoder.encode(userDTO.getPassword()));
         this.userRepository.save(user);
@@ -70,21 +72,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         return user;
-    }
-    /**
-     * helper method for mapping dtos
-     */
-    private void initializeMapping() {
-        PropertyMap<RegisterUserDTO, User> userMap = new PropertyMap<RegisterUserDTO, User>() {
-            @Override
-            protected void configure() {
-                map().setAccountNonExpired(true);
-                map().setAccountNonLocked(true);
-                map().setCredentialsNonExpired(true);
-                map().setEnabled(true);
-            }
-        };
-        modelMapper.addMappings(userMap);
     }
 
     /**

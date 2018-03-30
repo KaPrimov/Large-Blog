@@ -15,7 +15,6 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap/dist/js/bootstrap.js';
 import 'izitoast/dist/css/iziToast.min.css';
-import 'tether/dist/js/tether.min';
 import translations from './services/i18n/translations';
 import {AppContainer} from 'react-hot-loader';
 import '../assets/styles/index.scss';
