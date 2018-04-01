@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {I18n} from 'react-redux-i18n';
 import UserLoginForm from './users-login-form.component.jsx';
-import SecurityAPI from '../../../../services/api/security.api';
+import * as securityActions from '../../../../services/actions/security.actions';
 import FormValidatorService from '../../../../services/services/form-validator.service';
 import NotificationService from '../../../../services/services/notification.service.js';
 
@@ -38,9 +38,7 @@ class UserRegisterContainer extends Component {
 					password: this.state.password
 				};
 				
-				SecurityAPI.loginUser(userData).then(result => {
-					NotificationService.notifySuccess(I18n.t('user_actions.register_success'));
-				});
+				this.props.actions.loginUser(userData);
 			}
 		});
 		
@@ -108,4 +106,12 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(UserRegisterContainer);
+
+
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(securityActions, dispatch)
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserRegisterContainer);

@@ -19,6 +19,8 @@ export function authenticatedUserReducer(state = initializeStates().authenticate
 		}
 		return authenticatedUser;
 	}
+	case ActionTypes.LOGOUT_SUCCESS: 
+		return initializeStates().authenticatedUser;
 	default:
 		return state;
 	}

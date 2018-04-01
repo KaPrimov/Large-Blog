@@ -32,6 +32,7 @@ export function initializeLanguage() {
 	};
 }
 
-export function _setChangeLanguage(currentLocale) {
+/* ------------------------------ Dispatchers ------------------------------- */
+function _setChangeLanguage(currentLocale) {
 	return {type: ActionTypes.CHANGE_LANGUAGE, currentLocale : currentLocale};
 }

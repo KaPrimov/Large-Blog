@@ -1,37 +1,55 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {Translate} from 'react-redux-i18n';
-import LanguageContainer from './locale/language.container.jsx';
+import Navigation from './navigation.component.jsx';
+import * as securityActions from '../../../../services/actions/security.actions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {browserHistory} from 'react-router';
 
-const NavigationContainer= () => {
-	return (
-		<nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-			<div className="container">
-				<Link className="navbar-brand" to="/">L@rge</Link>
-				<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-					<i className="fa fa-bars"></i>
-				</button>
-				<div className="collapse navbar-collapse" id="navbarResponsive">
-					<ul className="navbar-nav ml-auto">
-						<li className="nav-item">
-							<Link className="nav-link" to="/blog/all"><Translate value="navigation.blogs"/></Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/users/login"><Translate value="navigation.login"/></Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/users/register"><Translate value="navigation.register"/></Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/admin"><Translate value="navigation.admin"/></Link>
-						</li>
-					</ul>
-				</div>
-				<LanguageContainer />
-			</div>
-		</nav>
-	);
-};
+class NavigationContainer extends React.Component {
+	constructor(props) {
+		super(props);
 
-export default NavigationContainer;
+		this.state = {
+			authenticatedUser: this.props.authenticatedUser,
+			isAuthenticated: false
+		};
+		this.onLogout = this.onLogout.bind(this);
+	}
+	componentWillReceiveProps(nextProps) {
+        
+		if (this.props.authenticatedUser !== nextProps.authenticatedUser) {
+			this.setState({authenticatedUser: nextProps.authenticatedUser});
+		}
+	}
+
+	render() {
+		return (
+			<Navigation authenticatedUser={this.state.authenticatedUser} onLogout={this.onLogout} />
+		);
+	}
+
+	/**
+   * Logout the authenticated user and redirect it to home page
+   */
+	onLogout(event) {
+		event.stopPropagation();
+		this.props.actions.logout().then(() => {
+			browserHistory.push('/');
+		});
+
+	}
+}
+
+function mapStateToProps(state) {
+	return {
+		authenticatedUser: state.authenticatedUser
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(securityActions, dispatch)
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);

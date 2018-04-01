@@ -1,11 +1,13 @@
 package com.kalin.large.core.service.user;
 
 import com.kalin.large.core.model.user.beans.RegisterUserDTO;
+import com.kalin.large.core.model.user.beans.UserFullDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * User service for working with {@link com.kalin.large.core.model.user.User} entity
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     /**
      * Register the given user
@@ -21,4 +23,11 @@ public interface UserService {
      * @return true if the login exists, otherwise - false
      */
     boolean hasLogin(final String username, final String email);
+
+    /**
+     * Finds the user by usernamw
+     * @param username {@link String}
+     * @return userDTO {@link UserFullDTO}
+     */
+    UserFullDTO getFullUserInfoByUsername(final String username);
 }

@@ -14,7 +14,6 @@ import java.util.Set;
 public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = -500058020892903251L;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", updatable = false, nullable = false)

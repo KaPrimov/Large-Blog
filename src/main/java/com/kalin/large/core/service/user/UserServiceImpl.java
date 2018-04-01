@@ -2,12 +2,12 @@ package com.kalin.large.core.service.user;
 
 import com.kalin.large.core.model.user.User;
 import com.kalin.large.core.model.user.beans.RegisterUserDTO;
+import com.kalin.large.core.model.user.beans.UserFullDTO;
 import com.kalin.large.core.repository.user.UserRepository;
 import com.kalin.large.core.service.role.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.HashSet;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
     /*---------------------------------------------------- CONSTANTS -------------------------------------------------*/
     private static final String ROLE_USER = "ROLE_USER";
 
@@ -63,6 +63,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public boolean hasLogin(final String username, final String email) {
         return this.userExists(username, email);
+    }
+
+    /**
+     * @see UserService#getFullUserInfoByUsername(String)
+     */
+    @Override
+    public UserFullDTO getFullUserInfoByUsername(String username) {
+        User user = this.userRepository.findFirstByUsername(username);
+        return modelMapper.map(user, UserFullDTO.class);
     }
 
     @Override

@@ -7,7 +7,8 @@ const bg = {
 		blogs: 'Статии',
 		login: 'Логин',
 		register: ' Регистрация',
-		admin: 'Администрация'
+		admin: 'Администрация',
+		logout: 'Отписване',
 	},
 	register: {
 		label: 'Регистрирайте се',
@@ -69,7 +70,10 @@ const bg = {
 		}
 	},
 	user_actions: {
-		register_success: 'Регистрирахте се успешно!'
+		register_success: 'Регистрирахте се успешно!',
+		login_success: 'Логнахте се успешно!',
+		login_failed: 'Грешно потребителско име или парола!',
+		logout_success: 'Отписахте се успешно!'
 	}
 };
 

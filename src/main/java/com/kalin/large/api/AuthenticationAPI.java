@@ -1,12 +1,22 @@
 package com.kalin.large.api;
 
+import com.kalin.large.core.model.user.beans.UserFullDTO;
+import com.kalin.large.core.service.security.SecurityService;
 import com.kalin.large.core.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @RestController
 public class AuthenticationAPI {
@@ -14,12 +24,11 @@ public class AuthenticationAPI {
     /*---------------------------------------------------- SERVICES --------------------------------------------------*/
     private final UserService userService;;
 
+    /*------------------------------------------------------ API -----------------------------------------------------*/
     @Autowired
-    public AuthenticationAPI(UserService userService) {
+    public AuthenticationAPI(UserService userService, SecurityService securityService) {
         this.userService = userService;
     }
-
-    /*------------------------------------------------------ API -----------------------------------------------------*/
 
     /**
      * Check if a login already exists
@@ -35,5 +44,28 @@ public class AuthenticationAPI {
             return ResponseEntity.ok(Boolean.TRUE);
         }
         return ResponseEntity.ok(Boolean.FALSE);
+    }
+
+    /**
+     * Gets the data of the currently logged in user
+     * @param principal {@link Principal}
+     * @return userDTO {@link UserFullDTO}
+     */
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(path = "/successLogin")
+    public ResponseEntity<UserFullDTO> getLoggedInUser(final Principal principal) {
+        return ResponseEntity.ok(this.userService.getFullUserInfoByUsername(principal.getName()));
+    }
+
+    /**
+     * Logout the authenticated user
+     */
+    @GetMapping(value = "/logout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseEntity<Boolean> logout(final HttpServletRequest request, final HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return ResponseEntity.ok(Boolean.TRUE);
     }
 }

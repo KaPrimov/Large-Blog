@@ -15,7 +15,8 @@ const gb = {
 		password_label: 'Password',
 		confirm_password_label: 'Repeat Password',
 		email_label: 'Your valid email',
-		btn: 'Register'
+		btn: 'Register',
+		logout: 'Logout',
 	},
 	login: {
 		btn: 'Login',
@@ -69,7 +70,10 @@ const gb = {
 		}
 	},
 	user_actions: {
-		register_success: 'Registered successfully!'
+		register_success: 'Registered successfully!',
+		login_success: 'Logged in successfully!',
+		login_failed: 'Wrong username or password',
+		logout_success: 'Logged out successfully!'
 	}	
 };
 

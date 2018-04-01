@@ -11,7 +11,6 @@ import UserErrorMessageCodeHandler from '../error-handlers/user-error-handler';
  * List all active user loaded only with their main data
  */
 export function registerUser(userData) {
-    console.log('action');
 	return function(dispatch) {
 		dispatch(showLoading());
 		return UserAPI.registerUser(userData).then(isRegistered => {

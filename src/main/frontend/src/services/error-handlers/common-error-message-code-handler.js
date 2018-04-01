@@ -28,7 +28,7 @@ export default class CommonErrorMessageCodeHandler {
 		let message = null;
 
 		if(error !== undefined && error.status !== undefined && error.status == UNAUTHORISED_ERROR_STATUS) {
-			message = {code: 'common.no_authorities_error', arguments: {}};
+			message = {code: 'user_actions.login_failed', arguments: {}};
 		} else if (error !== undefined && error.code !== undefined) {
 
 			if (BEAN_VALIDATION_ERROR_CODE == error.code) {

@@ -9,7 +9,7 @@ const appReducer = combineReducers({
 	routing: routerReducer,
 	currentLocale: localeReducer,
 	i18n: i18nReducer,
-	authneticatedUser: authenticatedUserReducer
+	authenticatedUser: authenticatedUserReducer
 });
 
 const rootReducer = (state, action) => {

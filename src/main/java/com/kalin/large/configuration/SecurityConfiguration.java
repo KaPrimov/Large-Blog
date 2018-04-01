@@ -1,14 +1,13 @@
 package com.kalin.large.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -27,40 +26,40 @@ import java.io.IOException;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    private final MySavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    public SecurityConfiguration(MySavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler, RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
-        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().and().httpBasic().and()
+        http.authorizeRequests().and().httpBasic()
+                .authenticationEntryPoint(createBasicAuthenticationEntry()).and()
 			.csrf().disable()
 			.exceptionHandling()
 	        .and()
 	        .authorizeRequests()
-	        .antMatchers("/api/users/login", "/api/users/register").permitAll()
+	        .antMatchers("/users/login", "/users/register").permitAll()
 	        .antMatchers("/api/**").authenticated()
 	        .and()
+            .headers().cacheControl().disable().addHeaderWriter(new CacheControlHeaderWriter()).and()
 	        .formLogin().permitAll()
 	        .usernameParameter("username")
 	        .passwordParameter("password")
 	        .loginPage("/users/login").permitAll()
-	        .successHandler(authenticationSuccessHandler)
-	        .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-	        .and()
-	        .logout();
+            .loginProcessingUrl("/users/login").permitAll()
+	        .successHandler(this.successHandler())
+	        .failureHandler(new SimpleUrlAuthenticationFailureHandler()).and()
+            .logout().disable();
     }
 
     private CsrfTokenRepository csrfTokenRepository() {
         HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
         repository.setHeaderName("X-XSRF-TOKEN");
         return repository;
+    }
+
+    @Bean
+    public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
+        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        successHandler.setTargetUrlParameter("/successLogin");
+        return successHandler;
     }
 
     @Bean
