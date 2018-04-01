@@ -1,0 +1,138 @@
+.detailed-view-readers{
+    width: 100%;
+    max-width: 650px;
+
+    .reader-avatar{
+        width: 50px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+
+    .reader-default{
+        width: 50px;
+        display: block;
+        margin: 0 auto;    
+        margin-bottom: 10px;
+    }
+
+    .reader-name{
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .body{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .regulation-stats-body, .event-stats-body {
+        overflow-x: hidden !important;
+        overflow-y: scroll !important;
+    }
+}
+
+.regulation-statistics-table-wrapper, .event-statistics-table-wrapper {
+    max-width: 1080px !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+	padding: 0 20px;
+}  
+
+.poll-stats-padding {
+    width: 85%;
+    border-bottom: 1px solid #DADADA;
+    margin: 0 auto 10px auto;
+}
+
+#regulation-table, #event-table {
+    margin-bottom: 100px;
+
+    .react-grid-Row .react-grid-Cell:first-child:hover {
+        cursor: pointer;
+    }
+
+    .react-grid-Container{
+        max-height: 400px;
+
+    }
+
+    .react-grid-Row{
+        height: 45px !important;
+    }
+    .react-grid-Cell{
+        height: 45px !important;
+    }
+
+    .react-grid-Cell__value{
+        .reset-btn{
+            margin-left: 50px !important;
+            padding: 0.25rem 0.5rem !important;
+            margin-right: 5px !important;
+            font-weight: 300 !important;
+            font-size: 12px !important;
+            padding: 6px 12px !important;
+            line-height: 2.5 !important;
+        }
+    }
+}
+
+.hyper-extended-view{
+
+    &.regulation-stats-modal, &.event-stats-modal, &.poll-stats-modal {
+        width: 100%;
+    }    
+
+    .modal-header{
+        .modal-title{
+            text-align: center;
+        }
+    }
+
+    .regulation-stats-doughnut, .event-stats-doughnut, .poll-stats-doughnut{
+        canvas{
+            height: 280px !important;
+            margin-right: auto !important;
+            margin-left: auto !important;
+        }
+    }
+}
+
+.poll-statistics-table-wrapper {
+    max-width: 85%!important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 5px 0 15px 0;
+}
+
+.regulation-statistics-table-wrapper, .event-statistics-table-wrapper {
+    .accepted{
+        background-color: #4bc0c0;
+        text-align: center;
+    }
+
+    .rejected{
+        background-color: #FF6384;
+        text-align: center;
+    }
+
+    .unvoted, .maybe{
+        background-color: #ffce56;
+        text-align: center;
+    }
+
+    .pending{
+        background-color: #36a2eb;
+        text-align: center;
+    }  
+}
+
+.poll-details-modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .target-group-list {
+        font-size: 1rem;
+        text-align: center;
+    }
+}

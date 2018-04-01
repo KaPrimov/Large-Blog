@@ -46,6 +46,19 @@ export function logout() {
 	};
 }
 
+/**
+ * finds the authenticated user, if existing
+ */
+export function refreshAuthentication() {
+	return function(dispatch) {
+		return SecurityAPI.checkLoggedInUser().then(user => {
+			if (user) {
+				dispatch(_saveAutheticatedUser(user));
+			}
+		});
+	};
+}
+
 
 /* ------------------------------ Dispatchers ------------------------------- */
 /**

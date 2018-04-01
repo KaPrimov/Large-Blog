@@ -1,0 +1,114 @@
+.article-footer-bar {
+
+	.reader-social-bookmark-item {
+        position: relative;
+        top: 8px;
+        font-family: 'Raleway';
+		font-weight: normal;
+		font-style: normal;
+        font-size: 12px;
+        color: black;
+        right: 5px;
+    }
+
+	.author-detail {
+		margin-left: 5px;
+	}
+
+    .author-avatar {
+        display: inline-block;
+        width: 35px;
+        margin-right: 10px;
+    }
+
+    .eye-component{
+		cursor: pointer;
+		margin-right: 5px;
+    }
+	
+	.number-of-readers-read-bar {
+        float: right
+    }
+
+    .readers-read-bar-unique-user{
+        float: right;
+        position: relative;
+		right: 28px;
+		max-height: 35px;
+    }
+
+    .readers-read-bar-for-two{
+        float: right;
+        position: relative;
+		right: 13px;
+		max-height: 35px;
+	}
+	
+	.readers-read-bar {
+		max-height: 35px;
+	}
+
+    .username {
+        position: relative;
+        bottom: 12px;
+        font-family: 'Raleway';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 12px;
+        color: black;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+
+    .reader-author-name {
+        font-family: 'Raleway';
+		font-weight: normal;
+		font-style: normal;
+        font-size: 12px;
+        color: black;
+        display: inline-block;
+    }
+
+    .reader-avatar{
+        width: 35px;
+    }
+
+    .readers-avatar {
+        cursor: pointer;
+        position: relative;
+        bottom: 20px;
+    }
+
+    .reader-saw-article{
+        position: relative;
+        right: 12px;
+        top: 9px;
+        font-family: 'Raleway';
+		font-weight: normal;
+		font-style: normal;
+        font-size: 13px;
+        color: black;
+	}
+	
+	.user0 {
+        position: relative;
+        z-index: 3;
+        left: 10px;
+    }
+    
+    .user1 {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .user2{
+        position: relative;
+        right: 9px;
+	}
+
+	.fa-eye{
+        position: relative;
+        bottom: 10px;
+    }
+}

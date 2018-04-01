@@ -1,0 +1,278 @@
+.article-management {
+	box-shadow: -1px 3px 14px -5px rgba(0, 0, 0, 0.3);
+	
+	.article-view-element * {
+		font-family: 'Raleway';
+		font-size: 300;
+	}
+
+	.article-view-element {
+		.btn-ocustom {
+			font-family: 'Open Sans';
+		}
+
+		i.fa {
+			font-family: 'FontAwesome';
+		}
+
+		.article-footer-bar .author-avatar {
+			max-width: 120px;
+		}
+	}
+
+    .article-management-buttons {
+        padding: 12px 50px;
+        .management-button {
+            margin-bottom: 10px;
+        }
+    }
+
+    .create-news-toolbar {
+        color: inherit;
+        margin-bottom: 0;
+        padding: 14px 15px 7px;
+        height: 48px;
+    }
+
+    .create-news-toolbar .btn {
+        float: right;
+        margin-left: 10px;
+    }
+
+    .create-news-toolbar .tools {
+        display: inline-block;
+        float: right;
+        margin-top: 0;
+        position: relative;
+        padding: 0;
+        margin-top: -6px;
+    }
+
+    #dante-wrapper {
+        padding: 12px 50px;
+    }
+
+    .article-element {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
+        margin-bottom: 10px;
+
+
+        .active-label, .inactive-label, .future-active-label {
+            bottom: 20px;
+            position: relative;
+            left: 25px;
+            padding: 0px 22px !important;
+            font-weight: 300;
+            font-size: 0.77em;
+            height: 17px;
+            border-radius: 32px;
+            margin: 5px;
+            color: #ffffff;
+            font-family: Raleway;
+            
+            @media screen and (max-width: 895px) {
+                bottom: 0!important;
+            }
+
+            @media screen and (max-width: 490px) {
+                line-height: 2;
+            }
+        }
+
+        .inactive-label {
+            background: #ea6f3e;
+        }
+
+        .active-label {
+            background: #1eb189;
+        }
+
+        .future-active-label {
+            background: orange;
+        }
+
+        .article-titles {
+            &.align-right {
+                padding-left: 10px;
+
+                .capital-title {
+                    font-size: 20px;
+                }
+            }
+        }
+             
+        .inline-block {
+            .nav-icons {
+
+                .nav-icons-bar-item { 
+                    list-style-type: none;
+                    float: left;
+                    display: block;
+                    margin: 5px 0;
+                    text-align: center;
+                    min-height: 50px;
+                    cursor: pointer;
+                    padding-left: 5px;
+                    padding-right: 5px;                   
+
+                    .nav-icon-text {
+                        text-decoration: none!important;
+                        padding: 5px 10px;
+                        display: block;
+                    }
+
+                    .nav-icons-label {
+                        margin-top: 4px;
+                        color: #777;
+                        display: list-item;
+                        font-size: 14px;
+                        padding-right: 5px;
+                        
+                        @media all and (max-width: 745px) {
+                            font-size: 12px!important;
+                        }
+                    }
+
+                    .nav-icons-label-open {
+                        margin-top: 1px;
+                        color: #777;
+                        display: list-item;
+                        font-size: 14px;
+                        padding-right: 5px;
+                        
+                        @media all and (max-width: 745px) {
+                            font-size: 12px!important;
+                        }
+                    }
+
+                    .nav-link {
+                        color: #081D4E;
+                    }
+                }
+            }
+        }
+    }
+
+    .article-management-element {
+        .article-management-element-title{
+            text-align: center;
+            font-size: 2em;
+            padding-top: 25px;
+        }
+
+        .article-management-element-filter {
+            padding-top: 20px;
+        }
+
+        .article-management-element-outline {
+			padding-top: 80px;
+			
+			.loader-wrapper {
+				height: 363px;
+				z-index: inherit;
+				position: relative;
+				left: 0;
+
+				& > div {
+					position: relative;
+					left: calc(50% - 60px);
+				}
+			}
+        }       
+    }
+}
+
+.target-group-management {
+    margin-bottom: 30px;
+    max-width: 1000px;
+    text-align: center;
+
+    .gradient-border{
+        border-left: 20px solid #697f9c;
+        text-align: left;
+        padding-left: 10px;
+        margin: 5px;
+        background: linear-gradient(to right, rgba(36, 156, 233, 0.31) 43%, rgba(5, 171, 224, 0) 100%);
+        color: #23385d;
+      }
+}    
+
+.create-article-editor {
+    background: transparent;
+
+    .create-metadata-button {
+        margin-bottom: 10px;
+        margin-top: 20px;
+    } 
+}
+
+.meta-data-label {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.single-tag {
+    font-size: 0.77em;
+    display: inline-block;
+    height: 30px;
+    background: #e0e0e0;
+    padding: 6px 12px;
+    border-radius: 32px;
+    margin: 5px;
+}
+
+.article-pic-wrapper {
+    margin-bottom: 10px;
+
+    .article-pic {
+      max-width: 200px;
+      width: 100%;
+
+      img {
+        width: 100%;
+        border-radius: 100%;
+      }
+    }
+
+    #crop-editor {
+      border: 1px solid #23385D;
+      max-width: 450px!important;
+      height: 500px;
+
+      @media all and (max-width: 1200px) {
+        height: 300px;
+      }
+    }
+
+    .article-editor {
+        max-width: 450px!important;
+    }
+
+    #cropper-bg {
+        margin: 0 auto;
+    }
+}
+
+.image-controls {    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    
+}
+
+.toolbar-link {
+    margin: 8px 10px 0 0;
+    display: inline-block;
+}
+
+@include media-breakpoint-down(md) {
+    .article-management {
+        #dante-wrapper {
+           padding: 0px;
+        }
+    }
+}

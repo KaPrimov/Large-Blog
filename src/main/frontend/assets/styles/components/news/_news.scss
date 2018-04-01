@@ -1,0 +1,22 @@
+@import 'manage_article_target_group';
+@import 'article_management';
+@import 'news_carrousel';
+@import 'no_found_items';
+@import 'article_card';
+@import 'meta_data';
+@import 'stats';
+@import 'article-footer';
+@import 'no_news_data';
+@import 'poll_managment';
+@import 'event_management';
+
+.news-list-wrapper > div:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.news-filter-by-tag {
+	color: #838c9c;
+    margin-bottom:  10px;
+}

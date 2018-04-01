@@ -1,0 +1,82 @@
+.carrousel-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px auto;
+
+    .slick-prev:before, .slick-next:before{
+        color: #24395E;
+    }
+
+    .few-polls-wrapper {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+    }
+
+    .slick-center {
+        transform: scale(1.08);
+        -webkit-transition: all 0.5s ease-in;
+        -moz-transition: all 0.5s ease-in;
+        -o-transition: all 0.5s ease-in;
+        -ms-transition: all 0.5s ease-in;
+        transition: all 0.5s ease-in;
+    }
+
+    .poll-element-card {
+        background: #ffffff;
+        display: flex!important;
+        flex-direction: column;
+        text-align: center;
+        box-sizing: border-box;
+        justify-content: space-around;
+        height: 150px;
+        padding: 5px 5px;
+
+        .poll-details {
+            visibility: hidden;
+            opacity: 0;
+            text-align: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            .poll-card-button {
+                width: 50%;
+                margin-top: 5px;
+                text-decoration: none;
+            }
+
+            .poll-card-stats {
+                &:hover {
+                    cursor: pointer;                    
+                }
+            }
+        }
+
+        &:hover {
+            .poll-main-data {
+                visibility: hidden;
+                opacity: 0;
+                display: none;
+                -webkit-transition: all 0.2s ease-in;
+                -moz-transition: all 0.2s ease-in;
+                -o-transition: all 0.2s ease-in;
+                -ms-transition: all 0.2s ease-in;
+                transition: all 0.2s ease-in;
+               
+            }
+    
+            .poll-details {
+                visibility: visible;
+                opacity: 1;
+                -webkit-transition: all 0.5s ease-in;
+                -moz-transition: all 0.5s ease-in;
+                -o-transition: all 0.5s ease-in;
+                -ms-transition: all 0.5s ease-in;
+                transition: all 0.5s ease-in;
+            }
+        }
+    }
+}

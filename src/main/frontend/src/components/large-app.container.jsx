@@ -1,8 +1,16 @@
 import React from 'react';
 import Navigation from './front/common/navigation/navigation.container.jsx';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as securityActions from '../services/actions/security.actions';
+
 class LargeAppContainer extends React.Component {
 	constructor(props) {
 		super(props);
+	}
+
+	componentDidMount() {
+		this.props.actions.refreshAuthentication();
 	}
 
 	render() {
@@ -15,4 +23,17 @@ class LargeAppContainer extends React.Component {
 	}
 }
 
-export default LargeAppContainer;
+
+function mapStateToProps(state) {
+	return {
+		authenticatedUser: state.authenticatedUser
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(securityActions, dispatch)
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LargeAppContainer);
