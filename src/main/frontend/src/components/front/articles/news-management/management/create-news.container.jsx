@@ -2,15 +2,12 @@ import React from 'react';
 import CreateContentContainer from './create-content.container.jsx';
 import MetaDataInputContainer from './meta-data-input.container.jsx';
 import PublishArticleComponent from './publish-article.component.jsx';
-import PageTitle from '../../../../common/layout/page-title/page-title.component.jsx';
-import Breadcrumb from '../../../../common/layout/breadcrumb/breadcrumb.component.jsx';
-import {Link, withRouter, browserHistory} from 'react-router';
-import {Translate, I18n} from 'react-redux-i18n';
+import {withRouter, browserHistory} from 'react-router';
+import {I18n} from 'react-redux-i18n';
 import * as newsActions from '../../../../../services/actions/news.actions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import NewsCreationWizard from '../../common/article-management/news-creation-wizard.component.jsx';
-import Layout from '../../../../common/layout/layout';
 import * as ArticleStatus from '../../common/article-status.constants.js';
 import PropTypes from 'prop-types';
 
@@ -35,8 +32,6 @@ class CreateNewsContainer extends React.Component {
 			currentLocale: this.props.currentLocale,
 			isMetadataButtonHidden: false
 		};
-
-		this.layout = new Layout();
 		this.bindEventHandlers();
 		this.creationLabels = {
 			content: {
@@ -55,7 +50,6 @@ class CreateNewsContainer extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.layout.initFixedSidebar();
 		if (nextProps.singleNews) {
 			this.setState({singleNews: nextProps.singleNews});
 		}
@@ -71,7 +65,6 @@ class CreateNewsContainer extends React.Component {
 	}
 
 	componentDidMount() {
-		this.layout.initFixedSidebar();
 		document.title = I18n.t('article_management_container.show_editor_label');
 		if (this.props.router.getCurrentLocation().pathname.toLowerCase() === '/news/article/publish' ||
 			this.props.router.getCurrentLocation().pathname.toLowerCase() === '/news/article/edit') {
@@ -123,11 +116,9 @@ class CreateNewsContainer extends React.Component {
 			singleNews: news,
 			previousStep: 'addContent'
 		});
-		this.layout.initFixedSidebar();
 	}
 
 	onMetadataStepDone(news) {
-		this.layout.initFixedSidebar();
 		this.props.actions.updateMetadataHandler(news).then(() => {
 			this.setState({
 				activeMetadataStep: false,
@@ -153,7 +144,6 @@ class CreateNewsContainer extends React.Component {
 			previousStep: 'metadata',
 			singleNews: news
 		});
-		this.layout.initFixedSidebar();
 	}
 
 	onPublishedStepBack(news) {
@@ -165,7 +155,6 @@ class CreateNewsContainer extends React.Component {
 			previousStep: 'publish',
 			singleNews: news
 		});
-		this.layout.initFixedSidebar();
 	}
 
 	bindEventHandlers() {
@@ -187,22 +176,7 @@ class CreateNewsContainer extends React.Component {
 
 	render() {
 		return (
-			<section className="container-fluid" >
-				<PageTitle mainTitle="article_management_container.main_title" subTitle="article_management_container.show_editor_label" />
-				<article className="page-bar">
-					<Breadcrumb nodes={this.getBreadCrumbNodes()} />
-					<div className="toolbar-link pull-right">
-						{this.state.isFromArticleManagement ?
-							<Link to={'/news/article-management'} className="text-xs-center btn btn-sm btn-ocustom">
-								<i className="fa fa-file-text-o"></i> <Translate value="article_management_container.back_to_management_button" />
-							</Link>
-							:
-							<Link to={'/news'} className="text-xs-center btn btn-sm btn-ocustom">
-								<i className="fa fa-file-text-o"></i> <Translate value="article_management_container.back_to_news_button" />
-							</Link>
-						} 
-					</div>
-				</article>
+			<section className="container-fluid" >				
 				<section className='container create-article-editor'>
 					{this.state.singleNews.status !== ArticleStatus.PUBLISHED && 
 						<NewsCreationWizard 
@@ -244,7 +218,7 @@ class CreateNewsContainer extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		singleNews: state.createNews,
+		singleNews: state.singleNews,
 		isFromArticleManagement: state.isFromArticleManagement,
 		currentLocale: state.currentLocale
 	};

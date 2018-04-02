@@ -1,4 +1,4 @@
-package com.proxiad.extranet.core.model.article.beans;
+package com.kalin.large.core.model.article.beans;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,17 +6,13 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.proxiad.extranet.core.model.article.Article;
-import com.proxiad.extranet.core.model.article.ArticleNotificationTypeEnum;
-import com.proxiad.extranet.core.model.article.ArticleStatusEnum;
-import com.proxiad.extranet.core.model.employee.Employee;
-import com.proxiad.extranet.core.model.employee.beans.EmployeeBasicDTO;
-import com.proxiad.extranet.core.model.employee.beans.EmployeeNameDTO;
+import com.kalin.large.core.model.article.Article;
+import com.kalin.large.core.model.article.ArticleStatusEnum;
+import com.kalin.large.core.model.user.User;
+import com.kalin.large.core.model.user.beans.UserBasicDTO;
 
 /**
  * Created on 08.12.2017 г.
- *
- * @author Kalin Primov <k.primov@proxiad.com>
  */
 public abstract class ArticleDTO implements Serializable {
 	/**
@@ -26,7 +22,7 @@ public abstract class ArticleDTO implements Serializable {
 	
 	protected Long id;
 	protected Long idUser;
-	protected EmployeeNameDTO employee;
+	protected UserBasicDTO user;
 	protected String title;
 	protected String subtitle;
 	protected Date startDate;
@@ -34,12 +30,9 @@ public abstract class ArticleDTO implements Serializable {
 	protected String body;
 	protected String imagePath;
 	protected ArticleImageDTO image;
-	protected ArticleNotificationTypeEnum notificationType;
 	protected ArticleStatusEnum status;
 	protected boolean directPublish;
 	protected ArticleTagDTO[] tags = {};
-	protected Set<EmployeeBasicDTO> targetEmployees = new LinkedHashSet<>();
-	protected Set<Long> targetOffices = new LinkedHashSet<>();
 	protected Set<ArticleFileDTO> articleFiles = new LinkedHashSet<>();
 	protected Set<ArticleFileDTO> deletedFiles = new LinkedHashSet<>();
 	
@@ -49,16 +42,11 @@ public abstract class ArticleDTO implements Serializable {
 	protected ArticleDTO() { }
 	
 	protected ArticleDTO(final Article article) {
-		this(article.getId(), article.getEmployee(), article.getTitle(), article.getSubtitle(), article.getStartDate(), article.getEndDate(), 
-				article.getBody(), article.getImagePath(), article.getNotificationType(), article.getStatus());
+		this(article.getId(), article.getUser(), article.getTitle(), article.getSubtitle(), article.getStartDate(), article.getEndDate(), 
+				article.getBody(), article.getImagePath(), article.getStatus());
 		this.tags = article.getTags().stream().map(articleTag -> new ArticleTagDTO(articleTag.getPk().getTag().getId(), articleTag.getPk().getTag().getName())).toArray(size -> new ArticleTagDTO[size]); 
 		this.articleFiles = article.getArticleFiles().stream().map(file -> new ArticleFileDTO(file.getId(), file.getFilePath(), file.getArticle().getId())).collect(Collectors.toSet());
 
-		if (article.getTargetEmployees().size() > 0) {
-			this.setTargetEmployees(article.getTargetEmployees().stream().map(targetEmployee -> new EmployeeBasicDTO(targetEmployee.getPk().getEmployee())).collect(Collectors.toSet()));
-		} else {
-			this.setTargetOffices(article.getTargetOffices().stream().map(office -> office.getPk().getOffice().getId()).collect(Collectors.toSet()));
-		}
 	}
 	
 	/**
@@ -74,10 +62,10 @@ public abstract class ArticleDTO implements Serializable {
 	 * @param notificationType
 	 * @param status
 	 */
-	protected ArticleDTO(final Long id,  final Employee employee, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
-			final String imagePath, final ArticleNotificationTypeEnum notificationType, final ArticleStatusEnum status){
-		this(id, title, subtitle, startDate, endDate, body, imagePath, notificationType, status);
-		this.employee = new EmployeeNameDTO(employee.getId(), employee.getFirstName(), employee.getMiddleName(), employee.getLastName());	
+	protected ArticleDTO(final Long id,  final User employee, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
+			final String imagePath, final ArticleStatusEnum status){
+		this(id, title, subtitle, startDate, endDate, body, imagePath, status);
+		this.user = new UserBasicDTO(user.getId(), user.getUsername());	
 	}
 	
 	/**
@@ -93,7 +81,7 @@ public abstract class ArticleDTO implements Serializable {
 	 * @param status
 	 */
 	protected ArticleDTO(final Long id, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
-			final String imagePath, final ArticleNotificationTypeEnum notificationType, final ArticleStatusEnum status){
+			final String imagePath, final ArticleStatusEnum status) {
 		this.id = id;
 		this.title = title;
 		this.subtitle = subtitle;
@@ -101,7 +89,6 @@ public abstract class ArticleDTO implements Serializable {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.imagePath = imagePath;
-		this.notificationType = notificationType;
 		this.status = status;
 	}
 	
@@ -244,34 +231,6 @@ public abstract class ArticleDTO implements Serializable {
 	public void setImage(ArticleImageDTO image) {
 		this.image = image;
 	}
-
-	/**
-	 * @return the {@link ArticleNotificationTypeEnum} value of notification type
-	 */
-	public ArticleNotificationTypeEnum getNotificationType() {
-		return notificationType;
-	}
-
-	/**
-	 * @param notificationType to set
-	 */
-	public void setNotificationType(ArticleNotificationTypeEnum notificationType) {
-		this.notificationType = notificationType;
-	}
-	
-	/**
-	 * @return the {@link ArticleNotificationTypeEnum} value of status
-	 */
-	public ArticleStatusEnum getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status to set
-	 */
-	public void setStatus(ArticleStatusEnum status) {
-		this.status = status;
-	}
 	
 	/**
 	 * @return the {@link Boolean} value of isDirectPublish
@@ -301,47 +260,7 @@ public abstract class ArticleDTO implements Serializable {
 		this.tags = tags;
 	}
 	
-	/**
-	 * @return the {@link Set<Long>} value of the ids of all targeted employees
-	 */
-	public Set<EmployeeBasicDTO> getTargetEmployees() {
-		return targetEmployees;
-	}
 	
-	/**
-	 * @param targetEmployees to set
-	 */
-	public void setTargetEmployees(Set<EmployeeBasicDTO> targetEmployees) {
-		this.targetEmployees = targetEmployees;
-	}
-
-	/**
-	 * @return the {@link Set<Long>} value of the ids of all targeted offices
-	 */
-	public Set<Long> getTargetOffices() {
-		return targetOffices;
-	}
-	
-	/**
-	 * @param targetOffices to set
-	 */
-	public void setTargetOffices(Set<Long> targetOffices) {
-		this.targetOffices = targetOffices;
-	}
-	/**
-	 * @return the {@link EmployeeNameDTO} value of the employee
-	 */
-	public EmployeeNameDTO getEmployee() {
-		return employee;
-	}
-
-	/**
-	 * @param employee to set
-	 */
-	public void setEmployee(EmployeeNameDTO employee) {
-		this.employee = employee;
-	}
-
 	/** 
 	 * @return set of {@link ArticleFileDTO}
 	 */

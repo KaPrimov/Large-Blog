@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import StartEndDateComponent from '../../common/article-metadata/start-end-date.component.jsx';
 import UploadArticleImageContainer from '../../../../common/image-upload/upload-image.container.jsx';
 import DisplayArticleImage from '../../../../common/image-upload/display-article-image.component.jsx';
-import ShowTargetGroupsOrEmployeesContainer from '../../common/article-metadata/manage-target-groups/show-target-groups.container.jsx';
 import {I18n} from 'react-redux-i18n';
 import {Link} from 'react-router';
 import ShortDescriptionComponent from './short-description.component.jsx';
@@ -13,7 +12,6 @@ import ArticleTagsCreationComponent from './article-tag-creation.component.jsx';
 import ShowNotificationType from '../../common/article-metadata/show-notification-type.component.jsx';
 import NewsShowTags from '../../common/article-metadata/news-show-tags.component.jsx';
 import NewsShowDates from '../../common/article-metadata/news-show-dates.components.jsx';
-import ManageArticleTargetGroupsComponent from '../../common/article-metadata/manage-target-groups/manage-target-groups.component.jsx';
 import ArticleShowText from '../../common/article-metadata/article-show-text.component.jsx';
 import * as ArticleStatus from '../../common/article-status.constants';
 import ArticleApi from '../../../../../services/api/article.api';
@@ -28,8 +26,7 @@ export default class MetaDataInputComponent extends React.Component {
 
 	render() {
 		let {startDate, endDate, onStartDateChange, onEndDateChange, selectLocaleForCalendar, currentLocale,
-			formChecker, onSaveHandler, shortDescription, onChange, onRadioButtonChange, radioButtons, onOfficesChange, 
-			offices, checkedOffices, isGroupMarked, onSwitchTargetButtonChange, onChangeSelectedEmployees, checkedEmployees, 
+			formChecker, onSaveHandler, shortDescription, onChange, onRadioButtonChange, radioButtons,
 			onBack, isPublished, singleNews, onNextPublishStep, onCancelPublish} = this.props;
 		return (
 			
@@ -82,27 +79,6 @@ export default class MetaDataInputComponent extends React.Component {
 									titleValue={I18n.t('meta_data_section.tags_title')}
 									subtitleValue={I18n.t('meta_data_section.tags_subtitle')}
 								/>}
-							{isPublished ? 
-								<ShowTargetGroupsOrEmployeesContainer 
-									article={singleNews} 
-									title={I18n.t('meta_data_section.show_groups_title')}
-									subtitle={I18n.t('meta_data_section.show_groups_subtitle')}
-									choosenTargetGroupsTitle={I18n.t('meta_data_section.chosen_target_group_title')}
-									choosenTargetGroupsSubtitle={I18n.t('meta_data_section.chosen_target_group_subtitle')}
-								/>
-								:
-								<ManageArticleTargetGroupsComponent 
-									title={I18n.t('meta_data_section.groups_title')}
-									subtitle={I18n.t('meta_data_section.groups_subtitle')}
-									onOfficesChange={onOfficesChange}
-									offices={offices}
-									checkedOffices={checkedOffices}
-									isGroupMarked={isGroupMarked}
-									onSwitchTargetButtonChange={onSwitchTargetButtonChange}
-									onChangeSelectedEmployees={onChangeSelectedEmployees}
-									checkedEmployees={checkedEmployees}
-								/>
-							}
 							{isPublished ?
 								<ShowNotificationType 
 									type={singleNews.notificationType}

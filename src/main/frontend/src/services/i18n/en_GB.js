@@ -7,7 +7,8 @@ const gb = {
 		blogs: 'Articles',
 		login: 'Login',
 		register: ' Register',
-		admin: 'Admin'
+		admin: 'Admin',
+		news_create: 'Crate news',
 	},
 	register: {
 		label: 'Register',
@@ -55,7 +56,8 @@ const gb = {
 			fill_in_all_required_field: 'Please fill in all mandatory fields',
 			passwords_do_not_match: 'Passwords does not match',
 			user_exists: 'Duplicated usename or password'
-		}
+		},
+		access_error: 'You do not have the needed credentials.',
 	},
 	language_component: {
 		lang: {

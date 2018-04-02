@@ -19,7 +19,7 @@ export default class SecurityAPI {
 	 * get currently logged in user after logged in
 	 */
 	static getLoggedInUser() {
-		return RestService.get('successLogin');
+		return RestService.get('success-login');
 	}
 
 	/**
@@ -33,6 +33,6 @@ export default class SecurityAPI {
 	 * checkm, wheather logged in user exists and returns it, if it does
 	 */
 	static checkLoggedInUser() {
-		return RestService.get('user');
+		return RestService.get('success-login');
 	}
 }

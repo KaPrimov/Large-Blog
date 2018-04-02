@@ -1,15 +1,11 @@
-package com.proxiad.extranet.core.model.article.beans;
+package com.kalin.large.core.model.article.beans;
 
-import com.proxiad.extranet.core.model.article.ArticleFile;
-import com.proxiad.extranet.core.model.temp.TempFileUpload;
 
 /**
  * {@link ArticleFileDTO} beans, contains the <code>articleFileId</code> field, 
  * if the {@link ArticleFile} already exist, or <code>tempFileUploadId</code>,
  * which is the id of new uploaded {@link TempFileUpload}, which should be moved
  * and created as {@link ArticleFile}
- * @author Mihail Merkov
- * @author Kalin Primov
  */
 public class ArticleFileDTO {
 	private Long articleFileId;

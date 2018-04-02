@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import SecurityService from '../../../../services/services/security.service';
+import SecurityService from '../../../services/services/security.service';
 import PropTypes from 'prop-types';
 
 class Authenticated extends React.Component {

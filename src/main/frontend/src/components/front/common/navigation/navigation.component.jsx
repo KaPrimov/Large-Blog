@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {Translate} from 'react-redux-i18n';
 import LanguageContainer from './locale/language.container.jsx';
 import PropTypes from 'prop-types';
-import Authenticated from '../security/authenticated.container.jsx';
+import Authenticated from '../../../common/security/authenticated.container.jsx';
 
 
 const Navigation= ({authenticatedUser, onLogout}) => {
@@ -18,7 +18,10 @@ const Navigation= ({authenticatedUser, onLogout}) => {
 				<div className="collapse navbar-collapse" id="navbarResponsive">
 					<ul className="navbar-nav ml-auto">
 						{authenticatedUser != null && <li className="nav-item">
-							<Link className="nav-link" to="/blog/all"><Translate value="navigation.blogs"/></Link>
+							<Link className="nav-link" to="/article/all"><Translate value="navigation.blogs"/></Link>
+						</li>}
+						{authenticatedUser != null && <li className="nav-item">
+							<Link className="nav-link" to="/articles/news/create"><Translate value="navigation.news_create"/></Link>
 						</li>}
 						{authenticatedUser == null && <li className="nav-item">
 							<Link className="nav-link" to="/users/login"><Translate value="navigation.login"/></Link>

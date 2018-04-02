@@ -7,7 +7,6 @@ import * as newsActions from '../../../../../services/actions/news.actions.js';
 import * as articleActions from '../../../../../services/actions/article.actions.js';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Layout from '../../../../common/layout/layout';
 import _ from 'lodash';
 
 class CreateContentContainer extends React.Component {
@@ -22,12 +21,7 @@ class CreateContentContainer extends React.Component {
 			tempFiles: this.props.tempFiles,
 			deletedFiles: this.props.deletedFiles
 		};
-		this.layout = new Layout();
 		this.bindEventHandlers();
-	}
-
-	componentDidMount() {		
-		this.layout.initFixedSidebar();
 	}
     
 	bindEventHandlers() {
@@ -36,7 +30,6 @@ class CreateContentContainer extends React.Component {
 	}
         
 	componentWillReceiveProps(nextProps) {
-		this.layout.initFixedSidebar();
 		if (nextProps.newsType) {
 			this.setState({isForSave: nextProps.isForSave, newsType: nextProps.newsType});
 		}
@@ -124,7 +117,7 @@ class CreateContentContainer extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		idUser: state.authenticatedUser.userId,
+		idUser: state.authenticatedUser ? state.authenticatedUser.id : null,
 		tempFiles: state.tempFiles,
 		deletedFiles: state.deletedFiles
 	};

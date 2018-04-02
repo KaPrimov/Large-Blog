@@ -7,10 +7,9 @@ export default class SecurityService {
    * Example: access("hasRole[ivan],hasRole[niki],hasPrivilege[menu:create],hasPrivilege[dashboard:all]")
    */
 	static access(authenticatedUser, requiredAuthorities, any) {
-		if (authenticatedUser == null) {
+		if (!authenticatedUser) {
 			return false;
 		}
-
 		if (authenticatedUser.authorities[Configuration.Roles.SUPER_ADMIN] !== undefined) {
 			return true;
 		}
@@ -33,7 +32,6 @@ export default class SecurityService {
 			if (isRole) {
 				let role = this.getArgument(authority);
 				let hasRole = this.hasRole(authenticatedUser, role);
-
 				if (any && hasRole) {
 					hasAccess = true;
 					break;
@@ -73,11 +71,11 @@ export default class SecurityService {
    * Checks the logged user for specific Role
    */
 	static hasRole(authenticatedUser, role) {
-		if (authenticatedUser == null) {
+		if (!authenticatedUser) {
 			return false;
 		}
 
-		if (authenticatedUser.authorities[Configuration.Roles.SUPER_ADMIN] !== undefined) {
+		if (authenticatedUser && authenticatedUser.authorities[Configuration.Roles.SUPER_ADMIN] !== undefined) {
 			return true;
 		}
 
@@ -85,7 +83,7 @@ export default class SecurityService {
 			role = 'ROLE_' + role;
 		}
 
-		if (authenticatedUser.authorities[role] === undefined) {
+		if (authenticatedUser.authorities.map(a => a.toLowerCase()).indexOf(role.toLowerCase()) === -1) {
 			return false;
 		}
 
@@ -96,7 +94,7 @@ export default class SecurityService {
    * Checks the logged user for specific Privilege
    */
 	static hasPrivilege(authenticatedUser, privilegeName, privilegeType) {
-		if (authenticatedUser == null) {
+		if (!authenticatedUser) {
 			return false;
 		}
 

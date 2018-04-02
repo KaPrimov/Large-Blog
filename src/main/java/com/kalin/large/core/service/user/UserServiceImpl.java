@@ -1,5 +1,6 @@
 package com.kalin.large.core.service.user;
 
+import com.kalin.large.core.model.roles.Role;
 import com.kalin.large.core.model.user.User;
 import com.kalin.large.core.model.user.beans.RegisterUserDTO;
 import com.kalin.large.core.model.user.beans.UserFullDTO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -71,7 +73,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserFullDTO getFullUserInfoByUsername(String username) {
         User user = this.userRepository.findFirstByUsername(username);
-        return modelMapper.map(user, UserFullDTO.class);
+        UserFullDTO userDTO = modelMapper.map(user, UserFullDTO.class);
+        userDTO.setAuthorities(user.getAuthorities().stream().map(Role::getAuthority).collect(Collectors.toSet()));
+		return userDTO;
     }
 
     @Override

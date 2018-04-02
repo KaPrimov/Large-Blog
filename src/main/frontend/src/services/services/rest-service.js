@@ -1,6 +1,5 @@
 import jQuery from 'jquery';
 import cookie from 'react-cookie';
-import * as constants from './constants';
 
 /**
  * RestService

@@ -1,11 +1,9 @@
-package com.proxiad.extranet.core.model.article.beans;
+package com.kalin.large.core.model.article.beans;
 
 import java.io.Serializable;
 
 /**
- * Created on 07.12.2017 г.
- *
- * @author Kalin Primov <k.primov@proxiad.com>
+ * Saves th title image for each article
  */
 public class ArticleImageDTO implements Serializable {
 	

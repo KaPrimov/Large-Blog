@@ -68,13 +68,3 @@
         }
     }
 }
-
-@include media-breakpoint-down(sm) {
-    .article-image-container{
-        text-align: center;
-    
-        img {
-            max-width: 100%;
-        }
-    }
-}

@@ -70,14 +70,6 @@
 			overflow-wrap: break-word
 		}
 	}
-
-    @include media-breakpoint-up(sm) {        
-        .article-footer-bar {
-            bottom: 0;
-            position: absolute;
-            width: 100%;
-        }
-    }
     
     a {
         text-decoration: none !important;

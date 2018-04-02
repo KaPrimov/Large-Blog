@@ -9,6 +9,7 @@ const bg = {
 		register: ' Регистрация',
 		admin: 'Администрация',
 		logout: 'Отписване',
+		news_create: 'Създай новина',
 	},
 	register: {
 		label: 'Регистрирайте се',
@@ -55,7 +56,8 @@ const bg = {
 			fill_in_all_required_field: 'Трябва да попълните всички задължителни полета',
 			passwords_do_not_match: 'Паролите не са еднакви',
 			user_exists: 'Имате дупликиран юзърнейм или имейл'
-		}
+		},
+		access_error: 'Нямате необходимите права, за да достигнете тази страница.',
 	},
 	language_component: {
 		lang: {

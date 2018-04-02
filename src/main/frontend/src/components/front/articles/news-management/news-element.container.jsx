@@ -32,7 +32,6 @@ class ArticleElement extends React.Component{
 		}
 		if (this.state.authenticatedUser != nextProps.authenticatedUser) {
 			this.setState({authenticatedUser:nextProps.authenticatedUser});
-			this.setState({hasProfileReadPrivilege: SecurityService.access(this.props.authenticatedUser, 'hasPrivilege[people.profile:read]')});
 		}	
 	}
 

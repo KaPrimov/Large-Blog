@@ -1,12 +1,10 @@
-package com.kalin.large.core.model.articles;
+package com.kalin.large.core.model.article;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * The Class Tag.
- *
- * @author Stoyan Dimitrov
  */
 @Entity
 @Table(name = "TAG")

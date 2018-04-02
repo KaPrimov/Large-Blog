@@ -1,11 +1,10 @@
-package com.kalin.large.core.model.articles;
+package com.kalin.large.core.model.article;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * This entity will manage the parameters as entity 
- * @author Mirela Vlaeva
  */
 @Entity
 @Table(name = "ARTICLE_FILE")

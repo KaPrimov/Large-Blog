@@ -1,11 +1,10 @@
 import React from 'react';
 import {Translate} from 'react-redux-i18n';
-import PopurDatePicker from '../../../../common/form/date-picker/popur-date-picker.component.jsx';
 import PropTypes from 'prop-types';
 import FieldCreationLabelComponent from '../../common/article-metadata/field-creation-label.component.jsx';
 import moment from 'moment';
 
-const NewsShowDates = ({startDate, endDate, selectLocaleForCalendar, title, subtitle, currentLocale}) => {
+const NewsShowDates = ({endDate, title, subtitle, currentLocale}) => {
 	return (
 		<div className="row mx-auto">
 			<FieldCreationLabelComponent

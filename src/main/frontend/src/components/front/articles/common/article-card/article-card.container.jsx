@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ArticleHeader from './article-header.component.jsx';
-import ArticleFooter from './article-footer.component.jsx';
 import {Translate} from 'react-redux-i18n';
-import {Link} from 'react-router';
 
 class ArticleCard extends React.Component{
 	
@@ -25,7 +23,6 @@ class ArticleCard extends React.Component{
 							<Translate value="article_card_page_container_component.read_more"/>
 						</button>
 					</div>
-					<ArticleFooter {...this.props} />
 				</main>
 			</article>
 		);

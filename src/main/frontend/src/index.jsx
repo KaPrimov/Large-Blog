@@ -20,6 +20,7 @@ import {AppContainer} from 'react-hot-loader';
 import '../assets/styles/index.scss';
 import '../assets/js/clean-blog.min.js';
 import '../assets/js/jqBootstrapValidation.min.js';
+import './components/common/wysiwyg-editor/styles/DanteStyles.css';
 
 const store = ConfigureStore();
 const history = syncHistoryWithStore(browserHistory, store);

@@ -12,11 +12,9 @@ public class UserFullDTO {
 
     private String username;
 
-    private String password;
-
     private String email;
 
-    private Set<RoleDTO> authorities;
+    private Set<String> authorities;
 
     public UserFullDTO() {
     }
@@ -37,14 +35,6 @@ public class UserFullDTO {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -53,11 +43,11 @@ public class UserFullDTO {
         this.email = email;
     }
 
-    public Set<RoleDTO> getAuthorities() {
+    public Set<String> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<RoleDTO> authorities) {
+    public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
     }
 }

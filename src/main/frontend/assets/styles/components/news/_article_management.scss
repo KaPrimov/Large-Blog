@@ -268,11 +268,3 @@
     margin: 8px 10px 0 0;
     display: inline-block;
 }
-
-@include media-breakpoint-down(md) {
-    .article-management {
-        #dante-wrapper {
-           padding: 0px;
-        }
-    }
-}

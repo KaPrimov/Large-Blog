@@ -52,7 +52,7 @@ public class AuthenticationAPI {
      * @return userDTO {@link UserFullDTO}
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping(path = "/successLogin")
+    @GetMapping(path = "/success-login")
     public ResponseEntity<UserFullDTO> getLoggedInUser(final Principal principal) {
         return ResponseEntity.ok(this.userService.getFullUserInfoByUsername(principal.getName()));
     }

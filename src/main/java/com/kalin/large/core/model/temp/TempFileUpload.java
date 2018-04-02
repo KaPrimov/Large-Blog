@@ -1,4 +1,4 @@
-package com.proxiad.extranet.core.model.temp;
+package com.kalin.large.core.model.temp;
 
 import java.io.File;
 import java.io.Serializable;
@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 /**
  * This entity will manage the parameters as entity 
- * @author Mirela Vlaeva
  */
 @Entity
 @Table(name = "TEMP_FILE_UPLOAD")

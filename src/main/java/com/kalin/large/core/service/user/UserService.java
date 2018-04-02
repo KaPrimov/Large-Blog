@@ -25,7 +25,7 @@ public interface UserService extends UserDetailsService {
     boolean hasLogin(final String username, final String email);
 
     /**
-     * Finds the user by usernamw
+     * Finds the user by username
      * @param username {@link String}
      * @return userDTO {@link UserFullDTO}
      */

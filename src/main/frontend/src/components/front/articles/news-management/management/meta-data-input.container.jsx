@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {I18n} from 'react-redux-i18n';
 import * as newsActions from '../../../../../services/actions/news.actions.js';
-import * as officeActions from '../../../../../services/actions/office.actions.js';
 import * as articleActions from '../../../../../services/actions/article.actions.js';
 import FormValidatorService from '../../../../../services/services/form-validator.service';
 import MetaDataInputComponent from './meta-data-input.component.jsx';
@@ -348,7 +347,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: bindActionCreators(Object.assign({}, newsActions, officeActions, articleActions), dispatch)
+		actions: bindActionCreators(Object.assign({}, newsActions, articleActions), dispatch)
 	};
 }
 

@@ -1,4 +1,4 @@
-package com.kalin.large.core.model.articles;
+package com.kalin.large.core.model.article;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;

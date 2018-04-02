@@ -4,15 +4,11 @@ import {bindActionCreators} from 'redux';
 import {Translate, I18n} from 'react-redux-i18n';
 import {Link, browserHistory} from 'react-router';
 import * as newsActions from '../../../../services/actions/news.actions';
-import Authenticated from '../../../common/security/authenticated.container.jsx';
 import * as articleActions from '../../../../services/actions/article.actions';
-import Breadcrumb from '../../../common/layout/breadcrumb/breadcrumb.component.jsx';
-import PageTitle from '../../../common/layout/page-title/page-title.component.jsx';
-import Layout from '../../../common/layout/layout';
 import ArticleManagementTabSwitcher from '../common/article-management/article-management-tab-switcher.component.jsx';
 import ArticleManagement from '../common/article-management/article-management-tab.jsx';
 import ArticleManagementTab from '../common/article-management/article-management-tab.component.jsx';
-import ArticleElement from './article-element.container.jsx';
+import ArticleElement from './news-element.container.jsx';
 import NoItemsFound from '../common/article-management/no-items-found.component.jsx';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -36,7 +32,6 @@ class NewsManagementPage extends React.Component {
 
 		this._isMounted = false;
 		
-		this.layout = new Layout();
 		this.onFilterNews = this.onFilterNews.bind(this);
 		this.deleteNews = this.deleteNews.bind(this);
 		this.onEditClickHandler = this.onEditClickHandler.bind(this);
@@ -56,13 +51,11 @@ class NewsManagementPage extends React.Component {
 			}
 		}, 500));
 
-		this.layout.initFixedSidebar();
 		document.title = I18n.t('article_management_container.sub_title');
 		this.setState({activeTab: ArticleStatus.DRAFT});
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.layout.initFixedSidebar();
 		if (this.props.currentLocale !== nextProps.currentLocale) {
 			this.setState({changeLang: !this.state.changeLang}, () => {
 				document.title = I18n.t('article_management_container.sub_title');
@@ -88,8 +81,6 @@ class NewsManagementPage extends React.Component {
 		if (nextProps.activeTab) {
 			this.setState({activeTab: nextProps.activeTab});
 		}
-
-		this.layout.initFixedSidebar();
 	}
 
 	componentWillUnmount() {
@@ -171,18 +162,8 @@ class NewsManagementPage extends React.Component {
 	}
 
 	render() {
-		this.layout = new Layout();
 		return (
 			<section className = "container-fluid" > 
-				<PageTitle mainTitle="article_management_container.main_title" subTitle="article_management_container.sub_title"/> 
-				<article className = "page-bar">
-					<Breadcrumb nodes={this.getBreadCrumbNodes()}/>
-					<div className="toolbar-link pull-right">
-						<Link to={'/news/article/create'} className="text-xs-center btn btn-sm btn-ocustom">
-							<i className="fa fa-pencil"></i> <Translate value="article_management_container.show_editor_label" />
-						</Link>	  
-					</div>
-				</article>
 				<article>
 					<section className="container-fluid">
 						<div className="row">
