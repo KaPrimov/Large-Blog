@@ -30,8 +30,8 @@ export default class MetaDataInputComponent extends React.Component {
 			onBack, isPublished, singleNews, onNextPublishStep, onCancelPublish} = this.props;
 		return (
 			
-			<section className='container create-article-editor'>
-				<div className='row'>
+			<section className='create-article-editor'>
+				<div>
 					<div className='portlet light article-management'>
 						<div className="portlet-title">
 							<span className="caption"><Translate value="article_management_container.meta_data_label" /></span>

@@ -5,7 +5,7 @@ import {Link} from 'react-router';
 
 const PublishArticleComponent = ({singleNews, finish, onRedirectClickHandler}) => {
 	return (
-		<section className='container create-article-editor'>
+		<section className='create-article-editor'>
 			<div className='row'>
 				<div className='portlet light article-management'>
 					<div className="portlet-title">

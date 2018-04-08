@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 const CreateContentComponent = ({onChangeContent, saveHandler, singleNews, bodyPlaceholder, isMetadataButtonHidden}) => {
 	return (
 		<section className="container-fluid" >
-			<section className='container create-article-editor'>
-				<div className='row'>
+			<section className='create-article-editor'>
+				<div>
 					<div className='portlet light article-management' >
 						<div className='article-view-element'>
 							<NewsWysiwygEditor

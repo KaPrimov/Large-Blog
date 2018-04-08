@@ -8,7 +8,7 @@ const gb = {
 		login: 'Login',
 		register: ' Register',
 		admin: 'Admin',
-		news_create: 'Crate news',
+		news_create: 'Create news',
 	},
 	register: {
 		label: 'Register',
@@ -76,7 +76,44 @@ const gb = {
 		login_success: 'Logged in successfully!',
 		login_failed: 'Wrong username or password',
 		logout_success: 'Logged out successfully!'
-	}	
+	},
+	wysiwyg_editor_labels: {
+		add_image: 'Add image',
+		add_video: 'Add video',
+		add_link: 'Add link',
+		add_link_placeholder: 'Paste a link to embed content from another site (e.g. Twitter) and press Enter',
+		add_video_placeholder: 'Paste a YouTube, Vine, Vimeo, or other video link, and press Enter',
+		add_video_caption: 'Type caption for embed (optional)',
+		body_placeholder: 'Write your content here',
+		regulation_body_placeholder: 'Write the regulation here',
+		body_title: 'Title',
+		button_to_metadata: 'Next step',
+		button_save_content: 'Save content',
+		title: 'Insert title',
+		subtitle: 'Insert subtitle (optional)',
+		title_required: 'Title is required',
+		content_required: 'Contents is required',
+		video_embedding_error: 'The video can not be found or the provider does not supports embedded videos.',
+		embedding_error: 'The embedded link can not be found or the provider does not supports it.'
+	},
+	news_creation_wizard_component: {
+		element_content: {
+			data: 'Content',
+			sub: 'Creating content'
+		},
+		element_metadata: {
+			data: 'Metadata',
+			sub: 'Input of metadata',
+			review: 'Review the metadata'
+		},
+		element_publish: {
+			data: 'Publish',
+			sub: 'Publish the article',
+			sub_regulation: 'Publish the regulation',
+			sub_poll: 'Publish the poll',
+			sub_event: 'Publish the event'			
+		}
+	}
 };
 
 export default gb;

@@ -76,7 +76,44 @@ const bg = {
 		login_success: 'Логнахте се успешно!',
 		login_failed: 'Грешно потребителско име или парола!',
 		logout_success: 'Отписахте се успешно!'
-	}
+	},
+	wysiwyg_editor_labels: {
+		add_image: 'Добавете снимка',
+		add_video: 'Добавете видео',
+		add_link: 'Добавете линк',
+		add_link_placeholder: 'Поставете линк за връзка към друг сайт (например Twitter) и настиснете Enter',
+		add_video_placeholder: 'Поставете линк за връзка YouTube, Vimeo или друг виедо линк и настиснете Enter',
+		add_video_caption: 'Въведете подзаглавие (не е задължително)',
+		body_placeholder: 'Напишете съдържание тук',
+		regulation_body_placeholder: 'Напишете регулация тук',
+		body_title: 'Заглавие',
+		button_to_metadata: 'Следващта стъпка',
+		button_save_content: 'Запази съдържанието',
+		title: 'Въведете заглавие тук',
+		subtitle: 'Въведете подзаглавие тук (не е задължително)',
+		title_required: 'Трябва да въведете заглавие',
+		content_required: 'Трябва да въведете текст',
+		video_embedding_error: 'Видеото не може да бъде намерено или сайтът не поддържа вграждане на видеото.',
+		embedding_error: 'Линкът не може да бъде намерен или сайтът не поддържа вграждане на видеото.'
+	},
+	news_creation_wizard_component: {
+		element_content: {
+			data: 'Съдържание',
+			sub: 'Създаване на съдържание'
+		},
+		element_metadata: {
+			data: 'Метадата',
+			sub: 'Въвеждане на метаданни',
+			review: 'Преглед на метаданните'
+		},
+		element_publish: {
+			data: 'Публикуване',
+			sub: 'Публикуване на статията',
+			sub_regulation: 'Публикуване на регулацията',
+			sub_poll: 'Публикуване на анкетата',
+			sub_event: 'Публикуване на събитие'
+		}
+	},
 };
 
 export default bg;

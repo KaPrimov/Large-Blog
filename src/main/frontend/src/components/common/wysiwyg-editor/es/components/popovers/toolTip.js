@@ -109,7 +109,7 @@ var DanteTooltip = function (_React$Component) {
     }
 
     var el = this.refs.dante_menu;
-    var padd = el.offsetWidth / 2;
+    var padd = el.offsetWidth - 40;
 
     var nativeSelection = getSelection(window);
     if (!nativeSelection.rangeCount) {
@@ -127,7 +127,7 @@ var DanteTooltip = function (_React$Component) {
       return;
     }
 
-    var top = selectionBoundary.top - parentBoundary.top - -230 - 5;
+    var top = selectionBoundary.top - parentBoundary.top - 30;
     var left = selectionBoundary.left + selectionBoundary.width / 2 - padd;
 
     if (!top || !left) {

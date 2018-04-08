@@ -959,7 +959,7 @@ var DanteEditor = function (_React$Component) {
               { id: 'editor', className: 'postField postField--body' },
               React.createElement(
                 'section',
-                { className: 'section--first section--last row' },
+                { className: 'section--first section--last' },
                 this.props.config.show_headings && 
                 (this.props.preTitleValue &&
                   React.createElement('h4',

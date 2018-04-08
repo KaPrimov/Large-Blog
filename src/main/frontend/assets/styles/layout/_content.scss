@@ -1,0 +1,354 @@
+/***
+Page content
+***/
+
+/* Page title */
+#proxiad-extranet-app, body {
+	.h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+		font-weight: 300;
+	}
+
+	select.form-control:not([size]):not([multiple]) {
+	    height: inherit;
+	}
+
+	.form-control {
+		padding: 0.3rem 0.5rem;
+    	height: 30px;
+		font-size: 0.8rem;
+		border-radius: 0;
+	}
+}
+
+.page-title {
+	padding: 0px;
+	font-size: 1.3em;
+	line-height: 26px;
+	display: block;
+	color: #641584 !important;
+	margin: 0px 0px 20px 0px;
+	font-family: "Raleway";
+	text-transform: uppercase;
+	font-weight: 700;
+
+	/* subtitle */
+	small {
+		font-size: 0.6em;
+		letter-spacing: 1px;
+		font-weight: 300;
+		color: #2480e2;
+	}
+}
+  	.container-fluid-with-max-width {
+		max-width: 1366px;
+		margin: 0 auto;
+	}
+
+	.main-panel-shadow-effect, .page-bar {
+		margin-bottom: 10px;
+	  background: #fff;
+	  border: 1px solid #e6e9ed;
+	  -webkit-column-break-inside: avoid;
+	  -moz-column-break-inside: avoid;
+	  column-break-inside: avoid;
+	  opacity: 1;
+	  transition: all .2s ease;
+	  box-shadow: -1px 3px 14px -5px rgba(0,0,0,.3);
+	}
+
+/* Page breadcrumb */
+
+.page-bar {
+	padding: 0px;
+	background-color: #ffffff;
+	margin-bottom: 20px;
+
+	@include clearfix();
+
+	.page-breadcrumb {
+		display: inline-block;
+		float: left;
+		padding: 10px 6px;
+		margin: 0;
+		list-style: none;
+		background-color: white;
+		border-radius: none;
+		font-family: 'Open Sans';
+		font-weight: 300;
+
+		> li  {
+			display: inline-block;
+
+			.ie8 & {
+				margin-right: 1px;
+			}
+
+			> a,
+			> span {
+				color: #888;
+				font-size: 13px;
+				text-shadow:none;
+			}
+
+			> i {
+				margin-right: 5px;
+				color: #525252;;
+				font-size: 14px;
+				text-shadow:none;
+			}
+
+			> i[class^="icon-"],
+	        > i[class*="icon-"] {
+	        	color: darken(#999, 5%);
+	        }
+		}
+	}
+
+	.page-toolbar {
+		display: inline-block;
+    margin-right: 10px;
+		float: right;
+
+		.nav-link {
+			line-height: 40px;
+		}
+
+		.btn {
+			min-width: 100px;
+		}
+
+		padding: 0 0 0 10px;
+
+		.dropdown-toggle {
+			&:after {
+				content: none;
+			}
+			i {
+				display: inline-block;
+				margin-top: 5px;
+				margin: 0;
+				font-size: $header-top-menu-user-font-size;
+				font-weight: $header-top-menu-user-font-weight;
+			}
+		}
+		.settings-link {
+			&:after {
+				content: none;
+			}
+			i {
+				display: inline-block;
+				margin-top: 5px;
+				margin: 0;
+				font-size: $header-top-menu-user-font-size;
+				font-weight: $header-top-menu-user-font-weight;
+			}
+		}
+
+		.dropdown-menu {
+			width: 238px;
+			top: inherit;
+			left: inherit;
+			border-radius: 0;
+			right: 23px;
+			margin-top: 7px;
+
+			li {
+				cursor: pointer;
+				padding: 0px 0 0px 0.5rem;
+				border-radius: 0px;
+				font-family: 'Open Sans';
+				font-weight: 300;
+				div {display: block}
+				a {
+					width: 100%;
+					display: block;
+					text-decoration: none;
+					font-size: 12px;
+					color: inherit !important;
+					i {
+						width: 15px;
+						display: inline-block;
+						margin-right: 9px;
+					}
+
+					.tag.tag-pill {
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* Page content */
+
+.page-content {
+	margin-top: 0px;
+	padding: 0px;
+	background-color: #fff;
+	font-family: 'Open Sans';
+	font-size: 0.95em;
+	font-weight: 300;
+
+	.page-container-bg-solid & {
+		background: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+	}
+
+	.page-full-width & {
+		margin-left: 0px !important;
+	}
+}
+
+/* Page content for the settings */
+.page-content-settings{
+  margin-left: 0px;
+  padding: 0px !important;
+  padding-top: 20px !important;
+  background-color: #fff;
+  font-family: 'Open Sans';
+  font-size: 0.95em;
+  font-weight: 300;
+  background: rgb(238, 241, 245);
+}
+
+@include media-breakpoint-up(md) {
+
+	/* Page content */
+	.page-content-wrapper {
+		float: left;
+		width: 100%;
+
+		.page-content {
+			margin-left: $sidebar-width;
+			margin-top: 0px;
+			min-height: $page-content-min-height;
+			padding: 20px 0 100px 0;
+
+			&.no-min-height {
+				min-height: auto;
+			}
+
+			.page-sidebar-fixed.page-sidebar-hover-on & {
+				margin-left: $sidebar-collapsed-width;
+			}
+
+			.page-sidebar-reversed & {
+				margin-left: 0 !important;
+				margin-right: $sidebar-width !important;
+			}
+
+			.page-sidebar-reversed.page-sidebar-fixed.page-sidebar-hover-on & {
+				margin-left: 0;
+				margin-right: $sidebar-collapsed-width;
+			}
+
+			.page-sidebar-reversed.page-sidebar-closed  & {
+				margin-left: 0 !important;
+				margin-right: $sidebar-collapsed-width !important;
+			}
+
+			.page-sidebar-closed  & {
+				margin-left: $sidebar-collapsed-width !important;
+			}
+
+			.page-sidebar-closed.page-sidebar-hide & {
+				margin-left: 0 !important;
+			}
+
+			.page-sidebar-closed.page-sidebar-reversed.page-sidebar-hide & {
+				margin-right: 0 !important;
+			}
+
+			.page-full-width & {
+				margin-left: 0px !important;
+			}
+		}
+
+		.page-content-settings{
+			margin-top: 0px;
+			min-height: $page-content-min-height;
+			padding: 20px 0 50px 0;
+		}
+
+	}
+
+}
+
+@include media-breakpoint-down(sm) {
+
+	/* Boxed page container  */
+	.page-boxed > .container {
+		width: 100%;
+ 		max-width: none !important;
+ 		margin: 0 !important;
+ 		padding: 0 !important;
+ 	}
+
+ 	/* Page content */
+	.page-content-wrapper {
+
+		.page-content {
+			margin: 0px !important;
+			padding: 20px !important;
+			min-height: 280px;
+		}
+
+		.page-content-settings{
+		margin: 0px !important;
+		padding: 20px !important;
+		min-height: 280px;
+		}
+	}
+}
+
+@include media-breakpoint-only(sm) {
+
+	/* Boxed page container */
+	.page-boxed > .container {
+ 		margin: auto !important;
+ 	}
+}
+
+@include media-breakpoint-down(sm) {
+
+	/* Page content */
+	.page-content-wrapper {
+		.page-content {
+			padding: 20px 0px 50px 0px !important;
+			overflow: hidden;
+
+			/* Page title */
+			.page-title {
+				margin-bottom: 15px;
+				font-size: 15px;
+
+				small {
+					font-size: 13px;
+					padding-top: 3px;
+				}
+			}
+
+			.page-bar .page-breadcrumb > li > a, .page-bar .page-breadcrumb > li > span {
+				font-size: 10px;
+			}
+		}
+
+		/* Page content for the settings */
+		.page-content-settings{
+		overflow: hidden;
+		.page-title {
+					margin-bottom: 15px;
+					font-size: 15px;
+
+					small {
+						font-size: 13px;
+						padding-top: 3px;
+					}
+				}
+
+				.page-bar .page-breadcrumb > li > a, .page-bar .page-breadcrumb > li > span {
+					font-size: 10px;
+				}
+		}
+	}
+}

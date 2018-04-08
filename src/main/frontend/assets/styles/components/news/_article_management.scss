@@ -147,7 +147,7 @@
                     }
 
                     .nav-link {
-                        color: #081D4E;
+                        color: #212529;
                     }
                 }
             }
@@ -204,7 +204,10 @@
     .create-metadata-button {
         margin-bottom: 10px;
         margin-top: 20px;
-    } 
+    }
+    .article-management {
+        top: 0!important;
+    }
 }
 
 .meta-data-label {
@@ -267,4 +270,8 @@
 .toolbar-link {
     margin: 8px 10px 0 0;
     display: inline-block;
+}
+
+.portlet .light .article-management {
+    box-shadow: -3px 14px 14px 3px rgba(0, 0, 0, 0.3)!important;
 }

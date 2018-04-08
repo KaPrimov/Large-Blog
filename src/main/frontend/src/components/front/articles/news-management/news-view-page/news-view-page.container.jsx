@@ -76,8 +76,8 @@ class ArticleViewPageContainer extends React.Component {
 	render() {
 		return (
 			<section className="container-fluid" >
-				<section className='container create-article-editor'>
-					<div className='row'>
+				<section className='create-article-editor'>
+					<div>
 						<div className='portlet light article-management'>
 							<div className='article-view-element'>
 								{this.state.articleElement && 

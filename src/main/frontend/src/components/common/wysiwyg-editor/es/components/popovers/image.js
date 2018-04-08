@@ -195,13 +195,13 @@ var DanteImagePopoverItem = function (_React$Component2) {
 
   DanteImagePopoverItem.prototype.render = function render() {
     return null;
-    //  React.createElement( 
-    //   'li',
-    //   {
-    //     className: 'dante-menu-button align-' + this.props.item.type,
-    //     onMouseDown: this.handleClick },
-    //   React.createElement('span', { className: 'tooltip-icon dante-icon-image-' + this.props.item.type })
-    // );
+     React.createElement( 
+      'li',
+      {
+        className: 'dante-menu-button align-' + this.props.item.type,
+        onMouseDown: this.handleClick },
+      React.createElement('span', { className: 'tooltip-icon dante-icon-image-' + this.props.item.type })
+    );
   };
 
   return DanteImagePopoverItem;

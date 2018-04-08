@@ -1,4 +1,5 @@
-@import "theme/theme";
+@import '~bootstrap/scss/bootstrap';
+@import "layout/layout";
 @import "components/components";
 @import "other/other";
-@import "news/news.scss";
+@import "theme/theme";

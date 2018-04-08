@@ -1,0 +1,21 @@
+//## Main Layout CSS Builder
+@import '_mixins';
+@import '_variables'; // theme level variables
+@import '_buttons'; // custom buttons
+@import '_header'; // page header
+@import '_page-container'; // page main container
+@import '_sidebar';  // page sidebar
+@import '_content'; // page consnde
+@import '_footer';   // page footer
+@import '_theme-panel';  // theme customizer panel
+@import '_theme_blue';
+@import '_special_days';
+
+
+html, body, #proxiad-extranet-app, proxiad-extranet-application, #layout, .page-content-wrapper {
+	min-height: 100%;
+}
+
+.page-container {
+	min-height: calc(100% - 130px);
+}

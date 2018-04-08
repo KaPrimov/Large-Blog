@@ -177,7 +177,7 @@ class CreateNewsContainer extends React.Component {
 	render() {
 		return (
 			<section className="container-fluid" >				
-				<section className='container create-article-editor'>
+				<section className='create-article-editor'>
 					{this.state.singleNews.status !== ArticleStatus.PUBLISHED && 
 						<NewsCreationWizard 
 							activeAddContentStep={this.state.activeAddContentStep}

@@ -1,0 +1,32 @@
+.btn-ocustom {
+  color: #7E7F85!important;
+  border-radius: 0;
+  border: 1px solid #7E7F85!important;
+  background: transparent;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  font-size: 12px;
+  margin-right: 5px;
+  z-index: 0 !important;
+
+  &:focus.transparent {
+    color: rgb(35, 35, 37);
+    background-color: transparent;
+  }
+
+  &.no-hover {
+    color: #7E7F85 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  &:hover, &:focus {
+    border-color: rgba(138, 153, 169, 0.35) !important;
+    background: #7E7F85!important;
+    color: #e5e5e5 !important;
+  }
+}
+
+.small-search-btn {
+  font-size: 10px !important;
+}
