@@ -5,7 +5,7 @@ package com.kalin.large.core.model.param;
  *
  */
 public enum ParamName {
-	/** Extranet repository path **/
+	/** Large repository path **/
 	LARGE_REPO_PATH("LARGE_REPO_PATH"),
 	
 	/** Directory with people's data **/

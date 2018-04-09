@@ -4,6 +4,7 @@ import {i18nReducer} from 'react-redux-i18n';
 import localeReducer from './locale.reducer';
 import {authenticatedUserReducer} from './security.reducer';
 import {singleNewsReducer} from './news.reducer';
+import {tempFilesReducer} from './temp-files.reducer';
 import * as ActionTypes from '../actions/action-types.constants';
 
 const appReducer = combineReducers({
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
 	i18n: i18nReducer,
 	authenticatedUser: authenticatedUserReducer,
 	singleNews: singleNewsReducer,
+	tempFiles: tempFilesReducer
 });
 
 const rootReducer = (state, action) => {

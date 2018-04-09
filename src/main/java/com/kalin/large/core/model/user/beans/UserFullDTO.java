@@ -1,8 +1,10 @@
 package com.kalin.large.core.model.user.beans;
 
-import com.kalin.large.core.model.roles.beans.RoleDTO;
+import com.kalin.large.core.model.roles.Role;
+import com.kalin.large.core.model.user.User;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Full user DTO
@@ -17,6 +19,13 @@ public class UserFullDTO {
     private Set<String> authorities;
 
     public UserFullDTO() {
+    }
+
+    public UserFullDTO(User user) {
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.id = user.getId();
+        this.setAuthorities(user.getAuthorities().stream().map(Role::getAuthority).collect(Collectors.toSet()));
     }
 
     public Long getId() {
