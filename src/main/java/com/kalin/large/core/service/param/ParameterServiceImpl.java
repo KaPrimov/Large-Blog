@@ -14,8 +14,12 @@ import org.springframework.stereotype.Service;
 public class ParameterServiceImpl implements ParameterService {
 
 	/*-------------------------------------------------- REPOSITORIES ------------------------------------------------*/
+	private final ParameterRepository parameterRepository;
+
 	@Autowired
-	private ParameterRepository parameterRepository;
+	public ParameterServiceImpl(ParameterRepository parameterRepository) {
+		this.parameterRepository = parameterRepository;
+	}
 
 	/*------------------------------------------------------ API -----------------------------------------------------*/
 	/**

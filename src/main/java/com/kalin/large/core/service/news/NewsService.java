@@ -1,21 +1,16 @@
 package com.kalin.large.core.service.news;
 
-import com.proxiad.extranet.core.model.employee.beans.EmployeeNameDTO;
-import com.proxiad.extranet.core.model.news.News;
-import com.proxiad.extranet.core.model.news.beans.NewsDTO;
-import com.proxiad.extranet.core.model.news.beans.NewsFilterCriteria;
-import com.proxiad.extranet.core.service.exception.BusinessLogicException;
+
+import com.kalin.large.core.model.news.News;
+import com.kalin.large.core.model.news.beans.NewsDTO;
+import com.kalin.large.core.model.user.beans.UserBasicDTO;
+import com.kalin.large.core.service.exception.BusinessLogicException;
 
 import java.util.Date;
 import java.util.Set;
 
 /**
  * News service
- * 
- * @author Mirela Vlaeva
- * @author Iliya Naydenov
- * @author Mihail Merkov
- * @author Kalin Primov
  */
 public interface NewsService {
 	/*---------------------------------------------------- CONSTANTS --------------------------------------------------*/
@@ -26,7 +21,7 @@ public interface NewsService {
 	 * Get ordered list of all articles.
 	 * @return {@link Set} of {@link News}s
 	 */
-	Set<NewsDTO> listAllNewsOfLoggedInUser();	
+	Set<NewsDTO> listAllNewsOfLoggedInUser();
 	
 	/**
      * Return a {@link News} by its <code>id</code>
@@ -37,20 +32,20 @@ public interface NewsService {
 	
     /**
      * Delete specific {@link News} by its id
-     * @param articleId the id of desired {@link News}
+     * @param newsId the id of desired {@link News}
      */
     void deleteNews(final Long newsId) throws BusinessLogicException;
     
     /**
      * List all employees who have read a news by its id
-     * @param articleId
-     * @return {@link Set} of {@link EmployeeNameDTO}s
+     * @param articleId {@link Long}
+     * @return {@link Set} of {@link UserBasicDTO}s
      */
-    Set<EmployeeNameDTO> listSeenByEmployees(final Long articleId);
+    Set<UserBasicDTO> listSeenByEmployees(final Long articleId);
     
     /**
      * Saves or updates the content of news
-     * @param newsDTO
+     * @param newsDTO {@link NewsDTO}
      * @return newsId {@link Long} of the newly created/updated news
      * @throws BusinessLogicException
      */
@@ -58,7 +53,7 @@ public interface NewsService {
     
     /**
      * Modifies only the metadata of the news
-     * @param newsDTO
+	 * @param newsDTO {@link NewsDTO}
      * @return newsId {@link Long} of the news
      * @throws BusinessLogicException
      */
@@ -66,18 +61,15 @@ public interface NewsService {
     
     /**
      * Publish the given {@link News}
-     * @param newsId
-     * @throws BusinessLogicException
+     * @param newsId {@link NewsDTO}
      */
     boolean publish(final Long newsId) throws BusinessLogicException;
 
 	  /**
      * Generate list of news which are published, current (current date is in their range) and which 
      * target groups correspond to the logged user ( either employee or subsidiary target groups)
-	 * @param filterCriteria 
-     * @throws BusinessLogicException
      */
-	Set<NewsDTO> listCurrentNews(final NewsFilterCriteria filterCriteria) throws BusinessLogicException;
+	Set<NewsDTO> listCurrentNews() throws BusinessLogicException;
 
 	/**
      * mark the {@link News} with articleId as seen by the current user who visits it
@@ -87,8 +79,7 @@ public interface NewsService {
 	
 	/**
 	 * Publishes all news with status PENDING_PUBLISHING and today's start date
-	 * @param currentDate
-	 * @throws BusinessLogicException 
+	 * @param currentDate {@link Date}
 	 */
 	void publishPendingNews(final Date currentDate) throws BusinessLogicException;
 }

@@ -431,12 +431,10 @@ var ImageBlock = function (_React$Component) {
 }(React.Component);
 
 function mapStateToProps(state) {
-	let article = state.createNews;
-	if (state.createNews.id) {
-		article = state.createNews;
-	} else if (state.regulation.id) {
-		article = state.regulation;
-	}
+	let article = state.singleNews;
+	if (state.singleNews.id) {
+		article = state.singleNews;
+	} 
 	return {
 		singleArticle: article
 	};

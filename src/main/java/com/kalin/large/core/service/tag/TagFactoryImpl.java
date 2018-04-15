@@ -1,10 +1,10 @@
 package com.kalin.large.core.service.tag;
 
-import com.proxiad.extranet.core.model.article.Article;
-import com.proxiad.extranet.core.model.article.ArticleTag;
-import com.proxiad.extranet.core.model.article.ArticleTagId;
-import com.proxiad.extranet.core.model.article.Tag;
-import com.proxiad.extranet.core.model.article.beans.ArticleTagDTO;
+import com.kalin.large.core.model.article.Article;
+import com.kalin.large.core.model.article.ArticleTag;
+import com.kalin.large.core.model.article.ArticleTagId;
+import com.kalin.large.core.model.article.Tag;
+import com.kalin.large.core.model.article.beans.ArticleTagDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +17,7 @@ import java.util.Collection;
  */
 @Component
 public class TagFactoryImpl implements TagFactory {
-	
-	/**
-	 * @see com.proxiad.extranet.core.service.tag.TagFactory#createFrom(tag, article)
-	 */
+
 	@Override
 	public ArticleTag createFrom(Tag tag, Article article) {
 		ArticleTag articleTag = new ArticleTag();
@@ -30,20 +27,12 @@ public class TagFactoryImpl implements TagFactory {
 		articleTag.setPk(articleTagId);
 		return articleTag;
 	}
-
-	/**
-	 * @see com.proxiad.extranet.core.service.tag.TagFactory#createFrom(name)
-	 */
 	@Override
 	public Tag createFrom(String name) {
 		Tag tag = new Tag();
 		tag.setName(formatTagName(name));
 		return tag;
 	}
-	
-	/**
-	 * {@link com.proxiad.extranet.core.service.tag.TagFactory#createArticleTagDTOsFromCollection(Collection)}
-	 */
 	@Override
 	public ArticleTagDTO[] createArticleTagDTOsFromCollection(Collection<ArticleTag> tags) {
 		ArticleTagDTO[] articleTagDTOs = new ArticleTagDTO[tags.size()];

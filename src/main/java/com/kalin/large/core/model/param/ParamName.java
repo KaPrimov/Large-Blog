@@ -12,7 +12,10 @@ public enum ParamName {
 	PEOPLE_DATA_PATH("PEOPLE_DATA_PATH"),
 
 	/** Directory for storage of temp files*/
-	TEMP_FILE_PATH("TEMP_FILE_PATH");
+	TEMP_FILE_PATH("TEMP_FILE_PATH"),
+
+	/** Directory for storage of temp files*/
+	NEWS_DATA_PATH("NEWS_DATA_PATH");
 
 	private String paramName;
 	

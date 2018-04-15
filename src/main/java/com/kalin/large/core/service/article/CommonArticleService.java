@@ -22,7 +22,7 @@ public interface CommonArticleService {
     /**
      * List all tags per article by its id
      * @param articleId
-     * @return {@link Set} of {@link TagDTO}s
+     * @return {@link Set} of {@link Tag}s
      */
     Set<Tag> findAllTagsFor(final Long articleId);
     

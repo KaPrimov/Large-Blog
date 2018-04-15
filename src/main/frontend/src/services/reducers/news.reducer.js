@@ -5,7 +5,9 @@ import * as ActionTypes from '../actions/action-types.constants';
  */
 function initializeStates() {
 	return {
-		singleNews: {},
+		singleNews: {
+			articleFiles: []
+		},
 	};
 }
 

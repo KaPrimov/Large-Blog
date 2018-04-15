@@ -54,12 +54,34 @@ public interface ErrorCode {
 	 * Error codes for DocumentService
 	 */
 	interface DocumentService {
-		int EMPLOYEE_DOCUMENT_NOT_FOUND = 500;
 		int CANT_WRITE_FILE 	= 501;
 		int CANT_READ_FILE 		= 502;
 		int FILE_ACCESS_PROBLEM	= 503;
 		int DOCUMENT_NOT_FOUND  = 504;
 		int CANT_DELETE_DIRECTORY = 505;
 	}
+	/**
+	 * Error codes for NewsService
+	 */
+	interface News {
+		int NEWS_NOT_FOUND = 2600;
+		int NEWS_IS_IN_USE = 2601;
+		int FILE_ACCESS_DENIED = 2602;
+		int ID_REQUIRED_FIELD = 2603;
+		int DESCRIPTION_LENGTH_TOO_LONG = 2604;
+		int DESCRIPTION_LENGTH_TOO_SHORT = 2605;
+		int DESCRIPTION_REQUIRED_FIELD = 2606;
+	}
 
+	/**
+	 * Error codes for EmployeeService
+	 */
+	interface UserService {
+		int FILE_ACCESS_DENIED 						= 600;
+		int USER_DOES_NOT_EXISTS		   	 	= 601;
+		int CANT_DELETE_USER					= 602;
+		int CANT_DELETE_CURRENT_USER				= 603;
+		int FILE_IS_NOT_A_PICTURE 	= 604;
+		int SUBSIDIARY_DIRECTOR_ALREADY_EXISTS 		= 605;
+	}
 }

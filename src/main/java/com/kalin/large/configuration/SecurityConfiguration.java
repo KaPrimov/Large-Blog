@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        .and()
 	        .authorizeRequests()
 	        .antMatchers("/api/users/register").permitAll()
-	        .antMatchers("/api/**").authenticated()
+	        .antMatchers("/api/**").permitAll()
 	        .and()
             .headers().cacheControl().disable().addHeaderWriter(new CacheControlHeaderWriter()).and()
 	        .formLogin().permitAll()

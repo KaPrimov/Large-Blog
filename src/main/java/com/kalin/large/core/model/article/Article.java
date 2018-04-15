@@ -31,20 +31,20 @@ public abstract class Article implements Serializable {
         @Column(name = "TITLE", nullable = false)
         private String title;
 
-        @Column(name = "SUBTITLE", nullable = true)
+        @Column(name = "SUBTITLE")
         private String subtitle;
 
-        @Column(name = "START_DATE", nullable = false)
+        @Column(name = "START_DATE")
         private Date startDate;
 
-        @Column(name = "END_DATE", nullable = false)
+        @Column(name = "END_DATE")
         private Date endDate;
 
         @Column(name = "BODY", nullable = false)
         @Type(type="text")
         private String body;
 
-        @Column(name = "IMAGE_PATH", nullable = true)
+        @Column(name = "IMAGE_PATH")
         private String imagePath;
         
         @Column(name = "PINNED", nullable = false)

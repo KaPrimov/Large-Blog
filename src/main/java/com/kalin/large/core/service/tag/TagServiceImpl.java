@@ -17,14 +17,19 @@ import java.util.Set;
  *
  */
 @Service
+@Transactional
 public class TagServiceImpl implements TagService {
 	/*---------------------------------------------------- Factories -------------------------------------------------*/
-	@Autowired
-	private TagFactory tagFactory;
+	private final TagFactory tagFactory;
 	/*-------------------------------------------------- REPOSITORIES ------------------------------------------------*/
+	private final TagRepository tagRepository;
+
 	@Autowired
-	private TagRepository tagRepository;
-	
+	public TagServiceImpl(TagFactory tagFactory, TagRepository tagRepository) {
+		this.tagFactory = tagFactory;
+		this.tagRepository = tagRepository;
+	}
+
 	/**
 	 * Gets the tag with name
 	 * @param {@link String} title
@@ -32,14 +37,12 @@ public class TagServiceImpl implements TagService {
 	 */
 	@Override
 	public Tag getTagByName(final String name) {
-		return tagRepository.getTagByName(name);
+		return tagRepository.findFirstByName(name);
 	}
 	
 	/**
-	 * Creates Tag by given {@link ArticleTagDTO}
-	 * @return {@link Tag}
+	 * @see com.kalin.large.core.service.tag.TagService#createTag(ArticleTagDTO[])
 	 */
-	@Transactional
 	@Override
 	public Set<Tag> createTag(final ArticleTagDTO[] tagsDTO) throws DataIntegrityViolationException {
 		Set<Tag> validatedTags = new HashSet<Tag>();
@@ -54,12 +57,13 @@ public class TagServiceImpl implements TagService {
 					validatedTags.add(newTag);
 				}
 			} else {
-				resultTags.add(tagRepository.get(articleTagDTO.getId()));
+				resultTags.add(tagRepository.getOne(articleTagDTO.getId()));
 			}
 		}
 
 		for(Tag newTag : validatedTags) {
-			if(!tagRepository.tagExists(newTag.getName())) {
+			Tag isTagPresent = tagRepository.findFirstByName(newTag.getName());
+			if(isTagPresent == null) {
 				tagRepository.save(newTag);
 				resultTags.add(getTagByName(newTag.getName()));
 			}
@@ -70,13 +74,13 @@ public class TagServiceImpl implements TagService {
 	
 
 	/**
-	 * @see com.proxiad.extranet.core.service.tag.TagService#searchArticleTagByName(String tagName)
+	 * @see com.kalin.large.core.service.tag.TagService#searchArticleTagByName(String tagName)
 	 */
 	@Override
 	public Set<ArticleTagDTO> searchArticleTagByName(String tagName) {
 		Set<ArticleTagDTO> tags = new HashSet<>();
 		if(tagName != null && !tagName.isEmpty()){
-			tags = tagRepository.searchArticleTagsByName(tagName);
+			tags = tagRepository.searchArticleTagsByName("%" + tagName + "%");
 		}
 		return tags;
 	}

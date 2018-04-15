@@ -1,7 +1,7 @@
 package com.kalin.large.core.service.tag;
 
-import com.proxiad.extranet.core.model.article.Tag;
-import com.proxiad.extranet.core.model.article.beans.ArticleTagDTO;
+import com.kalin.large.core.model.article.Tag;
+import com.kalin.large.core.model.article.beans.ArticleTagDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Set;

@@ -110,7 +110,7 @@ UploadArticleImageContainer.propTypes = {
 
 function mapStateToProps(state) {
 	return {
-		currentNews: state.createNews,
+		currentNews: state.singleNews,
 		currentLocale: state.currentLocale
 	};
 }

@@ -29,25 +29,12 @@ class MetaDataInputContainer extends React.Component {
 					'startDate': true, 'endDate': true, 'shortDescription': true
 				}
 			},
-			offices: [],
-			checkedOffices: this.props.currentNews.targetOffices || [],
-			checkedEmployees: this.props.currentNews.targetEmployees || [],
 			isGroupMarked: (this.props.currentNews.targetEmployees && this.props.currentNews.targetEmployees.length) > 0 ? false : true
 		};
 		this.radioButtons = [{value: 'WEB', option: I18n.t('meta_data_section.radio_button.options.web'), dataTip: I18n.t('meta_data_section.radio_button.tooltips.web')},
 			{value: 'MAIL', option: I18n.t('meta_data_section.radio_button.options.mail'), dataTip: I18n.t('meta_data_section.radio_button.tooltips.mail')}, 
 			{value: 'ALL', option: I18n.t('meta_data_section.radio_button.options.all'), dataTip: I18n.t('meta_data_section.radio_button.tooltips.all')}];
 		this.bindEventHandlers();
-	}
-	
-	componentDidMount() {
-		this.props.actions.listAllOffices().then(() => {
-			this.validateForm(null, null, true).then(() => {	
-				if (this.state.currentNews.isForPublish) {
-					this.onNextPublishStep();
-				}
-			});
-		});
 	}
 	
 	componentWillReceiveProps(nextProps) {
@@ -61,18 +48,6 @@ class MetaDataInputContainer extends React.Component {
 		if (!(_.isEmpty(_.xor(this.state.checkedTags, nextProps.checkedTags)))) {
 			this.setState({checkedTags: nextProps.checkedTags});
 		}
-		
-		if (this.state.offices !== nextProps.offices) {
-			this.setState({offices: nextProps.offices});
-		}
-		
-		if (this.state.employees !== nextProps.employees) {
-			this.setState({employees:nextProps.employees});
-		}
-		
-		if (this.state.checkedEmployees !== nextProps.checkedEmployees && nextProps.checkedEmployees != undefined) {
-			this.setState({checkedEmployees:nextProps.checkedEmployees});
-		}
 	}
 	
 	bindEventHandlers() {
@@ -81,39 +56,9 @@ class MetaDataInputContainer extends React.Component {
 		this.onEndDateChange = this.onEndDateChange.bind(this);
 		this.onSaveHandler = this.onSaveHandler.bind(this);
 		this.onChange = this.onChange.bind(this);
-		this.onRadioButtonChange = this.onRadioButtonChange.bind(this);
-		this.onOfficesChange = this.onOfficesChange.bind(this);
-		this.onChangeSelectedEmployees = this.onChangeSelectedEmployees.bind(this);
-		this.onSwitchTargetButtonChange = this.onSwitchTargetButtonChange.bind(this);
 		this.generateNewsToSave = this.generateNewsToSave.bind(this);
 		this.onNextPublishStep = this.onNextPublishStep.bind(this);
 		this.onCancelPublish = this.onCancelPublish.bind(this);
-	}
-
-	onChangeSelectedEmployees(newSelectedEmployees) {
-		this.setState({checkedEmployees: newSelectedEmployees});
-	}
-
-	onOfficesChange(offices) {
-		this.setState({checkedOffices: offices});
-	}
-
-	onSwitchTargetButtonChange(type) {
-		if(type === 'offices' && this.state.isGroupMarked) {
-			return;
-		} else if (type === 'employees' && !this.state.isGroupMarked) {
-			return;
-		}
-		ModalService.showConfirm(I18n.t('meta_data_section.modal_message'), I18n.t('meta_data_section.modal_title')).then(result => {
-			if (result) {
-				if (type === 'offices') {
-					this.setState({checkedEmployees: [], isGroupMarked: true});
-				} else if (type === 'employees') {
-					this.setState({checkedOffices: [], isGroupMarked: false});
-				}
-			}
-		});
-		
 	}
 
 	validateForm(field, silent, hardCheck) {
@@ -216,18 +161,12 @@ class MetaDataInputContainer extends React.Component {
 	}
 
 	generateNewsToSave() {
-		if(this.state.checkedEmployees.length === 0 && this.state.checkedOffices.length === 0) {
-			NotificationService.notifyError(I18n.t('meta_data_section.errors.target_group_required'));
-			return;
-		}
 		let newsToSave = Object.assign({}, this.state.currentNews);
 		newsToSave.startDate = this.state.startDate;
 		newsToSave.endDate = this.state.endDate;
 		newsToSave.shortDescription = this.state.shortDescription;
 		newsToSave.tags = this.state.checkedTags || [];
 		newsToSave.notificationType = newsToSave.notificationType ? newsToSave.notificationType : 'WEB'; 
-		newsToSave.targetEmployees = this.state.checkedEmployees.length !== 0 ? this.state.checkedEmployees : this.state.currentNews.targetEmployees;
-		newsToSave.targetOffices = this.state.checkedOffices.length !== 0 ? this.state.checkedOffices : this.state.currentNews.targetOffices;
 		return newsToSave;
 	}
 
@@ -314,12 +253,6 @@ class MetaDataInputContainer extends React.Component {
 				formChecker={this.state.formChecker}
 				onSaveHandler={this.onSaveHandler}
 				onRadioButtonChange={this.onRadioButtonChange}
-				onOfficesChange={this.onOfficesChange}
-				radioButtons={this.radioButtons}
-				offices={this.state.offices}
-				checkedOffices={this.state.checkedOffices}
-				onChangeSelectedEmployees={this.onChangeSelectedEmployees}
-				checkedEmployees={this.state.checkedEmployees}
 				isGroupMarked={this.state.isGroupMarked}
 				onSwitchTargetButtonChange={this.onSwitchTargetButtonChange}
 				onBack={this.props.onBack}
@@ -334,14 +267,11 @@ class MetaDataInputContainer extends React.Component {
 	}
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
 	return {
-		currentNews: state.createNews,
+		currentNews: state.singleNews,
 		currentLocale: state.currentLocale,
 		checkedTags: state.suggestedTags.checkedTags,
-		offices: state.offices,
-		employees: state.employees,
-		checkedEmployees: ownProps.checkedEmployees
 	};
 }
 
@@ -355,10 +285,7 @@ MetaDataInputContainer.propTypes = {
 	currentNews: PropTypes.object.isRequired,
 	currentLocale: PropTypes.object.isRequired,
 	onBack: PropTypes.func.isRequired,
-	checkedTags: PropTypes.array,
-	offices: PropTypes.array,
-	employees: PropTypes.array,
-	checkedEmployees: PropTypes.array
+	checkedTags: PropTypes.array
 };
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(MetaDataInputContainer);

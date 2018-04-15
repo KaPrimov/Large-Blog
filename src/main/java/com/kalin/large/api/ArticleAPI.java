@@ -1,12 +1,12 @@
 package com.kalin.large.api;
 
-import com.proxiad.extranet.api.exception.ElementNotFound;
-import com.proxiad.extranet.core.model.article.Article;
-import com.proxiad.extranet.core.model.article.ArticleFile;
-import com.proxiad.extranet.core.model.article.Tag;
-import com.proxiad.extranet.core.service.article.CommonArticleService;
-import com.proxiad.extranet.core.service.error.ErrorCode;
-import com.proxiad.extranet.core.service.exception.BusinessLogicException;
+import com.kalin.large.core.model.article.Article;
+import com.kalin.large.core.model.article.ArticleFile;
+import com.kalin.large.core.model.article.Tag;
+import com.kalin.large.core.service.article.CommonArticleService;
+import com.kalin.large.core.service.error.ErrorCode;
+import com.kalin.large.core.service.exception.BusinessLogicException;
+import com.kalin.large.core.service.exception.ElementNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class ArticleAPI {
 	/**
 	 * List all tags per {@link Article} by its id
 	 * @param id of {@link Article}
-	 * @return {@link Set<TagDTO>}
+	 * @return {@link Set<Tag>}
 	 */
 	@GetMapping(path="/{id}/tags", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Set<Tag>> listAllTagsPerArticle(@PathVariable final Long id) {

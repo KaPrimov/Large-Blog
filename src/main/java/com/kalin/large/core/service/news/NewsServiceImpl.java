@@ -3,25 +3,22 @@
  */
 package com.kalin.large.core.service.news;
 
-import com.proxiad.extranet.core.helpers.io.ProxiadExtranetFileUtil;
-import com.proxiad.extranet.core.model.article.beans.ArticleFileDTO;
-import com.proxiad.extranet.core.model.employee.Employee;
-import com.proxiad.extranet.core.model.employee.beans.EmployeeNameDTO;
-import com.proxiad.extranet.core.model.news.News;
-import com.proxiad.extranet.core.model.news.beans.NewsDTO;
-import com.proxiad.extranet.core.model.news.beans.NewsFilterCriteria;
-import com.proxiad.extranet.core.model.notification.WebNotificationTypeEnum;
-import com.proxiad.extranet.core.model.param.ParamName;
-import com.proxiad.extranet.core.repository.employee.EmployeeDao;
-import com.proxiad.extranet.core.repository.news.NewsDao;
-import com.proxiad.extranet.core.repository.news.NewsSeenByDao;
-import com.proxiad.extranet.core.service.article.CommonArticleService;
-import com.proxiad.extranet.core.service.error.ErrorCode;
-import com.proxiad.extranet.core.service.exception.BusinessLogicException;
-import com.proxiad.extranet.core.service.messenger.ExtranetMessengerService;
-import com.proxiad.extranet.core.service.notification.WebNotificationService;
-import com.proxiad.extranet.core.service.param.ParameterService;
-import com.proxiad.extranet.core.service.security.SecurityService;
+import com.kalin.large.core.helpers.io.LargeFileUtil;
+import com.kalin.large.core.model.article.beans.ArticleFileDTO;
+import com.kalin.large.core.model.news.News;
+import com.kalin.large.core.model.news.beans.NewsDTO;
+import com.kalin.large.core.model.news.beans.NewsFilterCriteria;
+import com.kalin.large.core.model.param.ParamName;
+import com.kalin.large.core.model.user.User;
+import com.kalin.large.core.model.user.beans.UserBasicDTO;
+import com.kalin.large.core.repository.news.NewsRepository;
+import com.kalin.large.core.repository.news.NewsSeenByRepository;
+import com.kalin.large.core.repository.user.UserRepository;
+import com.kalin.large.core.service.article.CommonArticleService;
+import com.kalin.large.core.service.error.ErrorCode;
+import com.kalin.large.core.service.exception.BusinessLogicException;
+import com.kalin.large.core.service.param.ParameterService;
+import com.kalin.large.core.service.security.SecurityService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -30,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 /**
@@ -39,6 +36,7 @@ import java.util.stream.Collectors;
  *
  */
 @Service
+@Transactional
 public class NewsServiceImpl implements NewsService {
 	
 	/*--------------------------------------------------- CONSTANTS --------------------------------------------------*/
@@ -50,85 +48,83 @@ public class NewsServiceImpl implements NewsService {
 	private static final int MINIMUM_DESCRIPTION_LENGTH = 20;
 
 	/*-------------------------------------------------- REPOSITORIES ------------------------------------------------*/
-	@Autowired
-	private NewsDao newsDao;
-	
-	@Autowired
-	private NewsSeenByDao newsSeenByDao;
-	
-	@Autowired
-	private EmployeeDao employeeDao;
+
+	private final NewsRepository newsRepository;
+
+	private final NewsSeenByRepository newsSeenByRepository;
+
+	private final UserRepository userRepository;
 	
 	/*---------------------------------------------------- SERVICES --------------------------------------------------*/
-	
-	@Autowired
-	private CommonArticleService commonArticleService;
-	
-	@Autowired
-	private WebNotificationService webNotificationService;
-	
-	@Autowired
-	private ExtranetMessengerService extranetMessengerService;
-	
-	@Autowired
-	private SecurityService securityService;
-	
-	@Autowired
-	private ParameterService parameterService;
+
+	private final CommonArticleService commonArticleService;
+
+	private final SecurityService securityService;
+
+	private final ParameterService parameterService;
 		
 	/*--------------------------------------------------- FACTORIES --------------------------------------------------*/
+
+	private final NewsFactory newsFactory;
+
 	@Autowired
-	private NewsFactory newsFactory;
+	public NewsServiceImpl(NewsRepository newsRepository, NewsSeenByRepository newsSeenByRepository, UserRepository userRepository, CommonArticleService commonArticleService, SecurityService securityService, ParameterService parameterService, NewsFactory newsFactory) {
+		this.newsRepository = newsRepository;
+		this.newsSeenByRepository = newsSeenByRepository;
+		this.userRepository = userRepository;
+		this.commonArticleService = commonArticleService;
+		this.securityService = securityService;
+		this.parameterService = parameterService;
+		this.newsFactory = newsFactory;
+	}
 
 	/*------------------------------------------------------ API -----------------------------------------------------*/
 	/**
-	 * @see com.proxiad.extranet.core.service.news.NewsService#listAllNewsOfLoggedInUser()
+	 * @see com.kalin.large.core.service.news.NewsService#listAllNewsOfLoggedInUser()
 	 */
 	@Override
 	public Set<NewsDTO> listAllNewsOfLoggedInUser() {
-		return newsDao.listAllOrderByTitleBy(securityService.getLoggedInUser().getUserId());
+		return newsRepository.listAllOrderByTitleBy(securityService.getLoggedInUser().getId());
 	}
 	
 	/**
 	 * @throws BusinessLogicException 
-	 * @see com.proxiad.extranet.core.service.news.NewsService#load(Long)
+	 * @see com.kalin.large.core.service.news.NewsService#load(Long)
 	 */
 	@Override
 	public NewsDTO load(final Long id) throws BusinessLogicException {
 		if(id == null){
-			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id: " + id);
+			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "Specify id for the news");
 		}
 
-		News news = newsDao.get(id);
+		Optional<News> newsOptional = newsRepository.findById(id);
 
-		if(news == null) {
+		if(!newsOptional.isPresent()) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id: " + id);
 		}
-
-		return newsFactory.createFrom(news);
+		return newsFactory.createFrom(newsOptional.get());
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.client.NewsService#deleteNews(Long)
+	 * @see com.kalin.large.core.service.news.NewsService#deleteNews(Long)
 	 */
 	@Transactional(rollbackFor = BusinessLogicException.class)
 	@Override
 	public void deleteNews(final Long newsId) throws DataIntegrityViolationException, BusinessLogicException {
-		News news = newsDao.get(newsId);
-		File newsPath = new File(parameterService.getGlobalParamAsString(ParamName.EXTRANET_REPO_PATH),parameterService.getGlobalParamAsString(ParamName.NEWS_DATA_PATH));
-		ProxiadExtranetFileUtil.deleteDirectory(new File(newsPath.getAbsolutePath(), newsId.toString()));
-		if(news == null){
+		Optional<News> optionalNews = this.newsRepository.findById(newsId);
+		File newsPath = new File(parameterService.getGlobalParamAsString(ParamName.LARGE_REPO_PATH),parameterService.getGlobalParamAsString(ParamName.PEOPLE_DATA_PATH));
+		LargeFileUtil.deleteDirectory(new File(newsPath.getAbsolutePath(), newsId.toString()));
+		if(!optionalNews.isPresent()){
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsId);
 		}
 
-		newsDao.delete(news);
+		newsRepository.delete(optionalNews.get());
 	}
 
 	/**
 	 * Check whether the news is for save or for update
 	 */
 	@Override
-	@Transactional
 	public Long saveOrUpdateNewsContent(final NewsDTO newsDTO) throws BusinessLogicException {
 		return newsDTO.getId() == null ? storeNews(newsDTO) : updateNewsContent(newsDTO);
 	}
@@ -137,78 +133,74 @@ public class NewsServiceImpl implements NewsService {
 	 * Updates the metadata of news
 	 */
 	@Override
-	@Transactional
 	public Long updateNewsMetadata(final NewsDTO newsDTO) throws BusinessLogicException {
-		News news = newsDao.get(newsDTO.getId());
+		Optional<News> optionalNews = newsRepository.findById(newsDTO.getId());
 
-		if(news == null){
+		if(!optionalNews.isPresent()){
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsDTO.getId());
 		}
+		News news = optionalNews.get();
 		if (newsDTO.getImage() != null) {
 			commonArticleService.updateArticleImage(news, newsDTO.getImage());
 		}
 		commonArticleService.updateArticleTags(news, newsDTO.getTags());
-		Set<Long> employeeIds = newsDTO.getTargetEmployees().stream().mapToLong(employee -> employee.getId()).boxed().collect(Collectors.toSet());
-		commonArticleService.updateArticleTargetGroup(news, employeeIds, newsDTO.getTargetOffices());
-		commonArticleService.updateNotificationType(news, newsDTO.getNotificationType());
+
 		commonArticleService.updateDates(news, newsDTO.getStartDate(), newsDTO.getEndDate());
 		updateDescription(news, newsDTO.getShortDescription());
 
-		newsDao.update(news);
+		newsRepository.saveAndFlush(news);
 
 		return news.getId();
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.news.NewsService#publish(Long)
+	 * @see com.kalin.large.core.service.news.NewsService#publish(Long)
 	 */
 	@Override
-	@Transactional
 	public boolean publish(final Long newsId) throws BusinessLogicException {
-		News news = newsDao.get(newsId);
+		Optional<News> optionalNews = newsRepository.findById(newsId);
 
-		if(news == null){
+		if(!optionalNews.isPresent()){
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsId);
 		}
-
+		News news = optionalNews.get();
 		commonArticleService.validateArticleForPublish(news);
 		validateNews(news);
 		return commonArticleService.updateStatus(news);
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.news.NewsService#listSeenByEmployees(Long)
+	 * @see com.kalin.large.core.service.news.NewsService#listSeenByEmployees(Long)
 	 */
 	@Override
-	public Set<EmployeeNameDTO> listSeenByEmployees(final Long articleId) {
-		return newsSeenByDao.listEmployeesByArticleSeen(articleId);
+	public Set<UserBasicDTO> listSeenByEmployees(final Long articleId) {
+		return newsSeenByRepository.listEmployeesByArticleSeen(articleId);
 	}
 	
 	/**
 	 * @throws BusinessLogicException 
-	 * @see com.proxiad.extranet.core.service.news.NewsService#listCurrentNews()
+	 * @see com.kalin.large.core.service.news.NewsService##listCurrentNews(NewsFilterCriteria)
 	 */
 	@Override
-	public Set<NewsDTO> listCurrentNews(final NewsFilterCriteria filterCriteria) throws BusinessLogicException {
-		return newsDao.listCurrentNews(employeeDao.get(securityService.getLoggedInUser().getUserId()), new Date(), filterCriteria);
+	public Set<NewsDTO> listCurrentNews() throws BusinessLogicException {
+		return newsRepository.listCurrentNews(new Date());
 	}
 	@Override
-	@Transactional
 	public void markNewsAsSeen(final Long newsId) {
-		News news = newsDao.get(newsId);
-		Long loggedUserId = securityService.getLoggedInUser().getUserId();
-		if(news.getEmployee().getId() != loggedUserId && news.getSeenBy().stream().filter(seenBy -> seenBy.getPk().getEmployee().getId().equals(loggedUserId)).count()== NumberUtils.LONG_ZERO) {
-			news.addSeenBy(employeeDao.get(loggedUserId));
-			newsDao.update(news);
+		News news = newsRepository.getOne(newsId);
+		Long loggedUserId = securityService.getLoggedInUser().getId();
+		if(!news.getUser().getId().equals(loggedUserId) && news.getSeenBy().stream().filter(seenBy -> seenBy.getPk().getUser().getId().equals(loggedUserId)).count()== NumberUtils.LONG_ZERO) {
+			news.addSeenBy(userRepository.getOne(loggedUserId));
+			newsRepository.saveAndFlush(news);
 		}
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.news.NewsService#publishPendingNews(Date)
+	 * @see com.kalin.large.core.service.news.NewsService#publishPendingNews(Date)
 	 */
 	@Override
 	public void publishPendingNews(final Date currentDate) throws BusinessLogicException {
-		Set<Long> idsOfNewsSetForPublish = newsDao.findAllNewsReadyForPublish(currentDate);
+		Set<Long> idsOfNewsSetForPublish = newsRepository.findAllNewsReadyForPublish(currentDate);
 		for (Long newsId : idsOfNewsSetForPublish) {
 			publish(newsId);
 		}
@@ -221,9 +213,9 @@ public class NewsServiceImpl implements NewsService {
 	 * @throws BusinessLogicException
 	 */
 	private Long storeNews(final NewsDTO newsDTO) throws BusinessLogicException {
-		Employee employee =  employeeDao.get(newsDTO.getIdUser());
-		News news = newsFactory.createFrom(newsDTO, employee);
-		newsDao.save(news);
+		User user =  userRepository.getOne(newsDTO.getIdUser());
+		News news = newsFactory.createFrom(newsDTO, user);
+		newsRepository.save(news);
 		commonArticleService.updateArticleFiles(news, newsDTO.getArticleFiles().toArray(new ArticleFileDTO[newsDTO.getArticleFiles().size()]));
 		return news.getId();
 	}
@@ -235,10 +227,11 @@ public class NewsServiceImpl implements NewsService {
 	 * @throws BusinessLogicException
 	 */
 	private Long updateNewsContent(final NewsDTO newsDTO) throws BusinessLogicException {
-		News news = newsDao.get(newsDTO.getId());
-		if(news == null){
+		Optional<News> optionalNews = newsRepository.findById(newsDTO.getId());
+		if(!optionalNews.isPresent()) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsDTO.getId());
 		}
+		News news = optionalNews.get();
 		news.setTitle(newsDTO.getTitle());
 		news.setSubtitle(newsDTO.getSubtitle());
 		news.setBody(newsDTO.getBody());
@@ -249,7 +242,7 @@ public class NewsServiceImpl implements NewsService {
 				news.getArticleFiles().removeIf(file -> file.getId().equals(articleFileDTO.getArticleFileId()));
 			}
 		}
-		newsDao.update(news);
+		newsRepository.saveAndFlush(news);
 		return news.getId();
 	}
 	
@@ -282,22 +275,4 @@ public class NewsServiceImpl implements NewsService {
 		
 		news.setShortDescription(shortDescription);
 	}
-	
-	/**
-	 * Helper method for sending of notifications to the target employees
-	 * @param news
-	 */
-	private void sendNotificationToTargetEmployees(final News news) {
-		switch(news.getNotificationType()) {
-		case WEB:
-			webNotificationService.createWebNotificationsForArticle(news, WebNotificationTypeEnum.NEWS);
-			break;
-		case MAIL:
-			extranetMessengerService.sendMailNotificationForCreatedNewsToTargetEmployees(news);
-			break;
-		default:
-			webNotificationService.createWebNotificationsForArticle(news, WebNotificationTypeEnum.NEWS);
-			extranetMessengerService.sendMailNotificationForCreatedNewsToTargetEmployees(news);
-		}
-	}	
 }

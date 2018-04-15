@@ -1,46 +1,47 @@
 package com.kalin.large.api;
 
-import com.proxiad.extranet.api.exception.ElementNotFound;
-import com.proxiad.extranet.api.exception.RestWebServiceException;
-import com.proxiad.extranet.core.model.article.Article;
-import com.proxiad.extranet.core.model.employee.beans.EmployeeNameDTO;
-import com.proxiad.extranet.core.model.news.News;
-import com.proxiad.extranet.core.model.news.beans.NewsDTO;
-import com.proxiad.extranet.core.model.news.beans.NewsFilterCriteria;
-import com.proxiad.extranet.core.service.error.ErrorCode;
-import com.proxiad.extranet.core.service.exception.BusinessLogicException;
-import com.proxiad.extranet.core.service.news.NewsService;
-import com.proxiad.extranet.core.service.security.CurrentUser;
-import com.proxiad.extranet.core.service.security.SecurityService;
+import com.kalin.large.core.model.article.Article;
+import com.kalin.large.core.model.news.News;
+import com.kalin.large.core.model.news.beans.NewsDTO;
+import com.kalin.large.core.model.user.beans.UserBasicDTO;
+import com.kalin.large.core.model.user.beans.UserFullDTO;
+import com.kalin.large.core.service.error.ErrorCode;
+import com.kalin.large.core.service.exception.BusinessLogicException;
+import com.kalin.large.core.service.exception.ElementNotFound;
+import com.kalin.large.core.service.exception.RestWebServiceException;
+import com.kalin.large.core.service.news.NewsService;
+import com.kalin.large.core.service.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
 
 /**
- * REST API for access to {@link (News} entity
+ * REST API for access to {@link (News)} entity
  */
 @RestController
 @RequestMapping(path = "/api/news")
 public class NewsAPI {
 
 	/*---------------------------------------------------- SERVICES --------------------------------------------------*/
-	@Autowired
-	private NewsService newsService;
+	private final NewsService newsService;
 	
+	private final SecurityService securityService;
+
 	@Autowired
-	private SecurityService securityService;
-	
+	public NewsAPI(NewsService newsService, SecurityService securityService) {
+		this.newsService = newsService;
+		this.securityService = securityService;
+	}
 	/*------------------------------------------------------ API -----------------------------------------------------*/
 	/**
 	 * Return all News:
-	 * @return {@link Set<News>}
+	 * @return {@link Set< News >}
 	 */
 	@GetMapping(produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<Set<NewsDTO>> listAllNews() {
@@ -66,15 +67,14 @@ public class NewsAPI {
      * @param id 
      * @return true/false with HTTP status ok
      */
-	@PreAuthorize("hasPrivilege('news.articles', 'update')")
 	@DeleteMapping(path="/{id}", produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Boolean> deleteNews(@PathVariable final Long id) {
 		try {
-			CurrentUser currentUser = securityService.getLoggedInUser();
+			UserFullDTO currentUser = securityService.getLoggedInUser();
 			NewsDTO news = newsService.load(id);
 			
-			if (!(news.getEmployee().getId().equals(currentUser.getUserId()))) {
-				throw new AccessDeniedException(String.format("The user: %d does not have the privilege to delete the article with id: %d.", currentUser.getUserId(), id));
+			if (!(news.getIdUser().equals(currentUser.getId()))) {
+				throw new AccessDeniedException(String.format("The user: %d does not have the privilege to delete the article with id: %d.", currentUser.getId(), id));
 			}
 			
 			newsService.deleteNews(id); 
@@ -89,29 +89,28 @@ public class NewsAPI {
 	/**
 	 * List all employees who have read an {@link Article} by its id
 	 * @param id of {@link Article}
-	 * @return {@link Set<EmployeeNameDTO>}
+	 * @return {@link Set<UserBasicDTO>}
 	 */
 	@GetMapping(path="/seen-by/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Set<EmployeeNameDTO>> listSeenByEmployees(@PathVariable final Long id) {
+	public ResponseEntity<Set<UserBasicDTO>> listSeenByEmployees(@PathVariable final Long id) {
 		return ResponseEntity.ok(newsService.listSeenByEmployees(id));
 	}
 		
 	/**
 	 * Creates a new {@link News}
-	 * @param News {@link NewsDTO}
+	 * @param contentNews {@link NewsDTO}
 	 * @return the new created new {@link News} with HTTP status ok
 	 */
-	@PreAuthorize("hasPrivilege('news.articles', 'update')")
 	@PostMapping(path="/store", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Long> createOrUpdateNewsContent(@RequestBody final NewsDTO contentNews) {
 	
 		try {
-			CurrentUser currentUser = securityService.getLoggedInUser();
+			UserFullDTO currentUser = securityService.getLoggedInUser();
 
 			if (contentNews.getId() != null) {
 				NewsDTO news = newsService.load(contentNews.getId());
-				if (!news.getEmployee().getId().equals(currentUser.getUserId())) {
-					throw new AccessDeniedException(String.format("The user: %d does not have the permission to update article with id: %d", currentUser.getUserId(), news.getId()));
+				if (!news.getIdUser().equals(currentUser.getId())) {
+					throw new AccessDeniedException(String.format("The user: %d does not have the permission to update article with id: %d", currentUser.getId(), news.getId()));
 				}
 			}
 			return ResponseEntity.ok(newsService.saveOrUpdateNewsContent(contentNews));
@@ -127,7 +126,7 @@ public class NewsAPI {
 	
 	/**
 	 * Marks article as seen
-	 * @param articleId the id of the article
+	 * @param newsId the id of the article
 	 * @return  HTTP status ok
 	 */
 	@PostMapping(path="/mark-as-seen", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -138,18 +137,17 @@ public class NewsAPI {
 	
 	/**
 	 * Updates the metadata of a given news {@link News}
-	 * @param News {@link NewsDTO}
+	 * @param contentNews {@link NewsDTO}
 	 * @return the new created new {@link News} with HTTP status ok
 	 */
-	@PreAuthorize("hasPrivilege('news.articles', 'update')")
 	@PutMapping(path="/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Long> updateNewsMetadata(@RequestBody final NewsDTO contentNews) {
 		try {
-			CurrentUser currentUser = securityService.getLoggedInUser();
+			UserFullDTO currentUser = securityService.getLoggedInUser();
 
 			NewsDTO news = newsService.load(contentNews.getId());
-			if (!(news.getEmployee().getId().equals(currentUser.getUserId()))) {
-				throw new AccessDeniedException(String.format("The user: %d does not have the permission to update the metadata of article with id: %d", currentUser.getUserId(), news.getId()));
+			if (!(news.getIdUser().equals(currentUser.getId()))) {
+				throw new AccessDeniedException(String.format("The user: %d does not have the permission to update the metadata of article with id: %d", currentUser.getId(), news.getId()));
 			}
 			return ResponseEntity.ok(newsService.updateNewsMetadata(contentNews));
 		} catch (BusinessLogicException ble) {
@@ -164,18 +162,17 @@ public class NewsAPI {
 	
 	/**
 	 * Publish single news {@link News}
-	 * @param News {@link NewsDTO}
+	 * @param id {@link Long}
 	 * @return the new created new {@link News} with HTTP status ok
 	 */
-	@PreAuthorize("hasPrivilege('news.articles', 'update')")
 	@PutMapping(path="/publish/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Boolean> publishNews(@PathVariable final Long id) {
 		try {
-			CurrentUser currentUser = securityService.getLoggedInUser();
+			UserFullDTO currentUser = securityService.getLoggedInUser();
 
 			NewsDTO news = newsService.load(id	);
-			if (!(news.getEmployee().getId().equals(currentUser.getUserId()))) {
-				throw new AccessDeniedException(String.format("The user: %d does not have the permission to update the metadata of article with id: %d", currentUser.getUserId(), news.getId()));
+			if (!(news.getIdUser().equals(currentUser.getId()))) {
+				throw new AccessDeniedException(String.format("The user: %d does not have the permission to update the metadata of article with id: %d", currentUser.getId(), news.getId()));
 			}
 			
 			return ResponseEntity.ok(newsService.publish(id));

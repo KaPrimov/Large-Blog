@@ -7,9 +7,7 @@ import DisplayArticleImage from '../../../../common/image-upload/display-article
 import {I18n} from 'react-redux-i18n';
 import {Link} from 'react-router';
 import ShortDescriptionComponent from './short-description.component.jsx';
-import NotificationTypesSelector from './notification-types-selector.component.jsx';
 import ArticleTagsCreationComponent from './article-tag-creation.component.jsx';
-import ShowNotificationType from '../../common/article-metadata/show-notification-type.component.jsx';
 import NewsShowTags from '../../common/article-metadata/news-show-tags.component.jsx';
 import NewsShowDates from '../../common/article-metadata/news-show-dates.components.jsx';
 import ArticleShowText from '../../common/article-metadata/article-show-text.component.jsx';
@@ -26,7 +24,7 @@ export default class MetaDataInputComponent extends React.Component {
 
 	render() {
 		let {startDate, endDate, onStartDateChange, onEndDateChange, selectLocaleForCalendar, currentLocale,
-			formChecker, onSaveHandler, shortDescription, onChange, onRadioButtonChange, radioButtons,
+			formChecker, onSaveHandler, shortDescription, onChange,
 			onBack, isPublished, singleNews, onNextPublishStep, onCancelPublish} = this.props;
 		return (
 			
@@ -79,22 +77,6 @@ export default class MetaDataInputComponent extends React.Component {
 									titleValue={I18n.t('meta_data_section.tags_title')}
 									subtitleValue={I18n.t('meta_data_section.tags_subtitle')}
 								/>}
-							{isPublished ?
-								<ShowNotificationType 
-									type={singleNews.notificationType}
-									title={I18n.t('meta_data_section.notifications_title')}
-									subtitle={I18n.t('meta_data_section.show_notifications_subtitle')}
-								/>
-								:
-								<NotificationTypesSelector 
-									name={'notificationType'}
-									titleValue={I18n.t('meta_data_section.notifications_title')}
-									subtitleValue={I18n.t('meta_data_section.notifications_subtitle')}
-									onRadioButtonChange={onRadioButtonChange}
-									radioButtons={radioButtons}
-									selected={singleNews.notificationType}
-								/>	
-							}
 							{isPublished ? 
 								<NewsShowDates 
 									startDate={!isNaN(moment(singleNews.startDate)) ? moment(singleNews.startDate) : null}
@@ -151,7 +133,6 @@ export default class MetaDataInputComponent extends React.Component {
 MetaDataInputComponent.propTypes = {
 	onStartDateChange: PropTypes.func.isRequired,
 	onEndDateChange: PropTypes.func.isRequired,
-	onOfficesChange: PropTypes.func.isRequired,
 	selectLocaleForCalendar: PropTypes.func.isRequired,
 	formChecker: PropTypes.object.isRequired,
 	onChangeSelectedEmployees: PropTypes.func.isRequired, 
@@ -162,10 +143,8 @@ MetaDataInputComponent.propTypes = {
 	startDate: PropTypes.object,
 	endDate: PropTypes.object, 
 	shortDescription: PropTypes.string, 
-	offices: PropTypes.array,
 	currentSelectedOffices: PropTypes.array,
 	isGroupMarked: PropTypes.bool, 
 	onSwitchTargetButtonChange: PropTypes.func, 
-	checkedEmployees: PropTypes.array,
 	onCancelPublish: PropTypes.func
 };

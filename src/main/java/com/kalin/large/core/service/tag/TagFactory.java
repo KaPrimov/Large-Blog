@@ -1,32 +1,28 @@
 package com.kalin.large.core.service.tag;
 
-import com.proxiad.extranet.core.model.article.Article;
-import com.proxiad.extranet.core.model.article.ArticleTag;
-import com.proxiad.extranet.core.model.article.Tag;
-import com.proxiad.extranet.core.model.article.beans.ArticleTagDTO;
-import com.proxiad.extranet.core.model.interest.EmployeeInterest;
+
+import com.kalin.large.core.model.article.Article;
+import com.kalin.large.core.model.article.ArticleTag;
+import com.kalin.large.core.model.article.Tag;
+import com.kalin.large.core.model.article.beans.ArticleTagDTO;
 
 import java.util.Collection;
 
 /**
- * Created on 12.12.2017 г.
- *
- * @author Kalin Primov
+ * Manages Tag entity
  */
 public interface TagFactory {
-	
+
 	/**
-	 * Create {@link EmployeeInterest} from supplied parameters
-	 * @param tag
-	 * @param article
-	 * @return {@link ArticleTag}
+	 * Create {@link ArticleTag} from supplied parameters
+	 * @param tag {@link Tag}
+	 * @param article {@link Article}
+	 * @return ArticleTag
 	 */
-	ArticleTag createFrom(final Tag tag, final Article article);
-	
-	
+	ArticleTag createFrom(Tag tag, Article article);
 	/**
 	 * Create {@link Tag} from supplied parameters
-	 * @param namr
+	 * @param title {@link String}
 	 * @return {@link Tag}
 	 */
 	Tag createFrom(final String title);

@@ -189,3 +189,6 @@ local.properties
 
 # Frontend module
 src/main/frontend/node_modules/
+
+### Project specific ###
+large/

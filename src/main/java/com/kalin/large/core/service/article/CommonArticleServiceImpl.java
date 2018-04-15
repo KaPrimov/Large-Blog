@@ -1,11 +1,10 @@
 package com.kalin.large.core.service.article;
 
+import com.kalin.large.core.helpers.datetime.LargeDateUtil;
 import com.kalin.large.core.helpers.exception.ImageProcessingException;
 import com.kalin.large.core.helpers.image.ImageProcessingHelper;
-import com.kalin.large.core.model.article.Article;
-import com.kalin.large.core.model.article.ArticleFile;
-import com.kalin.large.core.model.article.ArticleStatusEnum;
-import com.kalin.large.core.model.article.ArticleTag;
+import com.kalin.large.core.helpers.io.LargeFileUtil;
+import com.kalin.large.core.model.article.*;
 import com.kalin.large.core.model.article.beans.ArticleFileDTO;
 import com.kalin.large.core.model.article.beans.ArticleImageDTO;
 import com.kalin.large.core.model.article.beans.ArticleTagDTO;
@@ -17,6 +16,8 @@ import com.kalin.large.core.repository.user.UserRepository;
 import com.kalin.large.core.service.error.ErrorCode;
 import com.kalin.large.core.service.exception.BusinessLogicException;
 import com.kalin.large.core.service.param.ParameterService;
+import com.kalin.large.core.service.tag.TagFactory;
+import com.kalin.large.core.service.tag.TagService;
 import com.kalin.large.core.service.temp.TempFileUploadService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,9 +38,9 @@ import java.util.stream.Collectors;
 
 /**
  * Common {@link Article} service manager
- * @author Kalin Primov
  */
 @Service
+@Transactional
 public class CommonArticleServiceImpl implements CommonArticleService {
 	
 	/*--------------------------------------------------- CONSTANTS --------------------------------------------------*/
@@ -49,7 +50,6 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	private static final String TITLE_REQUIRED_FIELD_ERROR_MESSAGE = "Every Article should have a title.";
 	private static final String BODY_REQUIRED_FIELD_ERROR_MESSAGE = "Every Article should have a body.";
 	private static final String START_DATE_REQUIRED_FIELD_ERROR_MESSAGE = "Every Article should have a start date.";
-	private static final String NOTIFICATION_TYPE_REQUIRED_FIELD_ERROR_MESSAGE = "Every Article should have a notification type.";
 	private static final String STATUS_REQUIRED_FIELD_ERROR_MESSAGE = "Every Article should have a status.";
 	private static final String START_DATA_REQUIRED_ERROR_MESSAGE = "Start date is a required field";
 	private static final String START_DATE_IN_THE_PAST_MESSAGE = "Start date can not be set to a date, which is in the past";
@@ -58,39 +58,44 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	private static final int MAX_ARTICLE_CONTENT_IMAGE_WIDTH_IN_PIXELS = 1000;
 	private static final int MAX_ARTICLE_IMAGE_WIDTH_IN_PIXELS = 500;
 	/*-------------------------------------------------- REPOSITORIES ------------------------------------------------*/
-	@Autowired
-	private ArticleRepository articleRepository;
+	private final ArticleRepository articleRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
-	@Autowired
-	private ArticleTagRepository articleTagRepository;
+	private final ArticleTagRepository articleTagRepository;
 	
-	@Autowired
-	private ArticleFileRepository articleFileRepository;
+	private final ArticleFileRepository articleFileRepository;
 	
 	/*---------------------------------------------------- SERVICES --------------------------------------------------*/
-	@Autowired
-	private ParameterService parameterService;
+	private final ParameterService parameterService;
 	
-	@Autowired
-	private TagService tagService;
+	private final TagService tagService;
 
-	@Autowired
-	private TempFileUploadService tempFileUploadService;
+	private final TempFileUploadService tempFileUploadService;
 	
 	/*---------------------------------------------------- FACTORIES --------------------------------------------------*/
-	@Autowired
-	private TagFactory tagFactory;
+	private final TagFactory tagFactory;
 	
+	private final ArticleFileFactory articleFileFactory;
+
 	@Autowired
-	private ArticleFileFactory articleFileFactory;
-	
+	public CommonArticleServiceImpl(ArticleRepository articleRepository, UserRepository userRepository, ArticleTagRepository articleTagRepository, ArticleFileRepository articleFileRepository, 
+									ParameterService parameterService, TagService tagService, TempFileUploadService tempFileUploadService, TagFactory tagFactory, ArticleFileFactory articleFileFactory) {
+		this.articleRepository = articleRepository;
+		this.userRepository = userRepository;
+		this.articleTagRepository = articleTagRepository;
+		this.articleFileRepository = articleFileRepository;
+		this.parameterService = parameterService;
+		this.tagService = tagService;
+		this.tempFileUploadService = tempFileUploadService;
+		this.tagFactory = tagFactory;
+		this.articleFileFactory = articleFileFactory;
+	}
+
 	/*------------------------------------------------------ API -----------------------------------------------------*/
 	
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#findAllTagsFor(Long)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#findAllTagsFor(Long)
 	 */
 	@Override
 	public Set<Tag> findAllTagsFor(final Long articleId) {
@@ -98,24 +103,8 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#updateArticleTargetGroup(com.proxiad.extranet.core.model.article.Article, Set, Set)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#updateArticleTags(Article, ArticleTagDTO[])
 	 */
-	@Transactional
-	@Override
-	public void updateArticleTargetGroup(final Article article, final Set<Long> targetEmployees, final Set<Long> targetOffices) throws BusinessLogicException {
-		updateArticleTargetEmployees(article, targetEmployees);
-
-		if (targetEmployees != null && !targetEmployees.isEmpty()) {
-			updateArticleTargetOffices(article, new LinkedHashSet<>());
-		} else {
-			updateArticleTargetOffices(article, targetOffices);
-		}
-	}
-
-	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#updateArticleTags(com.proxiad.extranet.core.model.article.Article, com.proxiad.extranet.core.model.article.beans.ArticleTagDTO[])
-	 */
-	@Transactional
 	@Override
 	public void updateArticleTags(final Article article, final ArticleTagDTO[] tagsDTO) throws BusinessLogicException {
 		Set<ArticleTag> oldTargetTags = article.getTags();
@@ -148,10 +137,9 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#updateArticleFiles(com.proxiad.extranet.core.model.article.Article, com.proxiad.extranet.core.model.article.beans.ArticleFileDTO[])
+	 * @see com.kalin.large.core.service.article.CommonArticleService#updateArticleFiles(Article, ArticleFileDTO[])
 	 */
 	@Override
-	@Transactional
 	public void updateArticleFiles(final Article article, final ArticleFileDTO[] articleFilesDTO) throws BusinessLogicException {
 		final File destinationFolder = getBasicArticleFolderCreateIfNotExists(article.getId());
 		for (ArticleFileDTO articleFileDTO : articleFilesDTO) {
@@ -171,7 +159,7 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#validateArticleForPublish(com.proxiad.extranet.core.model.article.Article)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#validateArticleForPublish(Article)
 	 */
 	@Override
 	public void validateArticleForPublish(final Article article) throws BusinessLogicException {
@@ -183,20 +171,13 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 			throw new BusinessLogicException(ErrorCode.Articles.START_DATE_REQUIRED_FIELD, START_DATE_REQUIRED_FIELD_ERROR_MESSAGE);
 		} else if(article.getBody() == null) {
 			throw new BusinessLogicException(ErrorCode.Articles.BODY_REQUIRED_FIELD, BODY_REQUIRED_FIELD_ERROR_MESSAGE);
-		} else if (article.getNotificationType() == null) {
-			throw new BusinessLogicException(ErrorCode.Articles.NOTIFICATION_TYPE_REQUIRED_FIELD, NOTIFICATION_TYPE_REQUIRED_FIELD_ERROR_MESSAGE);
 		} else if (article.getStatus() == null) {
 			throw new BusinessLogicException(ErrorCode.Articles.STATUS_REQUIRED_FIELD, STATUS_REQUIRED_FIELD_ERROR_MESSAGE);
 		}
 	}
 
 	/**
-	 * Starts the procedure of updating article's image
-	 *
-	 * @param id
-	 * @param newsImageDto
-	 * @return
-	 * @throws BusinessLogicException
+	 * @see com.kalin.large.core.service.article.CommonArticleService#updateArticleImage(Article, ArticleImageDTO)
 	 */
 	@Transactional(rollbackFor = BusinessLogicException.class)
 	@Override
@@ -207,17 +188,17 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 
 		updateArticleImageFile(article, newsImageDto.getImage());
 
-		articleRepository.update(article);
+		articleRepository.saveAndFlush(article);
 
 		return article.getId();
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#getArticlePhoto(Long)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#getArticlePhoto(Long)
 	 */
 	@Override
 	public byte[] getArticlePhoto(final Long articleId) {
-		Article article = articleRepository.get(articleId);
+		Article article = articleRepository.getOne(articleId);
 		BufferedInputStream bufferedInputStream = null;
 		byte[] profilePictureRaw = null;
 		byte[] defaultPictureRaw = null;
@@ -255,35 +236,9 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 
 		return profilePictureRaw;
 	}
-
-	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#findEmployeesTargetGroup(com.proxiad.extranet.core.model.article.Article)
-	 */
-	@Override
-	public Set<EmployeeBasicDTO> findEmployeesTargetGroup(final Article article) {
-		if (!article.getTargetEmployees().isEmpty()) {
-			return articleTargetEmployeeDao.findTargetEmployeesForSpecificArticle(article.getId());
-		}
-		
-		return articleTargetOfficeDao.findTargetEmployeesForSpecificArticle(article.getId());
-	}
 	
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#updateNotificationType(news, notificationType)
-	 */
-	@Override
-	public void updateNotificationType(Article article, ArticleNotificationTypeEnum notificationType) throws BusinessLogicException {
-		if (notificationType == null) {
-			throw new BusinessLogicException(ErrorCode.Articles.NOTIFICATION_TYPE_REQUIRED_FIELD, NOTIFICATION_TYPE_REQUIRED_FIELD_ERROR_MESSAGE);
-		}
-		
-		if (!notificationType.equals(article.getNotificationType())) {
-			article.setNotificationType(notificationType);
-		}		
-	}
-	
-	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleServiceImpl#updateDates(News, Date, Date);
+	 * @see com.kalin.large.core.service.article.CommonArticleServiceImpl#updateDates(Article, Date, Date)
 	 */
 	@Override
 	public void updateDates(final Article article, final Date startDate, final Date endDate) throws BusinessLogicException {
@@ -295,20 +250,20 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 		Calendar calendarEndDate = Calendar.getInstance();
 		if (endDate != null) {
 			calendarEndDate.setTime(endDate);
-			article.setEndDate(ExtranetDateUtil.calculateAbsoluteEndOfTheDay(calendarEndDate).getTime());
+			article.setEndDate(LargeDateUtil.calculateAbsoluteEndOfTheDay(calendarEndDate).getTime());
 		} else {
 			article.setEndDate(null);
 		}
-		Calendar startDateMidnight = ExtranetDateUtil.calculateMidnight(calendarStartDate);
+		Calendar startDateMidnight = LargeDateUtil.calculateMidnight(calendarStartDate);
 		article.setStartDate(startDateMidnight.getTime());
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleServiceImpl#getArticleImage(Long)
+	 * @see com.kalin.large.core.service.article.CommonArticleServiceImpl#getArticleImage(Long)
 	 */
 	@Override
 	public byte[] getArticleImage(final Long articleId) {
-		Article article = articleRepository.get(articleId);
+		Article article = articleRepository.getOne(articleId);
 		BufferedInputStream bufferedInputStream = null;
 		byte[] articleImageRaw = null;
 		byte[] defaultImageRaw = null;
@@ -347,12 +302,12 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleServiceImpl#getArticleFile(Long, Long)
+	 * @see com.kalin.large.core.service.article.CommonArticleServiceImpl#getArticleFile(Long, Long)
 	 */
 	@Override
 	public byte[] getArticleFile(final Long articleId, final Long articleFileId) {
-		Article article = articleRepository.get(articleId);
-		ArticleFile articleFile = articleFileRepository.get(articleFileId);
+		Article article = articleRepository.getOne(articleId);
+		ArticleFile articleFile = articleFileRepository.getOne(articleFileId);
 		BufferedInputStream bufferedInputStream = null;
 		byte[] articleImageFileRaw = null;
 		byte[] defaultImageRaw = null;
@@ -392,12 +347,12 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#deleteFile(ArticleFileDTO)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#deleteFile(ArticleFileDTO)
 	 */
 	@Override
 	@Transactional
 	public boolean deleteFile(ArticleFileDTO articleFileDTO) {
-		ArticleFile articleFile = articleFileRepository.findArticleFileByName(articleFileDTO.getFileName());
+		ArticleFile articleFile = articleFileRepository.findArticleFileByFilePath(articleFileDTO.getFileName());
 		
 		
 		File specificArticleFolder = getBasicArticleFolderCreateIfNotExists(articleFile.getArticle().getId());
@@ -413,55 +368,30 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 	
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleServicee#extractTargetIds(Long)
-	 */
-	@Override
-	public Set<Long> extractTargetIds(final Long articleId) throws BusinessLogicException {
-		if(articleId == null){
-			throw new BusinessLogicException(ErrorCode.Articles.ARTICLE_NOT_FOUND, "There is no Article with id: " + articleId);
-		}
-		
-		Article article = articleRepository.get(articleId);
-		
-		if(article == null) {
-			throw new BusinessLogicException(ErrorCode.Articles.ARTICLE_NOT_FOUND, "There is no Article with id: " + articleId);
-		}
-		
-		Set<Long> targetIds = new LinkedHashSet<Long>();
-		if (article.getTargetOffices().size() > 0) {
-			for (Long officeId : article.getTargetOffices().stream().map(office -> office.getPk().getOffice().getId()).collect(Collectors.toSet())) {
-				targetIds.addAll(officeDao.findActiveEmployeesIdsForOffice(officeId));
-			}
-			
-		} else {
-			targetIds = article.getTargetEmployees().stream().map(empployee -> empployee.getPk().getEmployee().getId()).collect(Collectors.toSet());
-		}
-		return targetIds;
-	}
-	
-	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#extractTargetIds(Long)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#cancelPublishing(Long)
 	 */
 	@Override
 	@Transactional
 	public Boolean cancelPublishing(Long id) throws BusinessLogicException {
-		Article article = articleRepository.get(id);
+		Optional<Article> optionalArticle = articleRepository.findById(id);
 
-		if (article == null) {
+		if (!optionalArticle.isPresent()) {
 			throw new BusinessLogicException(ErrorCode.Articles.ARTICLE_NOT_FOUND, ARTICLE_NOT_FOUND_ERROR_MESSAGE);
 		}
+
+		Article article = optionalArticle.get();
 		
 		if (article.getStatus() != ArticleStatusEnum.PUBLISH_PENDING) {
 			return false;
 		}
 		
 		article.setStatus(ArticleStatusEnum.DRAFT);
-		articleRepository.update(article);
+		articleRepository.saveAndFlush(article);
 		return true;
 	}
 	
 	/**
-	 * @see com.proxiad.extranet.core.service.article.CommonArticleService#updateStatus(Article)
+	 * @see com.kalin.large.core.service.article.CommonArticleService#updateStatus(Article)
 	 */
 	@Override
 	public boolean updateStatus(final Article article) throws BusinessLogicException {
@@ -470,7 +400,7 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 			return false;
 		}
 		
-		Calendar todaysDate = ExtranetDateUtil.calculateMidnight(Calendar.getInstance());
+		Calendar todaysDate = LargeDateUtil.calculateMidnight(Calendar.getInstance());
 		Calendar startDate = Calendar.getInstance();
 		startDate.setTime(article.getStartDate());
 		if (startDate.after(todaysDate)) {
@@ -484,18 +414,9 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	}
 
 	/**
-	 * Update the article's image by:
-	 * <ul>
-	 * <li>If {@link ArticleImageDTO#image} is {@code null} the image is deleted (also the image file).</li>
-	 * <li>If {@link ArticleImageDTO#image} is not {@code null} and is equal to the name of the file in
-	 * {@link Article#imagePath} then the image is not altered at all.</li>
-	 * <li>If {@link ArticleImageDTO#image} is not {@code null} and is not equal to the name of the file in
-	 * {@link Article#imagePath} then the picture is updated with the content of the
-	 * {@link ArticleImageDTO#image} (a new file is created and the old one is removed).</li>
-	 * </ul>
 	 *
-	 * @param id                the id of the {@link Article}, which picture should be updated
-	 * @param ArticleImageDTO the transfer object
+	 * @param news {@link Article}
+	 * @param picContent {@link String}
 	 * @return the id of the updated {@link Article}
 	 * @throws BusinessLogicException with the following error codes:
 	 *                                <ul>
@@ -511,7 +432,7 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 				if (!picContent.equalsIgnoreCase(news.getImagePath())) {
 					deleteArticleImage(news);
 					String articleImage;
-					articleImage = ProxiadExtranetFileUtil.saveToImageFile(picContent, news.getId(), getBasicArticleFolderCreateIfNotExists(news.getId()), MAX_ARTICLE_IMAGE_WIDTH_IN_PIXELS);
+					articleImage = LargeFileUtil.saveToImageFile(picContent, news.getId(), getBasicArticleFolderCreateIfNotExists(news.getId()), MAX_ARTICLE_IMAGE_WIDTH_IN_PIXELS);
 					news.setImagePath(articleImage);
 				}
 			} else {
@@ -520,7 +441,7 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 		} catch (SecurityException se) {
 			throw new BusinessLogicException(ErrorCode.Articles.FILE_ACCESS_DENIED, "Access to the file system denied: " + se.getMessage(), se);
 		} catch (ImageProcessingException ipe) {
-			throw new BusinessLogicException(ErrorCode.EmployeeService.FILE_IS_NOT_A_PICTURE, ipe.getMessage(), ipe);
+			throw new BusinessLogicException(ErrorCode.UserService.FILE_IS_NOT_A_PICTURE, ipe.getMessage(), ipe);
 		}
 	}
 	
@@ -533,10 +454,10 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 	 * @return {@link File}
 	 */
 	private File getBasicArticleFolderCreateIfNotExists(final Long articleId) {
-		File baseRepositoryPath = ProxiadExtranetFileUtil.createFolderIfDoesNotExist(parameterService.getGlobalParamAsString(ParamName.EXTRANET_REPO_PATH));
-		File articleDataFolder = ProxiadExtranetFileUtil.createFolderIfDoesNotExist(baseRepositoryPath, parameterService.getGlobalParamAsString(ParamName.NEWS_DATA_PATH));
+		File baseRepositoryPath = LargeFileUtil.createFolderIfDoesNotExist(parameterService.getGlobalParamAsString(ParamName.LARGE_REPO_PATH));
+		File articleDataFolder = LargeFileUtil.createFolderIfDoesNotExist(baseRepositoryPath, parameterService.getGlobalParamAsString(ParamName.NEWS_DATA_PATH));
 
-		return ProxiadExtranetFileUtil.createFolderIfDoesNotExist(articleDataFolder, articleId.toString());
+		return LargeFileUtil.createFolderIfDoesNotExist(articleDataFolder, articleId.toString());
 	}
 	
 	/**
@@ -572,78 +493,4 @@ public class CommonArticleServiceImpl implements CommonArticleService {
 		File basicArticleFolder = getBasicArticleFolderCreateIfNotExists(article.getId());
 		return basicArticleFolder.getAbsolutePath();
 	}
-	
-	/**
-	 * Helper method for updating {@link ArticleTargetEmployee}s
-	 * @param article {@link Article}
-	 * @param targetEmployees {@link Set} from target employees
-	 * @throws BusinessLogicException
-	 */
-	private void updateArticleTargetEmployees(final Article article, final Set<Long> targetEmployees) {
-		Set<ArticleTargetEmployee> oldTargetEmployees = article.getTargetEmployees();
-		Set<ArticleTargetEmployee> newTargetemployees = new LinkedHashSet<>();
-		
-		if (targetEmployees == null || targetEmployees.isEmpty()) {
-			for (ArticleTargetEmployee targetEmployee : oldTargetEmployees) {
-				articleTargetEmployeeDao.delete(targetEmployee);
-			}
-			
-			article.setTargetEmployees(new LinkedHashSet<>());
-			
-			return;
-		}
-		
-		for (ArticleTargetEmployee targetEmployee : oldTargetEmployees) {
-			if (targetEmployees.stream().anyMatch(targetEmployeeId -> targetEmployeeId.equals(targetEmployee.getPk().getEmployee().getId()))) {
-				newTargetemployees.add(targetEmployee);
-			} else {
-				articleTargetEmployeeDao.delete(targetEmployee);
-			}
-		}
-		
-		for (Long targetEmployeeId : targetEmployees) {
-			if (!newTargetemployees.stream().anyMatch(targetEmployee -> targetEmployee.getPk().getEmployee().getId().equals(targetEmployeeId))) {
-				newTargetemployees.add(new ArticleTargetEmployee(article, userRepository.get(targetEmployeeId)));
-			}
-		}
-		
-		article.setTargetEmployees(newTargetemployees);
-	}
-	
-	/**
-	 * Helper method for updating {@link ArticleTargetOffice}s
-	 * @param article {@link Article}
-	 * @param targetOffices {@link Set} from target offices
-	 * @throws BusinessLogicException
-	 */
-	private void updateArticleTargetOffices(final Article article, final Set<Long> targetOffices) {
-		Set<ArticleTargetOffice> oldTargetOffices = article.getTargetOffices();
-		Set<ArticleTargetOffice> newTargetemployees = new LinkedHashSet<>();
-		
-		if (targetOffices == null || targetOffices.isEmpty()) {
-			for (ArticleTargetOffice targetOffice : oldTargetOffices) {
-				articleTargetOfficeDao.delete(targetOffice);
-			}
-			
-			article.setTargetOffices(new LinkedHashSet<>());
-			
-			return;
-		}
-		
-		for (ArticleTargetOffice targetOffice : oldTargetOffices) {
-			if (targetOffices.stream().anyMatch(targetOfficeId -> targetOfficeId.equals(targetOffice.getPk().getOffice().getId()))) {
-				newTargetemployees.add(targetOffice);
-			} else {
-				articleTargetOfficeDao.delete(targetOffice);
-			}
-		}
-		
-		for (Long targetOfficeId : targetOffices) {
-			if (!newTargetemployees.stream().anyMatch(targetOffice -> targetOffice.getPk().getOffice().getId().equals(targetOfficeId))) {
-				newTargetemployees.add(new ArticleTargetOffice(article, officeDao.get(targetOfficeId)));
-			}
-		}
-		
-		article.setTargetOffices(newTargetemployees);
-	}	
 }

@@ -31,7 +31,6 @@ public abstract class ArticleDTO implements Serializable {
 	protected String imagePath;
 	protected ArticleImageDTO image;
 	protected ArticleStatusEnum status;
-	protected boolean directPublish;
 	protected ArticleTagDTO[] tags = {};
 	protected Set<ArticleFileDTO> articleFiles = new LinkedHashSet<>();
 	protected Set<ArticleFileDTO> deletedFiles = new LinkedHashSet<>();
@@ -46,26 +45,24 @@ public abstract class ArticleDTO implements Serializable {
 				article.getBody(), article.getImagePath(), article.getStatus());
 		this.tags = article.getTags().stream().map(articleTag -> new ArticleTagDTO(articleTag.getPk().getTag().getId(), articleTag.getPk().getTag().getName())).toArray(size -> new ArticleTagDTO[size]); 
 		this.articleFiles = article.getArticleFiles().stream().map(file -> new ArticleFileDTO(file.getId(), file.getFilePath(), file.getArticle().getId())).collect(Collectors.toSet());
-
 	}
 	
 	/**
 	 * 
 	 * @param id
-	 * @param employee
+	 * @param user
 	 * @param title
 	 * @param subtitle
 	 * @param startDate
 	 * @param endDate
 	 * @param body
 	 * @param imagePath
-	 * @param notificationType
 	 * @param status
 	 */
-	protected ArticleDTO(final Long id,  final User employee, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
+	protected ArticleDTO(final Long id,  final User user, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
 			final String imagePath, final ArticleStatusEnum status){
 		this(id, title, subtitle, startDate, endDate, body, imagePath, status);
-		this.user = new UserBasicDTO(user.getId(), user.getUsername());	
+		this.user = new UserBasicDTO(user.getId(), user.getUsername());
 	}
 	
 	/**
@@ -77,7 +74,6 @@ public abstract class ArticleDTO implements Serializable {
 	 * @param endDate
 	 * @param body
 	 * @param imagePath
-	 * @param notificationType
 	 * @param status
 	 */
 	protected ArticleDTO(final Long id, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
@@ -230,20 +226,6 @@ public abstract class ArticleDTO implements Serializable {
 	 */
 	public void setImage(ArticleImageDTO image) {
 		this.image = image;
-	}
-	
-	/**
-	 * @return the {@link Boolean} value of isDirectPublish
-	 */
-	public boolean isDirectPublish() {
-		return directPublish;
-	}
-	
-	/**
-	 * @param directPublish to set
-	 */
-	public void setDirectPublish(boolean directPublish) {
-		this.directPublish = directPublish;
 	}
 
 	/**
