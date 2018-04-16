@@ -55,8 +55,8 @@ public class NewsFactoryImpl implements NewsFactory {
 	public NewsDTO createFrom(final News news) {		
 		NewsDTO newsDTO = new NewsDTO(news);
 
-		newsDTO.setShortDescription(news.getShortDescription());
 		newsDTO.setArticleFiles(news.getArticleFiles().stream().map(articleFileFactory::createDTOFrom).collect(Collectors.toSet()));
+		newsDTO.setIdUser(news.getUser().getId());
 		
 		ArticleImageDTO imageDTO = new ArticleImageDTO();
 		imageDTO.setId(news.getId());

@@ -1,0 +1,70 @@
+.Select .Select-menu-outer {
+	font-size: 0.75rem;
+	position: absolute;
+	overflow: auto;
+}
+
+.Select .Select-input, .Select .Select-control {
+	height: 29px;
+}
+
+.Select-option {
+	padding: 3px 10px !important;
+}
+
+.select-btn-ocustom {
+	.Select-control {
+		color: #23385d;
+		border-radius: 0;
+		border: 1px solid #23385d;
+		background: transparent;
+		font-family: 'Open Sans';
+		font-weight: 300;
+		font-size: 12px;
+		margin-right: 5px;
+		z-index: 0 !important;
+
+		&:focus.transparent {
+		  background: transparent;
+		  color: #114366;
+		  background-color: transparent;
+		}
+
+		&.no-hover {
+		  color: #021f33 !important;
+		  border-radius: 0 !important;
+		  background: transparent !important;
+		}
+
+		&:hover, &:focus {
+		  border-color: rgba(138, 153, 169, 0.35) !important;
+		  background: #3a526a;
+		  color: #e5e5e5;
+
+		  .Select-value .Select-value-label {
+			  color: #e5e5e5;
+		  }
+		}
+	}
+}
+
+.select-transperent:not(.has-value) {
+	.Select-placeholder {
+		color: #f1e4ea;
+		background: rgba(254, 253, 255, 0.28);
+		line-height: 29px;
+	}
+}
+
+.select-transperent.has-value {
+	.Select-value {
+		color: #f1e4ea !important;
+		background: rgba(254, 253, 255, 0.28);
+		border: 0;
+		line-height: 29px;
+
+		.Select-value-label {
+			color: #f1e4ea !important;
+		}
+	}
+}

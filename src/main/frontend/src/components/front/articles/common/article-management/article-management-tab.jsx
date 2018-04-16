@@ -7,19 +7,19 @@ class ArticleManagementTab extends React.Component {
 	render() {
 		return (
 			<div className="article-management-element">
-				<div className="article-management-element-title col-xs-6 offset-xs-3">
+				<div className="article-management-element-title col-sm-6 offset-xs-3">
 					<Translate value={this.props.title} />
 				</div>
-				<div className="article-management-element-filter  col-md-3 col-xs-12">
+				<div className="article-management-element-filter  col-md-3 col-sm-12">
 					<TextInput
 						isInputGroup={true}
 						icon="search"
 						inputIconClass="input-group-addon btn-ocustom small-search-btn no-hover"
 						inputClass="form-control btn-ocustom semi-transparent-button-article-management"
 						type="text"
-						labelClass="col-form-label col-xs-12 text-xs-center"
+						labelClass="col-form-label col-sm-12 text-center"
 						label=''
-						inputWrapperClass="col-xs-12"
+						inputWrapperClass="col-sm-12"
 						name="search"
 						value={this.props.keyword == null ? '' : this.props.keyword}
 						onChange={this.props.onFilter}

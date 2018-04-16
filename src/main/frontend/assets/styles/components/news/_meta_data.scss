@@ -1,7 +1,11 @@
 .metadata-portlet {
     min-height: 600px !important;
 }
-
+.meta-data-element-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .article-image-container{
     text-align: center;
    

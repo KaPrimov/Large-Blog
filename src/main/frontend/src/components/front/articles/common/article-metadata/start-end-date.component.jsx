@@ -6,21 +6,21 @@ import FieldCreationLabelComponent from './field-creation-label.component.jsx';
 
 const StartEndDateComponent = ({startDate, onStartDateChange, endDate, onEndDateChange, selectLocaleForCalendar, formChecker, title, subtitle}) => {
 	return (
-		<div className="row mx-auto">
+		<div className="mx-auto meta-data-element-wrapper">
 			<FieldCreationLabelComponent
 				title={title}
 				subtitle={subtitle}
 			/> 
-			<div className="form-group col-sm-6 text-xs-center">
-				<label className="col-xs-12 col-form-label block-element">
+			<div className="form-group col-sm-6 text-center">
+				<label className="col-sm-12 col-form-label block-element">
 					<Translate value="meta_data_section.start_date" />
 					<span className="required">*</span>
 				</label>
 				<PopurDatePicker selected={startDate} onChange={onStartDateChange} locale={selectLocaleForCalendar()} />
 				{!formChecker.silentCheck ? (formChecker.errors['startDate'] && <div className="alert-danger">{formChecker.errors['startDate']}</div>) : null}
 			</div>
-			<div className="form-group col-sm-6 text-xs-center">
-				<label className="col-xs-12 col-form-label block-element">
+			<div className="form-group col-sm-6 text-center">
+				<label className="col-sm-12 col-form-label block-element">
 					<Translate value="meta_data_section.end_date" />
 				</label>
 				<PopurDatePicker selected={endDate} onChange={onEndDateChange} locale={selectLocaleForCalendar()} />

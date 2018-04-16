@@ -273,12 +273,11 @@ export function saveNewsInState(news) {
 	};
 }
 
-export function clearNewsContent()
- {
-	 return function(dispatch) {
-		 dispatch(_clearNewsContent());
-	 }
- }
+export function clearNewsContent() {
+	return function(dispatch) {
+		dispatch(_clearNewsContent());
+	};
+}
 /* ------------------------------ Dispatchers ------------------------------- */
 
 /**
@@ -307,7 +306,7 @@ export function _appendNewsByTagSuccess(news){
 }
 
 export function _clearNewsContent() {
-	return {type: ActionTypes.CLEAR_NEWS_CONTEXT}
+	return {type: ActionTypes.CLEAR_NEWS_CONTEXT};;
 }
 
 /**

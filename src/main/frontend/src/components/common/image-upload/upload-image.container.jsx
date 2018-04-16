@@ -72,33 +72,29 @@ class UploadArticleImageContainer extends React.Component {
 				}
 			}
 			return (
-				<div className="row">
-					<div className="col-xs-12 article-pic-wrapper">
-						<DisplayArticleImage
-							imgSrc={imagePath}
-							changeViewModeHandler={(inViewMode) => this.setState({inViewMode: inViewMode})}
-							title={this.props.title}
-							subtitle={this.props.subtitle}
-							deleteImage={() => this.deleteImage()}
-						/>
-					</div>
+				<div>
+					<DisplayArticleImage
+						imgSrc={imagePath}
+						changeViewModeHandler={(inViewMode) => this.setState({inViewMode: inViewMode})}
+						title={this.props.title}
+						subtitle={this.props.subtitle}
+						deleteImage={() => this.deleteImage()}
+					/>
 				</div>
 			);
 		}
 		return (
-			<div className="row">
-				<div className="col-xs-12 article-pic-wrapper">
-					<UploadArticleImage
-						imgChangeHandler={this.handlerChangeImage}
-						removeImage={this.removeImage}
-						title={this.props.title}
-						subtitle={this.props.subtitle}
-						changeViewModeHandler={(inViewMode) => this.setState({inViewMode: inViewMode})}
-						ref='uploadArticleImage'
-						updateMetadataHandler={this.props.actions.updateMetadataHandler}
-						imgSrc={this.state.imgSrc}
-					/>
-				</div>
+			<div>
+				<UploadArticleImage
+					imgChangeHandler={this.handlerChangeImage}
+					removeImage={this.removeImage}
+					title={this.props.title}
+					subtitle={this.props.subtitle}
+					changeViewModeHandler={(inViewMode) => this.setState({inViewMode: inViewMode})}
+					ref='uploadArticleImage'
+					updateMetadataHandler={this.props.actions.updateMetadataHandler}
+					imgSrc={this.state.imgSrc}
+				/>
 			</div>
 		);
 	}

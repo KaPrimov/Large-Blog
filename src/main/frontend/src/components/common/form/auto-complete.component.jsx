@@ -52,7 +52,7 @@ const AutoComplete = ({isRequired, wrapperClass, labelClass, inputWrapperClass, 
 				>{item[name]}</div>
 			)}
 			renderMenu={(items, value) => (
-				<div className="autocompleate-proposals col-xs-12">
+				<div className="autocompleate-proposals col-sm-12">
 					{ loading ? (
 						<div style={{padding: 6}}><Translate value='auto_complete_component.loading'/></div>
 					) : items.map((item, index) => {

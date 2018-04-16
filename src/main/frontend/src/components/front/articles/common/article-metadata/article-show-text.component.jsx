@@ -4,12 +4,12 @@ import FieldCreationLabelComponent from '../../common/article-metadata/field-cre
 
 const ShowArticleTextPropertyComponent = ({text, title, subtitle}) => {
 	return (
-		<div className="row meta-data-label">
+		<div className="meta-data-label">
 			<FieldCreationLabelComponent 
 				title={title}
 				subtitle={subtitle}
 			/>
-			<h6 className="cols-xs-12 block-element text-xs-center">
+			<h6 className="cols-xs-12 block-element text-center">
 				{text}
 			</h6>
               

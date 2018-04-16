@@ -41,7 +41,7 @@ public class NewsAPI {
 	/*------------------------------------------------------ API -----------------------------------------------------*/
 	/**
 	 * Return all News:
-	 * @return {@link Set< News >}
+	 * @return {@link Set<News>}
 	 */
 	@GetMapping(produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<Set<NewsDTO>> listAllNews() {

@@ -963,7 +963,7 @@ var DanteEditor = function (_React$Component) {
                 this.props.config.show_headings && 
                 (this.props.preTitleValue &&
                   React.createElement('h4',
-                    { className: 'dante-reader-h4 text-xs-center' },
+                    { className: 'dante-reader-h4 text-center' },
                     this.props.preTitleValue 
                   )
                 ),

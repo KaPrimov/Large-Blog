@@ -205,7 +205,7 @@ export class ModalService {
         let modalContent = ModalHTMLStructureBuilder
             .createInstance()
             .setHeader(title)
-            .setBody(body, 'text-xs-center')
+            .setBody(body, 'text-center')
             .setModalEffects(modalEffects)
             .setButtonsType(ModalButtonsType.CONFIRM_CANCEL)
             .build();

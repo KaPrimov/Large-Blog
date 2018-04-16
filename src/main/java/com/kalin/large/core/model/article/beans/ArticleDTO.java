@@ -1,15 +1,15 @@
 package com.kalin.large.core.model.article.beans;
 
+import com.kalin.large.core.model.article.Article;
+import com.kalin.large.core.model.article.ArticleStatusEnum;
+import com.kalin.large.core.model.user.User;
+import com.kalin.large.core.model.user.beans.UserBasicDTO;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.kalin.large.core.model.article.Article;
-import com.kalin.large.core.model.article.ArticleStatusEnum;
-import com.kalin.large.core.model.user.User;
-import com.kalin.large.core.model.user.beans.UserBasicDTO;
 
 /**
  * Created on 08.12.2017 г.
@@ -116,7 +116,7 @@ public abstract class ArticleDTO implements Serializable {
 	}
 
 	/**
-	 * @param id to set
+	 * idUser to get
 	 */
 	public Long getIdUser() {
 		return idUser;
@@ -270,5 +270,12 @@ public abstract class ArticleDTO implements Serializable {
 	public void setDeletedFiles(Set<ArticleFileDTO> deletedFiles) {
 		this.deletedFiles = deletedFiles;
 	}
-	
+
+	public ArticleStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(ArticleStatusEnum status) {
+		this.status = status;
+	}
 }

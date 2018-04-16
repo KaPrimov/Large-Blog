@@ -130,7 +130,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 CreateContentContainer.propTypes = {
-	idUser: PropTypes.number.isRequired,
+	idUser: PropTypes.number,
 	singleNews: PropTypes.object,
 	tempFiles: PropTypes.array,
 	deletedFiles: PropTypes.array,

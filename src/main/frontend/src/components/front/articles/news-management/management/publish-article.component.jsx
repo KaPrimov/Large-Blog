@@ -5,9 +5,9 @@ import {Link} from 'react-router';
 
 const PublishArticleComponent = ({singleNews, finish, onRedirectClickHandler}) => {
 	return (
-		<section className='create-article-editor'>
+		<section className='portlet light article-management published-content'>
 			<div className='row'>
-				<div className='portlet light article-management'>
+				<div className=''>
 					<div className="portlet-title">
 						<span className="caption"><Translate value="article_management_container.publish_label" /></span>
 					</div>
@@ -31,7 +31,7 @@ const PublishArticleComponent = ({singleNews, finish, onRedirectClickHandler}) =
 					{finish && (
 						<div className="row">
 							<div className='row mx-auto'>
-								<Link to='news/article-management' className="btn btn-sm btn-ocustom col-xs-6 create-metadata-button offset-xs-3">
+								<Link to='news/article-management' className="btn btn-sm btn-ocustom col-sm-6 create-metadata-button offset-xs-3">
 									<Translate value="article_management.to_all_articles" />
 								</Link>
 							</div>

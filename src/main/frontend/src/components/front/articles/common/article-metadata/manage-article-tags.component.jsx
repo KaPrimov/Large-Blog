@@ -91,7 +91,7 @@ class ManageArticleTagsContainer extends React.Component {
 
 	render() {
 		return (
-			<article classID="target-group col-xs-12">
+			<article classID="target-group col-sm-12">
 				<header className="clearfix">
 					<ScrollArea
 						speed={0.8}
@@ -105,7 +105,7 @@ class ManageArticleTagsContainer extends React.Component {
 						</div>
 					</ScrollArea>
 					<AutoComplete
-						wrapperClass="form-group col-xs-12"
+						wrapperClass="form-group col-sm-12"
 						id="tag-autocomplete"
 						isRequired={false}
 						placeholder="common.grid.search"

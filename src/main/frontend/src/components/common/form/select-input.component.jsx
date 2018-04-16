@@ -120,7 +120,7 @@ class SelectInput extends React.Component {
 						clearable={this.props.clearable}
 					/>
 				</div>
-				{this.state.error && <div className="col-xs-12 alert-danger">{this.state.error}</div>}
+				{this.state.error && <div className="col-sm-12 alert-danger">{this.state.error}</div>}
 			</div>
 		);
 	}

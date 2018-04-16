@@ -6,7 +6,7 @@ import {I18n} from 'react-redux-i18n';
 
 const ShortDescriptionComponent = ({titleValue, subtitleValue, shortDescription, formChecker, onChange}) => {
 	return (
-		<div className="row mx-auto">
+		<div className="mx-auto meta-data-element-wrapper">
 			<FieldCreationLabelComponent
 				title={titleValue}
 				subtitle={subtitleValue}
@@ -15,12 +15,12 @@ const ShortDescriptionComponent = ({titleValue, subtitleValue, shortDescription,
 				rows={3}
 				maxLength={200}
 				type="text"
-				className="col-xs-6 offset-xs-3 btn-ocustom"
+				className="col-sm-6 offset-xs-3 btn-ocustom"
 				placeholder={I18n.t('meta_data_section.short_description_placeholder')}
 				name="shortDescription"
 				value={shortDescription || ''}
 				onChange={onChange} />
-			<div className="col-xs-6 offset-xs-3 cut-off-paddings-for-formchecker">
+			<div className="col-sm-6 offset-xs-3 cut-off-paddings-for-formchecker">
 				{!formChecker.silentCheck ? (formChecker.errors['shortDescription'] && <div className="alert-danger">{formChecker.errors['shortDescription']}</div>) : null}
 			</div>
 		</div>

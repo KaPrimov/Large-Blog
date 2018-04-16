@@ -19,9 +19,13 @@ import java.util.Set;
 public class ArticleAPI {
 	
 	/*---------------------------------------------------- SERVICES --------------------------------------------------*/
+	private final CommonArticleService commonArticleService;
+
 	@Autowired
-	private CommonArticleService commonArticleService;
-	
+	public ArticleAPI(CommonArticleService commonArticleService) {
+		this.commonArticleService = commonArticleService;
+	}
+
 	/*------------------------------------------------------ API -----------------------------------------------------*/
 	
 	/**

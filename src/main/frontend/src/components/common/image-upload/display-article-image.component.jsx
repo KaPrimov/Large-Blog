@@ -7,7 +7,7 @@ import FieldCreationLabelComponent from '../../front/articles/common/article-met
 const DisplayArticleImage = ({imgSrc, changeViewModeHandler, title, subtitle, deleteImage, withoutControls}) => {
 	return (
 		<div className="article-image-container">
-			<div className="col-xs-12 mx-auto">
+			<div className="col-sm-12 mx-auto">
 				<FieldCreationLabelComponent
 					title={title}
 					subtitle={subtitle}

@@ -196,20 +196,8 @@ class MetaDataInputContainer extends React.Component {
 
 	onNextPublishStep() {
 		this.validateForm(null, null, true).then(() => {
-			if (this.state.formChecker.isValid) {
-				if (moment(this.state.startDate).startOf('day').isAfter(moment().startOf('day'))) {
-					ModalService.showConfirm(I18n.t('meta_data_section.modal_publish_pending_body_news', {date: moment(this.state.startDate).format('DD/MM/YYYY')}), I18n.t('meta_data_section.modal_publish_pending_title')). then(result => {
-						if (result) {
-							this.invokeOnNextAction();
-						}
-					});
-				} else {
-					ModalService.showConfirm(I18n.t('meta_data_section.modal_message_save'), I18n.t('meta_data_section.modal_title')).then(result => {
-						if (result) {
-							this.invokeOnNextAction();
-						}
-					});
-				}				
+			if (this.state.formChecker.isValid) {								
+				this.invokeOnNextAction();
 			} else if(this.state.formChecker.errors['shortDescription']) {
 				NotificationService.notifyError(I18n.t('common.validation.required_field_with_name', {fieldName: I18n.t('meta_data_section.short_description_title')}));
 			} else {

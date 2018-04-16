@@ -1,3 +1,8 @@
+.published-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .article-management {
 	box-shadow: -1px 3px 14px -5px rgba(0, 0, 0, 0.3);
 	
@@ -49,7 +54,7 @@
     }
 
     #dante-wrapper {
-        padding: 12px 50px;
+        padding: 5px 10px;
     }
 
     .article-element {
@@ -220,16 +225,18 @@
 .single-tag {
     font-size: 0.77em;
     display: inline-block;
-    height: 30px;
     background: #e0e0e0;
-    padding: 6px 12px;
+    padding: 2px 12px 4px 12px;
     border-radius: 32px;
     margin: 5px;
 }
 
 .article-pic-wrapper {
     margin-bottom: 10px;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
     .article-pic {
       max-width: 200px;
       width: 100%;

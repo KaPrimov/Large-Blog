@@ -5,12 +5,12 @@ import FieldCreationLabelComponent from '../../common/article-metadata/field-cre
 
 const NewsShowTags = ({tags, title, subtitle}) => {
 	return (
-		<div className="row meta-data-label">
+		<div className="meta-data-label">
 			<FieldCreationLabelComponent 
 				title={title}
 				subtitle={subtitle}
 			/>
-			<article className="target-group col-xs-8 offset-xs-2">
+			<article className="target-group col-sm-8 offset-xs-2">
 				<header className="clearfix">
 					<ScrollArea
 						speed={0.8}

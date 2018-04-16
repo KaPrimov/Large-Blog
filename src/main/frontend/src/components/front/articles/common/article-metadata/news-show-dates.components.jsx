@@ -6,19 +6,19 @@ import moment from 'moment';
 
 const NewsShowDates = ({endDate, title, subtitle, currentLocale}) => {
 	return (
-		<div className="row mx-auto">
+		<div className="meta-data-element-wrapper">
 			<FieldCreationLabelComponent
 				title={title}
 				subtitle={subtitle}
 			/> 
-			<div className="form-group col-sm-6 text-xs-center">
-				<label className="col-xs-12 col-form-label block-element">
+			<div className="form-group col-sm-6 text-center">
+				<label className="col-sm-12 col-form-label block-element">
 					<Translate value="meta_data_section.start_date" />
 				</label>
 				<p>{convertDateTimeInReadableStyle(event.eventStartOn, currentLocale.shortName)}</p>
 			</div>
-			<div className="form-group col-sm-6 text-xs-center">
-				<label className="col-xs-12 col-form-label block-element">
+			<div className="form-group col-sm-6 text-center">
+				<label className="col-sm-12 col-form-label block-element">
 					<Translate value="meta_data_section.end_date" />
 				</label>
 				{endDate ? <p>{convertDateTimeInReadableStyle(event.eventStartOn, currentLocale.shortName)}</p> : <Translate value='poll_management_content.no_end_date'/>}

@@ -100,25 +100,25 @@ export default class MetaDataInputComponent extends React.Component {
 							}
 							<div className='row mx-auto'>
 								{singleNews.status !== ArticleStatus.PUBLISHED &&
-									<button onClick={() => onBack(singleNews)} className={`btn btn-sm btn-ocustom create-metadata-button ${singleNews.status !== ArticleStatus.PUBLISHED ? 'col-xs-4' : 'col-xs-12'}` }>
+									<button onClick={() => onBack(singleNews)} className={`btn btn-sm btn-ocustom create-metadata-button ${singleNews.status !== ArticleStatus.PUBLISHED ? 'col-sm-4' : 'col-sm-12'}` }>
 										<Translate value="common.btn.back" />
 									</button>
 								}
 								{singleNews.status !== ArticleStatus.PUBLISHED &&
-								<button onClick={onSaveHandler} className='standart-button-workflow btn-ocustom btn btn-sm col-xs-4 create-metadata-button' >
+								<button onClick={onSaveHandler} className='standart-button-workflow btn-ocustom btn btn-sm col-sm-4 create-metadata-button' >
 									<Translate value="meta_data_section.save_button" />
 								</button>}
 								{singleNews.status === ArticleStatus.PUBLISH_PENDING &&
-								<button onClick={onCancelPublish} className='standart-button-workflow btn-ocustom btn btn-sm col-xs-4 create-metadata-button' >
+								<button onClick={onCancelPublish} className='standart-button-workflow btn-ocustom btn btn-sm col-sm-4 create-metadata-button' >
 									<Translate value="meta_data_section.cancel_publish" />
 								</button>}
-								{singleNews.status === ArticleStatus.DRAFT && <button className="standart-button-workflow btn-sm col-xs-4 btn-ocustom btn create-metadata-button" onClick={onNextPublishStep}>
+								{singleNews.status === ArticleStatus.DRAFT && <button className="standart-button-workflow btn-sm col-sm-4 btn-ocustom btn create-metadata-button" onClick={onNextPublishStep}>
 									<Translate value="meta_data_section.to_publish_button" />
 								</button>}
 								{singleNews.status === ArticleStatus.PUBLISHED &&
 								<div className='row mx-auto'>
-									<Link to='news/regulation-management' className="btn btn-sm btn-ocustom col-xs-8 create-metadata-button offset-xs-2">
-										<Translate value="regulation_management.to_all_regulations" />
+									<Link to='news/news-management' className="btn btn-sm btn-ocustom col-sm-8 create-metadata-button offset-xs-2">
+										<Translate value="news_management.to_all_news" />
 									</Link>
 								</div>}
 							</div>
@@ -135,10 +135,7 @@ MetaDataInputComponent.propTypes = {
 	onEndDateChange: PropTypes.func.isRequired,
 	selectLocaleForCalendar: PropTypes.func.isRequired,
 	formChecker: PropTypes.object.isRequired,
-	onChangeSelectedEmployees: PropTypes.func.isRequired, 
 	onSaveHandler: PropTypes.func.isRequired, 
-	onRadioButtonChange: PropTypes.func.isRequired, 
-	radioButtons: PropTypes.array.isRequired,
 	onChange: PropTypes.func.isRequired, 
 	startDate: PropTypes.object,
 	endDate: PropTypes.object, 

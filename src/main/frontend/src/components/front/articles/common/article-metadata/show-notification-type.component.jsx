@@ -5,12 +5,12 @@ import FieldCreationLabelComponent from './field-creation-label.component.jsx';
 
 const ShowNotificationsTypeComponent = ({type, title, subtitle}) => {
 	return (
-		<div className="row meta-data-label">
+		<div className="meta-data-label">
 			<FieldCreationLabelComponent 
 				title={title}
 				subtitle={subtitle}
 			/>
-			<h4 className="cols-xs-6 block-element text-xs-center">
+			<h4 className="cols-xs-6 block-element text-center">
 				{I18n.t(`meta_data_section.radio_button.options.${type.toLowerCase()}`)}
 			</h4>
               
