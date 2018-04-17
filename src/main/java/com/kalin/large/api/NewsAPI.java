@@ -3,6 +3,7 @@ package com.kalin.large.api;
 import com.kalin.large.core.model.article.Article;
 import com.kalin.large.core.model.news.News;
 import com.kalin.large.core.model.news.beans.NewsDTO;
+import com.kalin.large.core.model.news.beans.NewsFilterCriteria;
 import com.kalin.large.core.model.user.beans.UserBasicDTO;
 import com.kalin.large.core.model.user.beans.UserFullDTO;
 import com.kalin.large.core.service.error.ErrorCode;
@@ -59,6 +60,19 @@ public class NewsAPI {
 			return ResponseEntity.ok(newsService.load(id));
 		} catch (BusinessLogicException ble) {
             throw new ElementNotFound(ErrorCode.News.NEWS_NOT_FOUND, ble.getMessage());
+		}
+	}
+
+	/**
+	 * Return news according to given filter:
+	 * @return {@link Set<News>}
+	 */
+	@PostMapping(path = "/current", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	ResponseEntity<Set<NewsDTO>> listCurrentNews(@RequestBody final NewsFilterCriteria filterCriteria) {
+		try {
+			return ResponseEntity.ok(newsService.listCurrentNews(filterCriteria));
+		} catch (BusinessLogicException ble) {
+			throw new ElementNotFound(ErrorCode.UserService.USER_DOES_NOT_EXISTS, ble.getMessage());
 		}
 	}
 	

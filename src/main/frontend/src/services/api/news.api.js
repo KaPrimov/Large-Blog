@@ -21,7 +21,6 @@ export default class NewsAPI {
 	static listCurrentNews(filterCriteria) {
 		return RestService.post('api/news/current', filterCriteria);
 	}
-
 	
 	/**
 	 * List employees who have read an article

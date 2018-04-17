@@ -20,7 +20,7 @@ export const CLEAR_NEWS_CONTEXT = 'CLEAR_NEWS_CONTEXT';
 export const ADD_NEWS_TYPE = 'ADD_NEWS_TYPE';
 export const SAVE_NEWS_IN_STATE = 'SAVE_NEWS_IN_STATE';
 export const RESET_IS_SAVE = 'RESET_IS_SAVE';
-export const LOAD_EMPLOYEES_PER_ARTICLE_SUCCESS = 'LOAD_EMPLOYEES_PER_ARTICLE_SUCCESS';
+export const LOAD_USERS_PER_ARTICLE_SUCCESS = 'LOAD_USERS_PER_ARTICLE_SUCCESS';
 export const NEWS_PUBLISHED_SUCCESS = 'NEWS_PUBLISHED_SUCCESS';
 
 /* --------------------------- Temp files actions ----------------------------- */

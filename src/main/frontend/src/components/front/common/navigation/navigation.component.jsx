@@ -8,15 +8,13 @@ import Authenticated from '../../../common/security/authenticated.container.jsx'
 
 const Navigation= ({authenticatedUser, onLogout}) => {
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+		<nav className="navbar-light navbar-fixed-top" id="mainNav">
 			<div className="container">
 				<Link className="navbar-brand" to="/">L@rge</Link>
-				<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-					<i className="fa fa-bars"></i>
-				</button>
+				<button className="navbar-toggler navbar-right collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+     			</button>
 				<div className="collapse navbar-collapse" id="navbarResponsive">
-					<ul className="navbar-nav ml-auto">
+					<ul className="nav navbar-nav ml-auto">
 						{authenticatedUser != null && <li className="nav-item">
 							<Link className="nav-link" to="/article/all"><Translate value="navigation.blogs"/></Link>
 						</li>}
@@ -37,9 +35,9 @@ const Navigation= ({authenticatedUser, onLogout}) => {
 						{authenticatedUser != null && <li className="nav-item">
 							<Link className="nav-link logout-btn" onClick={onLogout}><Translate value="navigation.logout"/></Link>
 						</li>}
+						<LanguageContainer />	
 					</ul>
 				</div>
-				<LanguageContainer />
 			</div>
 		</nav>
 	);

@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -97,12 +96,12 @@ public class NewsServiceImpl implements NewsService {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "Specify id for the news");
 		}
 
-		Optional<News> newsOptional = newsRepository.findById(id);
+		News news = newsRepository.get(id);
 
-		if(!newsOptional.isPresent()) {
+		if(news == null) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id: " + id);
 		}
-		return newsFactory.createFrom(newsOptional.get());
+		return newsFactory.createFrom(news);
 	}
 
 	/**
@@ -111,14 +110,15 @@ public class NewsServiceImpl implements NewsService {
 	@Transactional(rollbackFor = BusinessLogicException.class)
 	@Override
 	public void deleteNews(final Long newsId) throws DataIntegrityViolationException, BusinessLogicException {
-		Optional<News> optionalNews = this.newsRepository.findById(newsId);
+		News news = newsRepository.get(newsId);
 		File newsPath = new File(parameterService.getGlobalParamAsString(ParamName.LARGE_REPO_PATH),parameterService.getGlobalParamAsString(ParamName.PEOPLE_DATA_PATH));
 		LargeFileUtil.deleteDirectory(new File(newsPath.getAbsolutePath(), newsId.toString()));
-		if(!optionalNews.isPresent()){
+
+		if(news == null) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsId);
 		}
 
-		newsRepository.delete(optionalNews.get());
+		newsRepository.delete(news);
 	}
 
 	/**
@@ -134,12 +134,11 @@ public class NewsServiceImpl implements NewsService {
 	 */
 	@Override
 	public Long updateNewsMetadata(final NewsDTO newsDTO) throws BusinessLogicException {
-		Optional<News> optionalNews = newsRepository.findById(newsDTO.getId());
+		News news = newsRepository.get(newsDTO.getId());
 
-		if(!optionalNews.isPresent()){
+		if(news == null) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsDTO.getId());
 		}
-		News news = optionalNews.get();
 		if (newsDTO.getImage() != null) {
 			commonArticleService.updateArticleImage(news, newsDTO.getImage());
 		}
@@ -148,7 +147,7 @@ public class NewsServiceImpl implements NewsService {
 		commonArticleService.updateDates(news, newsDTO.getStartDate(), newsDTO.getEndDate());
 		updateDescription(news, newsDTO.getShortDescription());
 
-		newsRepository.saveAndFlush(news);
+		newsRepository.update(news);
 
 		return news.getId();
 	}
@@ -158,12 +157,11 @@ public class NewsServiceImpl implements NewsService {
 	 */
 	@Override
 	public boolean publish(final Long newsId) throws BusinessLogicException {
-		Optional<News> optionalNews = newsRepository.findById(newsId);
+		News news = newsRepository.get(newsId);
 
-		if(!optionalNews.isPresent()){
+		if(news == null) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsId);
 		}
-		News news = optionalNews.get();
 		commonArticleService.validateArticleForPublish(news);
 		validateNews(news);
 		return commonArticleService.updateStatus(news);
@@ -176,22 +174,23 @@ public class NewsServiceImpl implements NewsService {
 	public Set<UserBasicDTO> listSeenByEmployees(final Long articleId) {
 		return newsSeenByRepository.listEmployeesByArticleSeen(articleId);
 	}
-	
+
 	/**
-	 * @throws BusinessLogicException 
-	 * @see com.kalin.large.core.service.news.NewsService##listCurrentNews(NewsFilterCriteria)
+	 * @throws BusinessLogicException
+	 * @see com.kalin.large.core.service.news.NewsService#listCurrentNews(NewsFilterCriteria)
 	 */
 	@Override
-	public Set<NewsDTO> listCurrentNews() throws BusinessLogicException {
-		return newsRepository.listCurrentNews(new Date());
+	public Set<NewsDTO> listCurrentNews(final NewsFilterCriteria filterCriteria) throws BusinessLogicException {
+		return newsRepository.listCurrentNews(new Date(), filterCriteria);
 	}
 	@Override
 	public void markNewsAsSeen(final Long newsId) {
-		News news = newsRepository.getOne(newsId);
+		News news = newsRepository.get(newsId);
+
 		Long loggedUserId = securityService.getLoggedInUser().getId();
 		if(!news.getUser().getId().equals(loggedUserId) && news.getSeenBy().stream().filter(seenBy -> seenBy.getPk().getUser().getId().equals(loggedUserId)).count()== NumberUtils.LONG_ZERO) {
 			news.addSeenBy(userRepository.getOne(loggedUserId));
-			newsRepository.saveAndFlush(news);
+			newsRepository.update(news);
 		}
 	}
 
@@ -227,11 +226,11 @@ public class NewsServiceImpl implements NewsService {
 	 * @throws BusinessLogicException
 	 */
 	private Long updateNewsContent(final NewsDTO newsDTO) throws BusinessLogicException {
-		Optional<News> optionalNews = newsRepository.findById(newsDTO.getId());
-		if(!optionalNews.isPresent()) {
+		News news = newsRepository.get(newsDTO.getId());
+
+		if(news == null) {
 			throw new BusinessLogicException(ErrorCode.News.NEWS_NOT_FOUND, "There is no News with id " + newsDTO.getId());
 		}
-		News news = optionalNews.get();
 		news.setTitle(newsDTO.getTitle());
 		news.setSubtitle(newsDTO.getSubtitle());
 		news.setBody(newsDTO.getBody());
@@ -242,7 +241,7 @@ public class NewsServiceImpl implements NewsService {
 				news.getArticleFiles().removeIf(file -> file.getId().equals(articleFileDTO.getArticleFileId()));
 			}
 		}
-		newsRepository.saveAndFlush(news);
+		newsRepository.update(news);
 		return news.getId();
 	}
 	

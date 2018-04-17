@@ -3,6 +3,7 @@ package com.kalin.large.core.service.news;
 
 import com.kalin.large.core.model.news.News;
 import com.kalin.large.core.model.news.beans.NewsDTO;
+import com.kalin.large.core.model.news.beans.NewsFilterCriteria;
 import com.kalin.large.core.model.user.beans.UserBasicDTO;
 import com.kalin.large.core.service.exception.BusinessLogicException;
 
@@ -69,9 +70,9 @@ public interface NewsService {
      * Generate list of news which are published, current (current date is in their range) and which 
      * target groups correspond to the logged user ( either employee or subsidiary target groups)
      */
-	Set<NewsDTO> listCurrentNews() throws BusinessLogicException;
+    Set<NewsDTO> listCurrentNews(NewsFilterCriteria filterCriteria) throws BusinessLogicException;
 
-	/**
+    /**
      * mark the {@link News} with articleId as seen by the current user who visits it
      * @param newsId the id of the article
      */

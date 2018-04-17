@@ -65,28 +65,7 @@ public abstract class ArticleDTO implements Serializable {
 		this.user = new UserBasicDTO(user.getId(), user.getUsername());
 	}
 	
-	/**
-	 * 
-	 * @param id
-	 * @param title
-	 * @param subtitle
-	 * @param startDate
-	 * @param endDate
-	 * @param body
-	 * @param imagePath
-	 * @param status
-	 */
-	protected ArticleDTO(final Long id, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
-			final String imagePath, final ArticleStatusEnum status) {
-		this.id = id;
-		this.title = title;
-		this.subtitle = subtitle;
-		this.body = body;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.imagePath = imagePath;
-		this.status = status;
-	}
+
 	
 	/**
 	 * 
@@ -97,7 +76,29 @@ public abstract class ArticleDTO implements Serializable {
 		this.id = id;
 		this.title = title;
 	}
-	
+
+	/**
+	 *
+	 * @param id
+	 * @param title
+	 * @param subtitle
+	 * @param startDate
+	 * @param endDate
+	 * @param body
+	 * @param imagePath
+	 * @param status
+	 */
+	private ArticleDTO(final Long id, final String title, final String subtitle, final Date startDate, final Date endDate, final String body,
+					   final String imagePath, final ArticleStatusEnum status) {
+		this.id = id;
+		this.title = title;
+		this.subtitle = subtitle;
+		this.body = body;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.imagePath = imagePath;
+		this.status = status;
+	}
 	
 	/**
 	 * 

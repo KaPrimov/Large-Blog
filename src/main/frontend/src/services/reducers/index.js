@@ -3,7 +3,7 @@ import {routerReducer} from 'react-router-redux';
 import {i18nReducer} from 'react-redux-i18n';
 import localeReducer from './locale.reducer';
 import {authenticatedUserReducer} from './security.reducer';
-import {singleNewsReducer} from './news.reducer';
+import {singleNewsReducer, newsReducer, newsSeenByReducer} from './news.reducer';
 import {tempFilesReducer} from './temp-files.reducer';
 import * as TagReducer from './tag.reducer';
 import * as ActionTypes from '../actions/action-types.constants';
@@ -17,6 +17,8 @@ const appReducer = combineReducers({
 	tempFiles: tempFilesReducer,
 	suggestedTags: TagReducer.suggestedTagsReducer,
 	tags: TagReducer.tagsReducer,
+	usersPerArticle:  newsSeenByReducer,
+	news: newsReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -8,7 +8,7 @@ const PageHeader = () => {
 			<div className="overlay"></div>
 			<div className="container">
 				<div className="row">
-					<div className="col-lg-8 col-md-10 mx-auto">
+					<div className="offset-xs-2 col-xs-8">
 						<div className="site-heading">
 							<h1>L@rge</h1>
 							<span className="subheading"><Translate value="home.heading"/></span>
@@ -18,10 +18,6 @@ const PageHeader = () => {
 			</div>
 		</header>
 	);
-};
-
-PageHeader.propTypes = {
-
 };
 
 export default PageHeader;
