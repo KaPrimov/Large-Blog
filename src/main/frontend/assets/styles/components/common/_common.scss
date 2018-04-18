@@ -1,3 +1,14 @@
-.content-wrapper {
+.head-nav {
+    display: flex;
+    align-items: center;
+    .links-wrapper {
+        width: 100%;
     
+        .ul-links {
+            display: flex;
+            align-items: center;
+            // flex-direction: row-reverse;
+            justify-content: flex-end
+        }
+    }
 }

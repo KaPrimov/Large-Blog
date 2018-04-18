@@ -66,8 +66,8 @@ class CreateNewsContainer extends React.Component {
 
 	componentDidMount() {
 		document.title = I18n.t('article_management_container.show_editor_label');
-		if (this.props.router.getCurrentLocation().pathname.toLowerCase() === '/news/article/publish' ||
-			this.props.router.getCurrentLocation().pathname.toLowerCase() === '/news/article/edit') {
+		if (this.props.router.getCurrentLocation().pathname.toLowerCase() === '/articles/news/publish' ||
+			this.props.router.getCurrentLocation().pathname.toLowerCase() === '/articles/news/edit') {
 			if (this.props.singleNews === {} || !this.props.singleNews.id) {
 				this.props.router.push('/news');
 			}
@@ -171,7 +171,7 @@ class CreateNewsContainer extends React.Component {
 	}
 
 	onRedirectClickHandler(id) {
-		this.props.actions.getSingleNews(id, false).then(() => browserHistory.push('news/article/' + id));
+		this.props.actions.getSingleNews(id, false).then(() => browserHistory.push('articles/news/' + id));
 	}
 
 	render() {

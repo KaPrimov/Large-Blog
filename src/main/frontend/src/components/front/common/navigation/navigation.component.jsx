@@ -9,12 +9,10 @@ import Authenticated from '../../../common/security/authenticated.container.jsx'
 const Navigation= ({authenticatedUser, onLogout}) => {
 	return (
 		<nav className="navbar-light navbar-fixed-top" id="mainNav">
-			<div className="container">
+			<div className="container-fluid head-nav">
 				<Link className="navbar-brand" to="/">L@rge</Link>
-				<button className="navbar-toggler navbar-right collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-     			</button>
-				<div className="collapse navbar-collapse" id="navbarResponsive">
-					<ul className="nav navbar-nav ml-auto">
+				<div className="pull-right links-wrapper" id="navbarResponsive">
+					<ul className="nav navbar-nav ul-links">
 						{authenticatedUser != null && <li className="nav-item">
 							<Link className="nav-link" to="/article/all"><Translate value="navigation.blogs"/></Link>
 						</li>}

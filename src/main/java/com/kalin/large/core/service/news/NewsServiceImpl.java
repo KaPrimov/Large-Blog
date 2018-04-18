@@ -11,6 +11,7 @@ import com.kalin.large.core.model.news.beans.NewsFilterCriteria;
 import com.kalin.large.core.model.param.ParamName;
 import com.kalin.large.core.model.user.User;
 import com.kalin.large.core.model.user.beans.UserBasicDTO;
+import com.kalin.large.core.model.user.beans.UserFullDTO;
 import com.kalin.large.core.repository.news.NewsRepository;
 import com.kalin.large.core.repository.news.NewsSeenByRepository;
 import com.kalin.large.core.repository.user.UserRepository;
@@ -187,7 +188,11 @@ public class NewsServiceImpl implements NewsService {
 	public void markNewsAsSeen(final Long newsId) {
 		News news = newsRepository.get(newsId);
 
-		Long loggedUserId = securityService.getLoggedInUser().getId();
+		UserFullDTO loggedInUser = securityService.getLoggedInUser();
+		if (loggedInUser == null) {
+			return;
+		}
+		Long loggedUserId = loggedInUser.getId();
 		if(!news.getUser().getId().equals(loggedUserId) && news.getSeenBy().stream().filter(seenBy -> seenBy.getPk().getUser().getId().equals(loggedUserId)).count()== NumberUtils.LONG_ZERO) {
 			news.addSeenBy(userRepository.getOne(loggedUserId));
 			newsRepository.update(news);

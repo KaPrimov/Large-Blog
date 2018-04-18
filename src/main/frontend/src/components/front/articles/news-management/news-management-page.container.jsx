@@ -130,19 +130,19 @@ class NewsManagementPage extends React.Component {
 	}
 
 	onEditClickHandler(id) {
-		this.props.actions.getSingleNews(id, true).then(() => browserHistory.push('news/article/edit'));		
+		this.props.actions.getSingleNews(id, true).then(() => browserHistory.push('articles/news/edit'));		
 	}
 
 	onDetailsClickHandler(id) {
-		this.props.actions.getSingleNewsForDetails(id, true).then(() => browserHistory.push('news/article/edit'));
+		this.props.actions.getSingleNewsForDetails(id, true).then(() => browserHistory.push('articles/news/edit'));
 	}
 
 	onPublishClickHandler(id) {
-		this.props.actions.getSingleNewsForPublish(id, true).then(() => browserHistory.push('news/article/publish'));	
+		this.props.actions.getSingleNewsForPublish(id, true).then(() => browserHistory.push('articles/news/publish'));	
 	}
 
 	onRedirectClickHandler(id) {
-		this.props.actions.getSingleNews(id, true).then(() => browserHistory.push('news/article/' + id));
+		this.props.actions.getSingleNews(id, true).then(() => browserHistory.push('articles/news/' + id));
 	}
 
 	isArticleActive(article) {

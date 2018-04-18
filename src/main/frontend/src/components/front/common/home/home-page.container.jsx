@@ -138,7 +138,7 @@ class NewsViewPageContainer extends React.Component {
 	 * Redirect handler, whiche determines the correct link
 	 */
 	onRedirectClickHandler(id) {
-		browserHistory.push('news/article/' + id);
+		browserHistory.push('articles/news/' + id);
 	}
 
 	/**

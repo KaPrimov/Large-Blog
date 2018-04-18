@@ -1,6 +1,8 @@
 import React from 'react';
 import {Translate, Localize, I18n} from 'react-redux-i18n';
 import ArticleAPI from '../../../../../services/api/article.api';
+import NewsAPI from '../../../../../services/api/news.api';
+import NewsErrorMessageCodeHandler from '../../../../../services/error-handlers/news-error-message-code-handler';
 import NewsWysiwygEditor from '../management/news-wysiwyg-editor.container.jsx';
 import * as newsActions from '../../../../../services/actions/news.actions';
 import SecurityService from '../../../../../services/services/security.service' ;
@@ -29,6 +31,7 @@ class ArticleViewPageContainer extends React.Component {
 	}
     
 	componentDidMount() {
+		this.checkIfUserIsEligible();
 		document.title = I18n.t('article_management_container.show_view_label');
 	}
 
@@ -73,6 +76,15 @@ class ArticleViewPageContainer extends React.Component {
 			{icon: 'fa fa-file-text-o', label: 'article_management_container.article'}];
 	}
 
+	checkIfUserIsEligible() {
+		NewsAPI.getNewsWithId(this.props.params.id).then(news => {			
+			this.loadPageData(news);						
+		}).fail(error => {
+			let errorMessageCodeHandler = new NewsErrorMessageCodeHandler();
+			NotificationService.notifyError(errorMessageCodeHandler.generateMessage(error));
+		});
+	}
+
 	render() {
 		return (
 			<section className="container-fluid" >
@@ -83,14 +95,14 @@ class ArticleViewPageContainer extends React.Component {
 								{this.state.articleElement && 
 									<section>
 										<h6><Translate value="article_management_container.date_of_publish"/>
-										<Localize value={this.state.articleElement.startDate} dateFormat="date.l" /></h6>
+											<Localize value={this.state.articleElement.startDate} dateFormat="date.l" /></h6>
 										<NewsWysiwygEditor 
 											isReadOnly={true}
 											titleValue={this.state.articleElement.title}
 											subtitleValue={this.state.articleElement.subtitle}
 											imagePath={this.state.imagePath}
 											singleNews={this.state.articleElement}/>
-										<ArticleFooterComponent newsArticle={this.state.articleElement} hasProfileReadPrivilege={this.state.hasProfileReadPrivilege} />
+										{/* <ArticleFooterComponent newsArticle={this.state.articleElement} hasProfileReadPrivilege={this.state.hasProfileReadPrivilege} /> */}
 									</section>
 								}
 							</div>

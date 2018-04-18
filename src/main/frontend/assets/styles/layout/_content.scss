@@ -147,9 +147,8 @@ Page content
 		.dropdown-menu {
 			width: 238px;
 			top: inherit;
-			left: inherit;
+			right: 0!important;
 			border-radius: 0;
-			right: 23px;
 			margin-top: 7px;
 
 			li {
