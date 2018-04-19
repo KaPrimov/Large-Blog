@@ -25,10 +25,10 @@ const Navigation= ({authenticatedUser, onLogout}) => {
 						{authenticatedUser == null && <li className="nav-item">
 							<Link className="nav-link" to="/users/register"><Translate value="navigation.register"/></Link>
 						</li>}
-						<Authenticated access="hasRole[administrator]">
+						<Authenticated access="hasRole[administrator]" className="nav-item" isInList={true}>
 							<Link className="nav-link" to="/admin"><Translate value="navigation.admin"/></Link>
 						</Authenticated>
-						<Authenticated access="hasRole[administrator],hasRole[moderator]">
+						<Authenticated access="hasRole[administrator],hasRole[moderator]" className="nav-item" isInList={true}>
 							<Link className="nav-link" to="/articles/news-management"><Translate value="navigation.manage_news"/></Link>
 						</Authenticated>
 						{authenticatedUser != null && <li className="nav-item">

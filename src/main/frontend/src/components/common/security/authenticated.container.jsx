@@ -21,9 +21,12 @@ class Authenticated extends React.Component {
 	render() {
 		if (this.state.isAuthorized) {
 			return (
-				<div className="navbar-autenticated">
-					{this.props.children}
-				</div>
+				this.props.isInList ? 
+					<li className={this.props.className ? this.props.className : 'navbar-autenticated'}>
+						{this.props.children}
+					</li> : <div className={this.props.className ? this.props.className : 'navbar-autenticated'}>
+						{this.props.children}
+					</div>
 			);
 		} else {
 			return null;

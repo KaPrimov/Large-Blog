@@ -3,6 +3,7 @@ import Navigation from './front/common/navigation/navigation.container.jsx';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as securityActions from '../services/actions/security.actions';
+import Footer from './front/common/footer/footer.component.jsx';
 
 class LargeAppContainer extends React.Component {
 	constructor(props) {
@@ -18,6 +19,7 @@ class LargeAppContainer extends React.Component {
 			<article id="large-application">
 				<Navigation />	
 				{this.props.children}
+				<Footer />
 			</article>
 		);
 	}
