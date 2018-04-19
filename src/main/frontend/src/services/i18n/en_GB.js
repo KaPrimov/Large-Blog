@@ -9,6 +9,7 @@ const gb = {
 		register: ' Register',
 		admin: 'Admin',
 		news_create: 'Create news',
+		manage_news: 'News'
 	},
 	register: {
 		label: 'Register',
@@ -47,7 +48,6 @@ const gb = {
 			email_already_exists: 'Email already exists',
 			url: 'The field must contain a valid URL address',
 			number: 'The field must contain a valid number',
-			invalid_birthdate: 'The employee should not be under 16 years',
 			end_smaller_start: 'The final date cannot be lower than the start year',
 			positive_number: 'The field must contain a positive number',
 			connected_required_field: 'The field \'%{fieldName}\' should also be filled out.',
@@ -128,10 +128,10 @@ const gb = {
 		saving: 'Publishing the article...',
 		to_all_articles: 'Article management',
 		article_details: 'Open created article',
-		article_is_active_until: 'The article is active for reading from the employees until %{endDate}',
-		article_is_active_since: 'The article is active for reading from the employees since %{startDate} and has no end data',
-		article_is_inactive_until: 'The article will be active for reading from the employees on %{startDate}',
-		article_is_inactive_since: 'The article was active for reading from the employees on %{endDate}',
+		article_is_active_until: 'The article is active for reading from the users until %{endDate}',
+		article_is_active_since: 'The article is active for reading from the users since %{startDate} and has no end data',
+		article_is_inactive_until: 'The article will be active for reading from the users on %{startDate}',
+		article_is_inactive_since: 'The article was active for reading from the users on %{endDate}',
 		active_label: 'Active',
 		inactive_label: 'Inactive',
 		future_active_label: 'Will be published',
@@ -177,7 +177,7 @@ const gb = {
 		cancel_publish: 'Cancel publishing',
 		to_publish_button: 'Publish',
 		short_description_title: 'Short description',
-		short_description_subtitle: 'The description will be seen in the news list. Write something brief, accentuating and decribing, which will make the employee reed the full article. ',
+		short_description_subtitle: 'The description will be seen in the news list. Write something brief, accentuating and decribing, which will make the user reed the full article. ',
 		short_description_placeholder: 'Short description...',
 		errors: {
 			invalid_data: 'You have invalid data'

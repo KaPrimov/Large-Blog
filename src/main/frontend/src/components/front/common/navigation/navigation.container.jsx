@@ -22,12 +22,6 @@ class NavigationContainer extends React.Component {
 		}
 	}
 
-	render() {
-		return (
-			<Navigation authenticatedUser={this.state.authenticatedUser} onLogout={this.onLogout} />
-		);
-	}
-
 	/**
    * Logout the authenticated user and redirect it to home page
    */
@@ -37,6 +31,12 @@ class NavigationContainer extends React.Component {
 			browserHistory.push('/');
 		});
 
+	}
+
+	render() {
+		return (
+			<Navigation authenticatedUser={this.state.authenticatedUser} onLogout={this.onLogout} />
+		);
 	}
 }
 

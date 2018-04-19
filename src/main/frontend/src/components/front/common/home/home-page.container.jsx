@@ -17,7 +17,7 @@ class NewsViewPageContainer extends React.Component {
 		super(props);
 		this.state = {
 			news: this.props.news,
-			employeesPerArticle: this.props.employeesPerArticle,
+			usersPerArticle: this.props.usersPerArticle,
 			hasProfileReadPrivilege: SecurityService.access(this.props.authenticatedUser, 'hasPrivilege[people.profile:read]'),
 			loadAsynchData: false,
 			filterCriteria: {desiredPage: 0, hasMoreItems: true, filterByTag: this.props.params['tag'] !== undefined ? this.props.params['tag'] : null},

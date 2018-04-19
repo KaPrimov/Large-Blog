@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import SecurityService from '../../../../services/services/security.service';
-import ArticleStats from '../common/article-stats/article-stats.component.jsx';
 import * as newsAction from '../../../../services/actions/news.actions';
 import * as ArticleStatus from '../common/article-status.constants';
 
@@ -16,38 +15,22 @@ class ArticleElement extends React.Component{
 
 		this.state={
 			article: this.props.article,
-			employeesPerArticle: this.props.employeesPerArticle,
+			usersPerArticle: this.props.usersPerArticle,
 			modalIsOpen: false,
 			hasProfileReadPrivilege: SecurityService.access(this.props.authenticatedUser, 'hasPrivilege[people.profile:read]')			
 		};
 
-		this.openStatsModal = this.openStatsModal.bind(this);
-		this.closeStatsModal = this.closeStatsModal.bind(this);
 		this.generateToolTip = this.generateToolTip.bind(this);
 	}
     
 	componentWillReceiveProps(nextProps) {
-		if(this.state.employeesPerArticle !== nextProps.employeesPerArticle){
-			this.setState({employeesPerArticle: nextProps.employeesPerArticle});
+		if(this.state.usersPerArticle !== nextProps.usersPerArticle){
+			this.setState({usersPerArticle: nextProps.usersPerArticle});
 		}
 		if (this.state.authenticatedUser != nextProps.authenticatedUser) {
 			this.setState({authenticatedUser:nextProps.authenticatedUser});
 		}	
 	}
-
-	openStatsModal(e) {
-		e.preventDefault();
-		this.props.actions.listAllEmployeesPerArticleSeen(this.state.article.id);
-		this.setState({modalIsOpen: true});
-	}
-	
-
-	closeStatsModal(e) {
-		e.preventDefault();
-		this.props.actions.clearEmployeesPerArticleSeen();
-		this.setState({modalIsOpen: false});
-	}
-
 	generateToolTip() {
 		const article = this.state.article;
 		let tooltipData = {};
@@ -100,18 +83,6 @@ class ArticleElement extends React.Component{
 								<Translate value="article_management.open" />
 							</span>
 						</li>
-						<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={this.openStatsModal}>
-							<ArticleStats 
-								isOpen={this.state.modalIsOpen} 
-								onRequestClose={this.closeStatsModal}
-								employeesPerArticle={this.state.employeesPerArticle}
-								hasProfileReadPrivilege={this.state.hasProfileReadPrivilege} 
-							/>
-							<FontAwesome name='line-chart' />
-							<span className="nav-icons-label">
-								<Translate value="article_management.stats" />
-							</span>
-						</li>
 						<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={() => this.props.onEditClickHandler(this.props.article.id)}>
 							<FontAwesome name='pencil' />
 							<span className="nav-icons-label">
@@ -156,7 +127,7 @@ class ArticleElement extends React.Component{
 
 function mapStateToProps(state) {
 	return {
-		employeesPerArticle: state.employeesPerArticle,
+		usersPerArticle: state.usersPerArticle,
 		authenticatedUser: state.authenticatedUser
 	};
 }

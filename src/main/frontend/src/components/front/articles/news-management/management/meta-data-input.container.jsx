@@ -29,7 +29,6 @@ class MetaDataInputContainer extends React.Component {
 					'startDate': true, 'endDate': true, 'shortDescription': true
 				}
 			},
-			isGroupMarked: (this.props.currentNews.targetEmployees && this.props.currentNews.targetEmployees.length) > 0 ? false : true
 		};
 		this.radioButtons = [{value: 'WEB', option: I18n.t('meta_data_section.radio_button.options.web'), dataTip: I18n.t('meta_data_section.radio_button.tooltips.web')},
 			{value: 'MAIL', option: I18n.t('meta_data_section.radio_button.options.mail'), dataTip: I18n.t('meta_data_section.radio_button.tooltips.mail')}, 

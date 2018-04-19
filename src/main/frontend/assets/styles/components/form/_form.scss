@@ -4,6 +4,13 @@
 @import 'circular_button';
 @import 'select';
 
+.input-group-addon {
+  background: no-repeat;
+  border: none;
+  padding-left: 50px;
+  padding-right: 0px;
+}
+
 .alert-danger {
   font-size: 0.85em;
   padding-left: 10px;

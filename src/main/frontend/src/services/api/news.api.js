@@ -4,8 +4,8 @@ export default class NewsAPI {
 	/**
 	 * Delete news by Id 
 	 */
-	static deleteNews(newsId, employeeId) {
-		return RestService.delete(`api/news/${newsId}?employeeId=${employeeId}`);
+	static deleteNews(newsId, userId) {
+		return RestService.delete(`api/news/${newsId}?userId=${userId}`);
 	}
 
 	/**
@@ -23,9 +23,9 @@ export default class NewsAPI {
 	}
 	
 	/**
-	 * List employees who have read an article
+	 * List users who have read an article
 	 */
-	static listAllEmployeesPerArticleSeen(articleId) {
+	static listAllUsersPerArticleSeen(articleId) {
 		return RestService.get(`api/news/seen-by/${articleId}`);
 	}
 

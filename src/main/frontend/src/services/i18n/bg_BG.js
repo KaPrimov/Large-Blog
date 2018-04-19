@@ -10,6 +10,7 @@ const bg = {
 		admin: 'Администрация',
 		logout: 'Отписване',
 		news_create: 'Създай новина',
+		manage_news: 'Статии'
 	},
 	register: {
 		label: 'Регистрирайте се',

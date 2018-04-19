@@ -117,7 +117,7 @@ export function deleteNews(news) {
 		ModalService.showConfirm(I18n.t('news_actions.confirm_delete')).then(result => {
 			if(result) {
 				dispatch(showLoading());				
-				NewsAPI.deleteNews(news.id, news.employee.id).then(result => {
+				NewsAPI.deleteNews(news.id, news.user.id).then(result => {
 					if (result) {
 						NotificationService.notifySuccess(I18n.t('news_actions.success_delete', {name: news.title}));
 						dispatch(_deleteNewsSuccess(news));
@@ -217,14 +217,14 @@ export function resetIsSave() {
 }
 
 /**
- * List employees which have read a specific article
+ * List users which have read a specific article
  */
-export function listAllEmployeesPerArticleSeen(articleId) {
+export function listAllUsersPerArticleSeen(articleId) {
 	return function(dispatch) {
 		dispatch(showLoading());
-		return NewsAPI.listAllEmployeesPerArticleSeen(articleId).then(employeesPerArticle => {
+		return NewsAPI.listAllUsersPerArticleSeen(articleId).then(usersPerArticle => {
 			dispatch(hideLoading());
-			dispatch(_loadEmployeesPerArticleSeenSuccess(employeesPerArticle));
+			dispatch(_loadUsersPerArticleSeenSuccess(usersPerArticle));
 		}).fail(error => {
 			_handleCommonServerErrors(error);
 			dispatch(hideLoading());
@@ -233,11 +233,11 @@ export function listAllEmployeesPerArticleSeen(articleId) {
 }
 
 /**
- * Clear store from employees per article
+ * Clear store from users per article
  */
-export function clearEmployeesPerArticleSeen() {
+export function clearUsersPerArticleSeen() {
 	return function(dispatch) {
-		dispatch(_loadEmployeesPerArticleSeenSuccess([]));
+		dispatch(_loadUsersPerArticleSeenSuccess([]));
 	};
 }
 
@@ -361,10 +361,10 @@ function _loadSingleNewsSuccess(news, isFromManagePage) {
 }
 
 /**
- * Load employees who have successfully read an article
+ * Load users who have successfully read an article
  */
-export function _loadEmployeesPerArticleSeenSuccess(employeesPerArticle, articleId){
-	return {type:ActionTypes.LOAD_EMPLOYEES_PER_ARTICLE_SUCCESS, employeesPerArticle, articleId};
+export function _loadUsersPerArticleSeenSuccess(usersPerArticle, articleId){
+	return {type:ActionTypes.LOAD_USERS_PER_ARTICLE_SUCCESS, usersPerArticle, articleId};
 }
 
 /**

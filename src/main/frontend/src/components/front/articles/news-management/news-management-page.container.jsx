@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {Translate, I18n} from 'react-redux-i18n';
-import {Link, browserHistory} from 'react-router';
+import {I18n} from 'react-redux-i18n';
+import {browserHistory} from 'react-router';
 import * as newsActions from '../../../../services/actions/news.actions';
 import * as articleActions from '../../../../services/actions/article.actions';
 import ArticleManagementTabSwitcher from '../common/article-management/article-management-tab-switcher.component.jsx';

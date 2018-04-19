@@ -6,7 +6,6 @@ const Author = ({author, hasProfileReadPrivilege}) => {
 	return (
 		<div className="author-detail">
 			<Link to={hasProfileReadPrivilege ? `/people/${author.id}` : ''}  className="profile" >
-				{/* <div className="author-avatar"><Img imgClasses="rounded-circle" src={EmployeeAPI.getProfilePictureUrlByEmployeeId(author.id)} alt="" /></div> */}
 				<span className="username hidden-xs-down">{author.firstName + ' ' + author.lastName}</span>
 			</Link>
 		</div>

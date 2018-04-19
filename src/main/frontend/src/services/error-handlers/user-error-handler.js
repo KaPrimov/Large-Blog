@@ -1,8 +1,8 @@
 import CommonErrorMessageCodeHandler from './common-error-message-code-handler';
 
-export default class EmployeeErrorMessageCodeHandler extends CommonErrorMessageCodeHandler {
+export default class UserErrorMessageCodeHandler extends CommonErrorMessageCodeHandler {
 	constructor() {
-		super('employee_actions.server_errors');
+		super('user_actions.server_errors');
 		this.WRONG_CREDENTIALS = 401;
 	}
 
