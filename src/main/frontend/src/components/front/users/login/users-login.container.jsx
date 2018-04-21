@@ -20,6 +20,14 @@ class UserRegisterContainer extends Component {
 		this.bindEventHandlers();
 	}
 
+	componentDidMount() {
+		$('#footer').addClass('sticky');
+	}
+	
+	componentWillUnmount() {
+		$('#footer').removeClass('sticky');
+	}
+
 	bindEventHandlers() {
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);

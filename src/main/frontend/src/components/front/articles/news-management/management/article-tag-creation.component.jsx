@@ -5,7 +5,7 @@ import FieldCreationLabelComponent from '../../common/article-metadata/field-cre
 
 const NewsTagCreationComponent = ({titleValue, subtitleValue}) => {
 	return (
-		<div className="mx-auto meta-data-element-wrapper">
+		<div className="row mx-auto meta-data-element-wrapper">
 			<FieldCreationLabelComponent
 				title={titleValue}
 				subtitle={subtitleValue} 

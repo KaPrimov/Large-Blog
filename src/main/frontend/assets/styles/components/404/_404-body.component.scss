@@ -1,0 +1,49 @@
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~bootstrap/scss/variables';
+
+.small-header {
+	position: relative;
+	width: 100%;
+	background: #FFFFFF;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	z-index: 1;
+}
+
+.error-wrapper {
+  	position: absolute;
+    padding: 5px;
+    color: #274C7D;
+    top: 150px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    width: 100%;
+    font-size: 3em;
+
+	.thin {
+		font-weight: 200;
+	}
+
+  span {
+    display: block;
+  }
+
+  #error-type {
+		font-family: 'Open Sans';
+		font-weight: 700;
+		font-style: normal;
+    font-size: 3.0em;
+  }
+
+  #error-message {
+
+  }
+}
+
+@include media-breakpoint-only(xs) {
+  .error-wrapper, #error-type {
+  	font-size: 2em;
+  }
+}

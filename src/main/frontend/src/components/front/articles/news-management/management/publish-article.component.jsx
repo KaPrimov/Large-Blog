@@ -31,7 +31,7 @@ const PublishArticleComponent = ({singleNews, finish, onRedirectClickHandler}) =
 					{finish && (
 						<div className="row">
 							<div className='row mx-auto'>
-								<Link to='news/article-management' className="btn btn-sm btn-ocustom col-sm-6 create-metadata-button offset-xs-3">
+								<Link to='articles/news-management' className="btn btn-sm btn-ocustom col-sm-6 create-metadata-button offset-xs-3">
 									<Translate value="article_management.to_all_articles" />
 								</Link>
 							</div>

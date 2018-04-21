@@ -22,7 +22,7 @@ export const SAVE_NEWS_IN_STATE = 'SAVE_NEWS_IN_STATE';
 export const RESET_IS_SAVE = 'RESET_IS_SAVE';
 export const LOAD_USERS_PER_ARTICLE_SUCCESS = 'LOAD_USERS_PER_ARTICLE_SUCCESS';
 export const NEWS_PUBLISHED_SUCCESS = 'NEWS_PUBLISHED_SUCCESS';
-
+export const RESET_LAST_ACTIVE_TAB = 'RESET_LAST_ACTIVE_TAB';
 /* --------------------------- Temp files actions ----------------------------- */
 export const CLEAR_TEMP_FILES_CONTEXT = 'CLEAR_TEMP_FILES_CONTEXT';
 export const ADD_TEMP_FILE_SUCCESS = 'ADD_TEMP_FILE_SUCCESS';

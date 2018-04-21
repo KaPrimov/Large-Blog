@@ -116,8 +116,8 @@ export function deleteNews(news) {
 	return function(dispatch) {
 		ModalService.showConfirm(I18n.t('news_actions.confirm_delete')).then(result => {
 			if(result) {
-				dispatch(showLoading());				
-				NewsAPI.deleteNews(news.id, news.user.id).then(result => {
+				dispatch(showLoading());
+				NewsAPI.deleteNews(news.id, news.idUser).then(result => {
 					if (result) {
 						NotificationService.notifySuccess(I18n.t('news_actions.success_delete', {name: news.title}));
 						dispatch(_deleteNewsSuccess(news));

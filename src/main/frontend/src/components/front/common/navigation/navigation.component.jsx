@@ -14,9 +14,6 @@ const Navigation= ({authenticatedUser, onLogout}) => {
 				<div className="pull-right links-wrapper" id="navbarResponsive">
 					<ul className="nav navbar-nav ul-links">
 						{authenticatedUser != null && <li className="nav-item">
-							<Link className="nav-link" to="/article/all"><Translate value="navigation.blogs"/></Link>
-						</li>}
-						{authenticatedUser != null && <li className="nav-item">
 							<Link className="nav-link" to="/articles/news/create"><Translate value="navigation.news_create"/></Link>
 						</li>}
 						{authenticatedUser == null && <li className="nav-item">

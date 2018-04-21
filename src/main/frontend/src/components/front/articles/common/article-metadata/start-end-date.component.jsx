@@ -6,7 +6,7 @@ import FieldCreationLabelComponent from './field-creation-label.component.jsx';
 
 const StartEndDateComponent = ({startDate, onStartDateChange, endDate, onEndDateChange, selectLocaleForCalendar, formChecker, title, subtitle}) => {
 	return (
-		<div className="mx-auto meta-data-element-wrapper">
+		<div className="row mx-auto meta-data-element-wrapper">
 			<FieldCreationLabelComponent
 				title={title}
 				subtitle={subtitle}

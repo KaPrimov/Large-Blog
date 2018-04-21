@@ -1,5 +1,6 @@
 {
   "globalDependencies": {
-    "bootstrap": "registry:dt/bootstrap#3.3.5+20160726204056"
+    "bootstrap": "registry:dt/bootstrap#3.3.5+20160726204056",
+    "gsap": "registry:dt/gsap#1.19.0+20170130020606"
   }
 }

@@ -69,7 +69,7 @@ class CreateNewsContainer extends React.Component {
 		if (this.props.router.getCurrentLocation().pathname.toLowerCase() === '/articles/news/publish' ||
 			this.props.router.getCurrentLocation().pathname.toLowerCase() === '/articles/news/edit') {
 			if (this.props.singleNews === {} || !this.props.singleNews.id) {
-				this.props.router.push('/news');
+				this.props.router.push('/');
 			}
 		}
 		if (this.props.singleNews.isForPublish) {

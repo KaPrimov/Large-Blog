@@ -89,10 +89,9 @@ class ArticleViewPageContainer extends React.Component {
 		return (
 			<section className="container-fluid" >
 				<section className='create-article-editor'>
-					<div>
-						<div className='portlet light article-management'>
-							<div className='article-view-element'>
-								{this.state.articleElement && 
+					<div className='portlet light article-management'>
+						<div className='article-view-element'>
+							{this.state.articleElement && 
 									<section>
 										<h6><Translate value="article_management_container.date_of_publish"/>
 											<Localize value={this.state.articleElement.startDate} dateFormat="date.l" /></h6>
@@ -104,8 +103,7 @@ class ArticleViewPageContainer extends React.Component {
 											singleNews={this.state.articleElement}/>
 										{/* <ArticleFooterComponent newsArticle={this.state.articleElement} hasProfileReadPrivilege={this.state.hasProfileReadPrivilege} /> */}
 									</section>
-								}
-							</div>
+							}
 						</div>
 					</div>
 				</section>

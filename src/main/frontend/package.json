@@ -71,6 +71,7 @@
     "draft-convert": "1.2.3",
     "draft-js": "0.9.1",
     "font-awesome": "4.7.0",
+    "gsap": "1.20.4",
     "halogen": "0.2.0",
     "immutable": "3.8.2",
     "izitoast": "1.1.5",

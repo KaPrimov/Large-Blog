@@ -17,6 +17,10 @@
     color: #7E7F85 !important;
     border-radius: 0 !important;
     background: transparent !important;
+
+    &:hover {
+      background: transparent !important;
+    }
   }
 
   &:hover, &:focus {
@@ -28,4 +32,5 @@
 
 .small-search-btn {
   font-size: 10px !important;
+  padding: 8px 10px!important;
 }

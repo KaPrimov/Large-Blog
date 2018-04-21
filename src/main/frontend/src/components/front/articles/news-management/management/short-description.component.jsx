@@ -6,7 +6,7 @@ import {I18n} from 'react-redux-i18n';
 
 const ShortDescriptionComponent = ({titleValue, subtitleValue, shortDescription, formChecker, onChange}) => {
 	return (
-		<div className="mx-auto meta-data-element-wrapper">
+		<div className="row mx-auto meta-data-element-wrapper mt-2">
 			<FieldCreationLabelComponent
 				title={titleValue}
 				subtitle={subtitleValue}

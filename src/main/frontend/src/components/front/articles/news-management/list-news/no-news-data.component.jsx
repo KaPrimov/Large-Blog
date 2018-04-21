@@ -6,9 +6,9 @@ import {Translate} from 'react-redux-i18n';
 const NoNewsData = ({loading}) => {
 	return (
 		<article className={'no-news-data text-xs-center ' + (loading ? 'loading' : '')}>
-			<figure className="mx-auto poster">
+			{/* <figure className="mx-auto poster">
 				<Img src="/assets/images/no-news-poster.jpg" />
-			</figure>
+			</figure> */}
 			<div className="no-news-feed-text">
 				<h3><Translate value="no_news_data.no_data" /></h3>
 			</div>

@@ -1,5 +1,5 @@
 import * as ActionTypes from '../actions/action-types.constants';
-
+import * as ArticleContants from '../../components/front/articles/common/article-status.constants';
 /**
  * Helper function for generation of initial states of reducers
  */
@@ -10,6 +10,7 @@ function initializeStates() {
 		},
 		news: [],
 		usersPerArticle: [],
+		lastActiveTab: ArticleContants.DRAFT
 	};
 }
 
@@ -56,6 +57,17 @@ export function newsSeenByReducer(state = initializeStates().usersPerArticle, ac
 	switch(action.type) {
 	case ActionTypes.LOAD_USERS_PER_ARTICLE_SUCCESS:
 		return action.usersPerArticle;
+	default:
+		return state;
+	}
+}
+
+export function lastActiveTabReducer(state = initializeStates().lastActiveTab, action) {
+	switch(action.type) {
+	case ActionTypes.CHANGE_LAST_ACTIVE_TAB:
+		return action.activeTab;
+	case ActionTypes.RESET_LAST_ACTIVE_TAB:
+		return initializeStates().lastActiveTab;
 	default:
 		return state;
 	}

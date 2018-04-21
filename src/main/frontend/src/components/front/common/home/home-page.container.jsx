@@ -11,6 +11,7 @@ import {Translate, I18n} from 'react-redux-i18n';
 import NoNewsData from '../../articles/news-management/list-news/no-news-data.component.jsx';
 import PageHeader from './page-header.component.jsx';
 import {setTimeout} from 'timers';
+import LoaderComponent from '../../../common/loader/loader-component.jsx';
 
 class NewsViewPageContainer extends React.Component {
 	constructor(props) {

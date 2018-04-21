@@ -4,6 +4,7 @@ import SecurityAPI from '../api/security.api';
 import NotificationService from '../../services/services/notification.service';
 import UserErrorMessageCodeHandler from '../error-handlers/user-error-handler';
 import {I18n} from 'react-redux-i18n';
+import {browserHistory} from 'react-router';
 
 /* ------------------------------ Public API ------------------------------- */
 /**
@@ -17,6 +18,7 @@ export function loginUser(userData) {
 				if (authenticatedUser) {
 					NotificationService.notifySuccess(I18n.t('user_actions.login_success'));
 					dispatch(_saveAutheticatedUser(authenticatedUser));
+					browserHistory.push('/');
 				} else {
 					NotificationService.notifyError(I18n.t('user_actions.login_failed'));
 				}

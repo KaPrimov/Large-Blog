@@ -66,7 +66,7 @@ class ArticleElement extends React.Component{
 		const articleTooltipData = this.generateToolTip();
 		return (  
 			<article key={this.props.article.id} className="article-element row">
-				<div className="col-sm-12 col-sm-6 col-lg-5 align-right article-titles">
+				<div className="col-xs-12 col-sm-6 col-lg-5 align-right article-titles">
 					<div className="capital-title">
 						{this.props.article.title}
 					</div>
@@ -75,15 +75,15 @@ class ArticleElement extends React.Component{
 						{this.props.article.subtitle}
 					</div>
 				</div>
-				<div className="col-sm-12 col-sm-6 col-lg-7 inline-block row" >
+				<div className="col-xs-12 col-sm-6 col-lg-7 inline-block row" >
 					<ul className="nav-icons">
-						<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={() => this.props.onRedirectClickHandler(this.props.article.id)}>
+						<li className="nav-icons-bar-item col-sm-4 col-lg-3" onClick={() => this.props.onRedirectClickHandler(this.props.article.id)}>
 							<FontAwesome name='external-link' className="nav-icon-text"/>
 							<span className="nav-icons-label-open">
 								<Translate value="article_management.open" />
 							</span>
 						</li>
-						<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={() => this.props.onEditClickHandler(this.props.article.id)}>
+						<li className="nav-icons-bar-item col-sm-4 col-lg-3" onClick={() => this.props.onEditClickHandler(this.props.article.id)}>
 							<FontAwesome name='pencil' />
 							<span className="nav-icons-label">
 								<Translate value="article_management.edit" />
@@ -91,21 +91,21 @@ class ArticleElement extends React.Component{
 						</li>
 
 						{this.state.article.status === ArticleStatus.PUBLISHED &&
-							<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={() => this.props.onDetailsClickHandler(this.props.article.id)}>
+							<li className="nav-icons-bar-item col-sm-4 col-lg-3" onClick={() => this.props.onDetailsClickHandler(this.props.article.id)}>
 								<FontAwesome name='search'/>
 								<span className="nav-icons-label">
 									<Translate value="article_management.details" />
 								</span>
 							</li>
 						}
-						<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={() => this.props.onDelete(this.props.article)}>
+						<li className="nav-icons-bar-item col-sm-4 col-lg-3" onClick={() => this.props.onDelete(this.props.article)}>
 							<FontAwesome name='times'/>
 							<span className="nav-icons-label">
 								<Translate value="article_management.delete" />
 							</span>
 						</li>
 						{this.state.article.status === ArticleStatus.DRAFT && 
-							<li className="nav-icons-bar-item col-sm-4 col-lg-2" onClick={() => this.props.onPublish(this.props.article.id)}>
+							<li className="nav-icons-bar-item col-sm-4 col-lg-3" onClick={() => this.props.onPublish(this.props.article.id)}>
 								<FontAwesome name='arrow-right'/>
 								<span className="nav-icons-label">
 									<Translate value="article_management.publish" />
@@ -113,7 +113,7 @@ class ArticleElement extends React.Component{
 							</li>
 						}
 						{this.state.article.status !== ArticleStatus.DRAFT && (							
-							<li className={this.state.article.status === ArticleStatus.PUBLISHED ? 'nav-icons-bar-item col-sm-4 col-lg-2' : 'nav-icons-bar-item col-sm-8 col-lg-4'} onClick={() => this.props.onPublish(this.props.article.id)}>
+							<li className={this.state.article.status === ArticleStatus.PUBLISHED ? 'nav-icons-bar-item col-sm-4 col-lg-3' : 'nav-icons-bar-item col-sm-8 col-lg-4'} onClick={() => this.props.onPublish(this.props.article.id)}>
 								<span className={`${articleTooltipData.className} pull-right`} data-tip={articleTooltipData.tooltip} data-for={`id-${this.props.article.id}`}><Translate value={articleTooltipData.value}/></span>
 								<ReactTooltip id={`id-${this.props.article.id}`} />
 							</li>) 						

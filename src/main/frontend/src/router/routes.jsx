@@ -9,6 +9,7 @@ import ArticleLayoutComponent from '../components/common/module-layout/articles/
 import CreateNewsContainer from '../components/front/articles/news-management/management/create-news.container.jsx';
 import NewsManagement from '../components/front/articles/news-management/news-management-page.container.jsx';
 import ViewNewsContainer from '../components/front/articles/news-management/news-view-page/news-view-page.container.jsx';
+import NotFound from '../components/front/common/404/404-page.container.jsx';
 
 export default (
 	<Route path="/" component={LargeAppContainer}>
@@ -22,8 +23,14 @@ export default (
 
 		<Route path="/articles" component={ArticleLayoutComponent}>
 			<Route path="news/create" component={requireAuth(CreateNewsContainer, null, 'hasRole[moderator],hasRole[administrator]')}/>
+			<Route path="news/edit" component={requireAuth(CreateNewsContainer, null, 'hasRole[moderator],hasRole[administrator]')} />	
+			<Route path="news/publish" component={requireAuth(CreateNewsContainer, null, 'hasRole[moderator],hasRole[administrator]')} />	
 			<Route path="news/:id" component={requireAuth(ViewNewsContainer, 'clearCreateNewsStates')}/>
-			<Route path="news-management" component={requireAuth(NewsManagement, 'clearCreateNewsStates', 'hasPrivilege[news.articles:update]', true)} />
+			<Route path="news-management" component={requireAuth(NewsManagement, 'clearCreateNewsStates', 'hasRole[moderator],hasRole[administrator]')} />
+			<Route path="admin" component={requireAuth(NewsManagement, null, 'hasRole[administrator]')} />
 		</Route>
+
+		{/* --------------------------------------- Page not found Route -------------------------------------- */}
+		<Route path="*" component={requireAuth(NotFound)} />
 	</Route>
 );
