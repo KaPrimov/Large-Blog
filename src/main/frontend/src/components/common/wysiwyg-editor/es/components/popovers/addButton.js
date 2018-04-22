@@ -231,8 +231,8 @@ var DanteInlineTooltip = function (_React$Component) {
 			// checkeamos si esta vacio
 			this.display(block.getText().length === 0 && blockType === 'unstyled');
 			return this.setPosition({
-				top: coords.top + window.scrollY - 220,
-				left: coords.left + window.scrollX - 200
+				top: coords.top + window.scrollY,
+				left: coords.left + window.scrollX - 400
 			});
 
 			/*

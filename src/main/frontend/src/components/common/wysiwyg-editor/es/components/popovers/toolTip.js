@@ -127,8 +127,8 @@ var DanteTooltip = function (_React$Component) {
       return;
     }
 
-    var top = selectionBoundary.top - parentBoundary.top - 30;
-    var left = selectionBoundary.left + selectionBoundary.width / 2 - padd;
+    var top = selectionBoundary.top - parentBoundary.top + 230;
+    var left = (selectionBoundary.left + selectionBoundary.width / 2) - 500;
 
     if (!top || !left) {
       return;

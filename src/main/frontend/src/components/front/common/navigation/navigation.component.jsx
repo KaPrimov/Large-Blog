@@ -13,9 +13,9 @@ const Navigation= ({authenticatedUser, onLogout}) => {
 				<Link className="navbar-brand" to="/">L@rge</Link>
 				<div className="pull-right links-wrapper" id="navbarResponsive">
 					<ul className="nav navbar-nav ul-links">
-						{authenticatedUser != null && <li className="nav-item">
+						<Authenticated access="hasRole[administrator],hasRole[moderator]" className="nav-item" isInList={true}>
 							<Link className="nav-link" to="/articles/news/create"><Translate value="navigation.news_create"/></Link>
-						</li>}
+							</Authenticated>
 						{authenticatedUser == null && <li className="nav-item">
 							<Link className="nav-link" to="/users/login"><Translate value="navigation.login"/></Link>
 						</li>}						

@@ -22,6 +22,8 @@ export default class LocaleService {
      * Get specific locale by shortName
      */
 	static getLocaleByShortName(shortName) {
+		console.log('cur', shortName)
+		console.log('all', this.getLocales());
 		return this.getLocales().filter(locale => locale.shortName == shortName)[0];
 	}
 
