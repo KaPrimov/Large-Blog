@@ -1,10 +1,15 @@
 package com.kalin.large.core.service.user;
 
 import com.kalin.large.core.model.roles.Role;
+import com.kalin.large.core.model.roles.beans.AuthorityRoleDTO;
 import com.kalin.large.core.model.user.User;
 import com.kalin.large.core.model.user.beans.RegisterUserDTO;
+import com.kalin.large.core.model.user.beans.UserAuthoritiesDTO;
 import com.kalin.large.core.model.user.beans.UserFullDTO;
+import com.kalin.large.core.model.user.beans.UserRolesDTO;
 import com.kalin.large.core.repository.user.UserRepository;
+import com.kalin.large.core.service.error.ErrorCode;
+import com.kalin.large.core.service.exception.BusinessLogicException;
 import com.kalin.large.core.service.role.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,12 +36,16 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final BCryptPasswordEncoder cryptPasswordEncoder;
 
+    /*---------------------------------------------------- FACTORIES --------------------------------------------------*/
+    private final UserFactory userFactory;
+
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final ModelMapper modelMapper, final RoleService roleService, final BCryptPasswordEncoder cryptPasswordEncoder) {
+    public UserServiceImpl(final UserRepository userRepository, final ModelMapper modelMapper, final RoleService roleService, final BCryptPasswordEncoder cryptPasswordEncoder, UserFactory userFactory) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.roleService = roleService;
         this.cryptPasswordEncoder = cryptPasswordEncoder;
+        this.userFactory = userFactory;
     }
 
     /**
@@ -76,6 +84,46 @@ public class UserServiceImpl implements UserService {
         UserFullDTO userDTO = modelMapper.map(user, UserFullDTO.class);
         userDTO.setAuthorities(user.getAuthorities().stream().map(Role::getAuthority).collect(Collectors.toSet()));
 		return userDTO;
+    }
+
+    /**
+     * @see UserService#getAllUsers()
+     */
+    @Override
+    public Set<UserAuthoritiesDTO> getAllUsers() {
+        List<User> allUsers = this.userRepository.findAll();
+        Set<UserAuthoritiesDTO> userAuthoritiesDTOS = new LinkedHashSet<>();
+        for (User user : allUsers) {
+            userAuthoritiesDTOS.add(this.userFactory.createUserWithAuthoritiesDTO(user));
+        }
+        return userAuthoritiesDTOS;
+    }
+
+    @Override
+    public Long updateRoles(final Long id, final UserRolesDTO userRolesDTO) throws BusinessLogicException {
+        Optional<User> optionalUser = this.userRepository.findById(id);
+
+        if (!optionalUser.isPresent()) {
+            throw new BusinessLogicException(ErrorCode.UserService.USER_DOES_NOT_EXISTS, "There is no user with id: " + id);
+        }
+
+        Set<Role> roles = new LinkedHashSet<>();
+
+        for (Long roleId : userRolesDTO.getRoles()) {
+            roles.add(this.roleService.findRoleById(roleId));
+        }
+
+        User user = optionalUser.get();
+        user.setAuthorities(roles);
+        userRepository.saveAndFlush(user);
+
+        return user.getId();
+    }
+
+    @Override
+    public Set<AuthorityRoleDTO> listRolesWhichBelongsToUser(final Long id) {
+        User user = userRepository.getOne(id);
+        return user.getAuthorities().stream().map(a -> new AuthorityRoleDTO(a)).collect(Collectors.toSet());
     }
 
     @Override

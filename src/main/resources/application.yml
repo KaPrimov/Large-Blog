@@ -62,3 +62,22 @@ spring:
 
       # Allows Hibernate to generate SQL optimized for a particular DBMS
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+# ===============================
+# = LARGE SPECIFIC
+# ===============================
+large:
+  tempFileUploadExpirationDays: 1
+
+# ===============================
+# = CRON EXPRESSIONS
+#   Online CRON expression generator: https://www.freeformatter.com/cron-expression-generator-quartz.html
+# ===============================
+cronProcess:
+  temporaryFiles:
+# ==== Describe expression: At 00:00:00am every day
+# ==== Example executions: Thu Nov 02 00:00:00 UTC 2017 | Fri Nov 03 00:00:00 UTC 2017 | Sat Nov 04 00:00:00 UTC 2017 | Sun Nov 05 00:00:00 UTC 2017
+    cleanTempFilesExecutionTime: 0 0 0 ? * *
+  articles:
+# ==== Describe expression: At 00:00:00am every day
+# ==== Example executions: Thu Nov 02 00:00:00 UTC 2017 | Fri Nov 03 00:00:00 UTC 2017 | Sat Nov 04 00:00:00 UTC 2017 | Sun Nov 05 00:00:00 UTC 2017
+    changeArticleStatusesTime: 0 0 0 ? * *

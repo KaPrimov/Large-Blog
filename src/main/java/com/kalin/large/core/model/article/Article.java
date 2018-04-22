@@ -158,4 +158,11 @@ public abstract class Article implements Serializable {
 		public void setArticleFiles(Set<ArticleFile> articleFiles) {
 			this.articleFiles = articleFiles;
 		}
+		/**
+		 * Adds new article tag to the tags collection
+		 * @param tag
+		 */
+		public void addTag(final Tag tag) {
+		tags.add(new ArticleTag(this, tag));
+	}
 }

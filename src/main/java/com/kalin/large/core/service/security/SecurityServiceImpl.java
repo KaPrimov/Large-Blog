@@ -1,11 +1,14 @@
 package com.kalin.large.core.service.security;
 
+import com.kalin.large.core.model.roles.Role;
 import com.kalin.large.core.model.user.User;
 import com.kalin.large.core.model.user.beans.UserFullDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 /**
  * {@link SecurityService} implementation
@@ -31,7 +34,9 @@ public class SecurityServiceImpl implements SecurityService {
             if (currentUser instanceof User) {
 
                 User loggedInUser = (User) currentUser;
-                return this.modelMapper.map(loggedInUser, UserFullDTO.class);
+                UserFullDTO userFullDTO = this.modelMapper.map(loggedInUser, UserFullDTO.class);
+                userFullDTO.setAuthorities(loggedInUser.getAuthorities().stream().map(Role::getAuthority).collect(Collectors.toSet()));
+                return userFullDTO;
             }
         }
 

@@ -4,4 +4,7 @@ import com.kalin.large.core.model.roles.Role;
 
 public interface RoleService {
     Role findRoleByName(String name);
+
+    Role findRoleById(Long id);
+
 }

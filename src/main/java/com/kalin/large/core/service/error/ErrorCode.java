@@ -15,6 +15,7 @@ public interface ErrorCode {
 		int ROLE_NAME_WRONG = 102;
 		int ROLE_NAME_REQUIRED_FIELD = 103;
 		int ROLE_NAME_MIN_SIZE_ERROR = 104;
+		int WRONG_ROLE = 105;
 	}
 	
 	/**

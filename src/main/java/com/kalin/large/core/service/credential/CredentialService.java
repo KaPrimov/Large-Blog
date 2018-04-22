@@ -3,7 +3,6 @@ package com.kalin.large.core.service.credential;
 /**
  * Credential service
  *
- * @author Kalin Primov
  */
 public interface CredentialService {
 

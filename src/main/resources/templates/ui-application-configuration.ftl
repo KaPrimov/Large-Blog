@@ -10,7 +10,7 @@ window.Configuration = {
 	},
 	LOCALES: {
 		localesISO: {
-			bg_BG: {flag: 'flag-sm flag-bg', name: 'lang.bulgarian', shortName: 'bg'},
+			bg_BG: {flag: 'flag-sm flag-com', name: 'lang.bulgarian', shortName: 'com'},
 			en_GB: {flag: 'flag-sm flag-gb', name: 'lang.english', shortName: 'en-GB'}
 		},
 		preferredLocale: 'en_GB',

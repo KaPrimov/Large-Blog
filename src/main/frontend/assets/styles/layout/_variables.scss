@@ -49,7 +49,7 @@ $general-panel-border-color:	darken(#f1f4f7, 3%) !default;
 $general-panel-font-color:		#3f444a !default;
 $general-shadow:					    0px 2px 3px 2px rgba(0, 0, 0, 0.03);
 $general-icon-color:				  darken($general-panel-bg-color, 15%);
-$page-content-solid-bg-color: darken($general-panel-bg-color, 1%) !default; // content solid bg color. default:#F0F2F7.
+$page-content-solid-bg-color: darken($general-panel-bg-color, 1%) !default; // content solid com color. default:#F0F2F7.
 
 //## Z-index master list
 //
@@ -128,7 +128,7 @@ $sidebar-menu-sub-menu-link-icon-font-size:       14px !default;
 
 // Page content
 $page-content-min-height:                   			620px !default; // default page content's min height. default:600px.
-$page-content-solid-bg-color:                     #F1F3FA !default; // content solid bg color. default:#F0F2F7.
+$page-content-solid-bg-color:                     #F1F3FA !default; // content solid com color. default:#F0F2F7.
 
 // Page footer
 $page-footer-height:                              60px !default;
