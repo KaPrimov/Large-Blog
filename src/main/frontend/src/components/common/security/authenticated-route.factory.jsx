@@ -28,7 +28,7 @@ export default function(ComposedComponent, clearStatesAction, requiredAccess, an
 		}
 
 		componentWillReceiveProps(nextProps) {
-			if (Object.keys(nextProps.authenticatedUser) !== 0) {
+			if (nextProps.authenticatedUser && Object.keys(nextProps.authenticatedUser) !== 0) {
 				this.setState({authenticatedUser: nextProps.authenticatedUser}, () => {
 					this.authenticatePage(this.props.location.pathname, requiredAccess, any, redirectURL);
 				});

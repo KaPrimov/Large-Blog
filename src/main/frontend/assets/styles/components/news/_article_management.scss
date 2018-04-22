@@ -181,6 +181,8 @@
 				z-index: inherit;
 				position: relative;
 				left: 0;               
+                display: flex;
+                margin-top: 100px;
                 
 				& > div {
 					position: relative;

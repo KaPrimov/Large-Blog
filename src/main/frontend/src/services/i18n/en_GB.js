@@ -196,6 +196,25 @@ const gb = {
 		show_view_label: 'View article',
 		date_of_publish: 'Date of publication: '
 	},
+	news_actions: {
+		server_errors: {
+			news_is_in_use: 'The deletion of this News is impossible, since it is being used',
+			news_not_found: 'This News does not exist',
+			file_access_denied: 'You have no access to the file',
+			id_required_field: 'ID is required',
+			description_length_too_long: 'Descriptions should be less than 200 characters',
+			description_length_too_short: 'Descriptions should be more than 20 characters',
+			description_required_field: 'Description is required'
+		},
+		confirm_delete: 'Are you sure, you want to delete this news_',
+		success_delete: 'The news %{name} was successfully deleted',
+		success_create: 'The article was successfully saved as draft',
+		success_update: 'The article\'s content was updated!',
+		image_updated: 'Image was updated!',
+		meta_data_updated: 'Metadata was successfully updated',
+		news_published: 'The news is published successfully!',
+		news_already_published: 'The news is already published'
+	},
 };
 
 export default gb;

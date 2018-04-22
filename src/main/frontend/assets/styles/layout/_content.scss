@@ -1,7 +1,10 @@
 /***
 Page content
 ***/
-
+.dropdown-menu {	
+	left: -100px!important;
+	position: absolute;
+}
 /* Page title */
 #proxiad-extranet-app, body {
 	.h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -150,7 +153,6 @@ Page content
 			right: 0!important;
 			border-radius: 0;
 			margin-top: 7px;
-
 			li {
 				cursor: pointer;
 				padding: 0px 0 0px 0.5rem;

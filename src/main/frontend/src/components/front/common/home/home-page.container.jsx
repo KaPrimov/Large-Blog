@@ -214,7 +214,7 @@ class NewsViewPageContainer extends React.Component {
 
 NewsViewPageContainer.propTypes = {
 	actions: PropTypes.object.isRequired,
-	authenticatedUser: PropTypes.object.isRequired,
+	authenticatedUser: PropTypes.object,
 	news: PropTypes.array.isRequired,
 };
 

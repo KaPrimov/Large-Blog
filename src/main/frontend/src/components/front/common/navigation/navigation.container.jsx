@@ -27,10 +27,8 @@ class NavigationContainer extends React.Component {
    */
 	onLogout(event) {
 		event.stopPropagation();
-		this.props.actions.logout().then(() => {
-			browserHistory.push('/');
-		});
-
+		this.props.actions.logout();
+		browserHistory.push('/');
 	}
 
 	render() {

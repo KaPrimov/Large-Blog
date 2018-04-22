@@ -5,6 +5,7 @@ import localeReducer from './locale.reducer';
 import {authenticatedUserReducer} from './security.reducer';
 import {singleNewsReducer, newsReducer, newsSeenByReducer, lastActiveTabReducer} from './news.reducer';
 import {tempFilesReducer} from './temp-files.reducer';
+import {usersReducer, userReducer, userRolesReducer} from './users.reducer';
 import * as TagReducer from './tag.reducer';
 import * as ActionTypes from '../actions/action-types.constants';
 
@@ -20,6 +21,9 @@ const appReducer = combineReducers({
 	usersPerArticle:  newsSeenByReducer,
 	news: newsReducer,
 	activeTab: lastActiveTabReducer,
+	users: usersReducer,
+	user: userReducer,
+	userRoles: userRolesReducer,
 });
 
 const rootReducer = (state, action) => {

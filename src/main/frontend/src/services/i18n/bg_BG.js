@@ -188,20 +188,41 @@ const bg = {
 		short_description_placeholder: 'Кратко описание на статията...',
 		errors: {
 			invalid_data: 'Имате невалидни данни'
+		}
+	},
+	article_management_container: {
+		main_title: 'Новини',
+		sub_title: 'Управление на статии',
+		show_editor_label: 'Създаване на статия',
+		meta_data_label: 'Въвеждане на метаданни',
+		publish_label: 'Публикуване на статия',
+		back_to_management_button: 'Управление на статии',
+		back_to_news_button: 'Обратно към новините',
+		article: 'Статия',
+		user_not_eligible: 'Не е възможно да прегледате тази статия, защото не е предназначена за вас',
+		show_view_label: 'Новина',
+		date_of_publish: 'Дата на публикуване: '
+	},
+	news_actions: {
+		server_errors: {
+			news_is_in_use: 'Невъзможно е изтриването на статията, защото се използва',
+			news_not_found: 'Статията не съществува',
+			file_acces_denied: 'Нямате достъп до файла',
+			id_required_field: 'Статията трябва да има уникален идентификатор',
+			description_length_too_long: 'Описанието не може да е повече от 200 символа',
+			description_length_too_short: 'Описанието не може да е по-малко от 20 символа',
+			description_required_field: 'Описанието трябва да бъде попълнено'
 		},
-		article_management_container: {
-			main_title: 'Новини',
-			sub_title: 'Управление на статии',
-			show_editor_label: 'Създаване на статия',
-			meta_data_label: 'Въвеждане на метаданни',
-			publish_label: 'Публикуване на статия',
-			back_to_management_button: 'Управление на статии',
-			back_to_news_button: 'Обратно към новините',
-			article: 'Статия',
-			user_not_eligible: 'Не е възможно да прегледате тази статия, защото не е предназначена за вас',
-			show_view_label: 'Новина',
-			date_of_publish: 'Дата на публикуване: '
-		},
+		confirm_delete: 'Сигурни ли сте, че искате да изтриете тази статия?',
+		success_delete: 'Статия %{name} беше успешно изтрита',
+		success_create: 'Новината е създадена успешно като чернова!',
+		success_update: 'Съдържанието на статията беше променено!',
+		image_updated: 'Снимката беше добавена!',
+		meta_data_updated: 'Мета данните са успешно променени',
+		news_published: 'Новината е публикувана успешно!',
+		news_already_published: 'Новината вече е публикувана!',
+		publish_canceled: 'Публикуването е отменено',
+		publish_already_canceled: 'Публикуването вече е отменено',
 	},
 };
 

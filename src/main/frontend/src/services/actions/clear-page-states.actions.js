@@ -12,7 +12,7 @@ export function clearListNewsStates() {
 }
 /**
  * @component: CreateNewsContainer
- * @url-page: /news/article/create
+ * @url-page: /news/create
  */
 export function clearCreateNewsStates() {
 	return function(dispatch) {
@@ -24,11 +24,21 @@ export function clearCreateNewsStates() {
 
 /**
  * @component: CreateNewsContainer
- * @url-page: /news/article/edit
+ * @url-page: /news/edit
  */
 export function clearTempFilesStates() {
 	return function(dispatch) {
 		dispatch({type: ActionTypes.CLEAR_TEMP_FILES_CONTEXT});
 		dispatch({type: ActionTypes.CLEAR_CREATE_NEWS_CONTEXT});
+	};
+}
+
+/**
+ * @component: ListUsers
+ * @url-page: /admin
+ */
+export function clearAdminUsersStates() {
+	return function(dispatch) {
+		dispatch({type: ActionTypes.CLEAR_USERS_CONTEXT});
 	};
 }
